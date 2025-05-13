@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KnE Services</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" referrerpolicy="no-referrer" />
+  <!-- AOS Library for Animations -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+  <style>
+    /* Global Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #f7f7f7;
+      color: #2C3E50;
+      line-height: 1.6;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    /* Container */
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    /* Navbar */
+    .navbar {
+      background: #2C3E50;
+      position: sticky;
+      top: 0;
+      z-index: 1500;
+      padding: 1rem 0;
+      border-bottom: 2px solid #34495E;
+    }
+    .navbar .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+    }
+    .navbar .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 1px;
+    }
+    nav {
+      /* For mobile, we’ll make nav absolutely positioned */
+      position: relative;
+    }
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+    nav ul li {
+      margin-left: 2rem;
+      position: relative;
+    }
+    nav ul li a {
+      color: #fff;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 0.5rem 0;
+      transition: color 0.3s ease;
+      cursor: pointer;
+    }
+    nav ul li a:hover {
+      color: #bdc3c7;
+    }
+    /* Dropdown Menu */
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: #f7f7f7;
+      min-width: 280px;
+      border: 1px solid #bdc3c7;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+    }
+    .dropdown-menu li {
+      padding: 0.75rem 1rem;
+      white-space: nowrap;
+    }
+    .dropdown-menu li a {
+      color: #2C3E50;
+      font-size: 0.95rem;
+    }
+    .dropdown-menu li a:hover {
+      color: #000;
+    }
+    .dropdown:hover .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    /* Mobile Menu Toggle */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .menu-toggle span {
+      height: 3px;
+      width: 25px;
+      background: #fff;
+      margin-bottom: 4px;
+      transition: all 0.3s ease;
+    }
+    /* Hero Section */
+    .hero {
+      position: relative;
+      height: 100vh;
+      background: url('https://img.freepik.com/free-vector/dark-hexagonal-background-with-gradient-color_79603-1409.jpg') no-repeat center center/cover;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0; 
+      left: 0;
+      width: 100%; 
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+    }
+    .hero .container {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .hero h1 {
+      color: #fff;
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      animation: fadeInDown 1.5s ease-out;
+    }
+    .hero p {
+      color: #ddd;
+      font-size: 1.2rem;
+      max-width: 600px;
+      animation: fadeInUp 1.5s ease-out;
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* Section Headers for Offerings */
+    .section-header {
+      text-align: center;
+      padding: 2rem 0 1rem;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid #bdc3c7;
+    }
+    .section-header h2 {
+      font-size: 2rem;
+      color: #000;
+      margin-bottom: 0.5rem;
+      letter-spacing: 1px;
+    }
+    .section-header p {
+      font-size: 1rem;
+      color: #d72323;
+    }
+    /* Offerings Sections */
+    section.offering-section {
+      padding: 3rem 0;
+      background: #fff;
+    }
+    .offerings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      justify-items: center;
+      padding: 0 1rem;
+    }
+    /* Custom Offering Box Design */
+    .custom-box {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 2rem;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .custom-box::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 4px;
+      background: #d72323;
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+    .custom-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    .custom-box:hover::before {
+      width: 80px;
+    }
+    .custom-box i {
+      font-size: 2rem;
+      color: #d72323;
+      margin-bottom: 1rem;
+    }
+    .custom-box h3 {
+      margin: 1rem 0;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #2C3E50;
+      text-transform: uppercase;
+    }
+    .custom-box p {
+      color: #7f8c8d;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    /* Mission & Why Choose Us Sections */
+    .mission, .why-choose-us {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      text-align: center;
+      width: 100%;
+    }
+    .mission-image img, .why-choose-us img {
+      width: 100%;
+      max-width: 550px;
+      height: auto;
+    }
+    .mission > div, .why-choose-us > div {
+      width: 100%;
+      max-width: 700px;
+    }
+    .mission h3, .why-choose-us h3 {
+      font-weight: 300;
+      margin-top: 10px;
+      font-size: 24px;
+    }
+    .mission p, .why-choose-us p {
+      font-size: 16px;
+      line-height: 1.5;
+      margin-top: 10px;
+    }
+    /* Media Query: Mission/Why Choose Us Row at Large Screens */
+    @media screen and (min-width: 768px) {
+      .mission, .why-choose-us {
+        flex-direction: row;
+        text-align: left;
+      }
+      .mission-image, .why-choose-us img {
+        margin-right: 30px;
+      }
+      .mission h3, .why-choose-us h3 {
+        font-size: 28px;
+      }
+      .mission p, .why-choose-us p {
+        font-size: 18px;
+      }
+    }
+    /* Contact Us Button */
+    .contact-us-btn {
+      margin-top: 20px;
+      padding: 12px 20px;
+      font-size: 16px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .contact-us-btn:hover {
+      background-color: #0056b3;
+    }
+    /* Redesigned Contact Section */
+    .contact {
+      background: #fff;
+      padding: 3rem 0;
+    }
+    .contact h2 {
+      color: #2C3E50;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      font-size: 2rem;
+    }
+    .contact-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+      align-items: center;
+    }
+    @media screen and (min-width: 768px) {
+      .contact-content {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
+    .contact-info, .contact-form {
+      flex: 1;
+      padding: 1rem;
+    }
+    .contact-info h3 {
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+      color: #007BFF;
+    }
+    .contact-info p {
+      font-size: 1.1rem;
+      margin: 0.5rem 0;
+    }
+    .contact-info i {
+      margin-right: 10px;
+      color: #d72323;
+    }
+    .contact-form form {
+      display: flex;
+      flex-direction: column;
+    }
+    .contact-form input,
+    .contact-form textarea {
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border: 1px solid #bdc3c7;
+      font-size: 1rem;
+      width: 100%;
+    }
+    .contact-form button {
+      padding: 1rem;
+      border: none;
+      background: #2C3E50;
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .contact-form button:hover {
+      background: #34495E;
+    }
+    /* Footer */
+    footer {
+      background: #2C3E50;
+      color: #fff;
+      text-align: center;
+      padding: 1.5rem 0;
+      font-size: 0.9rem;
+    }
+    footer a {
+      color: #fff;
+      margin: 0 0.5rem;
+      transition: color 0.3s ease;
+    }
+    footer a:hover {
+      color: #bdc3c7;
+    }
+    /* Mobile Responsive Styles */
+    @media (max-width: 768px) {
+      .navbar .container {
+        flex-direction: row;
+        align-items: center;
+      }
+      /* Position nav as an absolute panel beneath the navbar */
+      nav {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #2C3E50;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        max-height: 0;
+        width: 100%;
+      }
+      nav.active {
+        max-height: 300px; /* Adjust as needed */
+      }
+      .navbar .container {
+        width: 100%;
+        padding: 2%;
+      }
+      nav ul {
+        flex-direction: column;
+        align-items: center;
+      }
+      nav ul li {
+        width: 100%;
+        margin: 0;
+        padding: 0.5rem 0;
+      }
+      .menu-toggle {
+        display: flex;
+      }
+      /* Mobile Toggle Animation */
+      .menu-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+      .menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+      }
+      .menu-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+      }
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      .hero p {
+        font-size: 1rem;
+        padding: 0 1rem;
+      }
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+
+    #privacy-policy {
+      background: #fff;
+      padding: 1rem 0;
+      min-width: 100vh;
+      color: #2C3E50;
+    }
+    #privacy-policy .section-header h2 {
+      color: #2C3E50;
+      margin-bottom: 1rem;
+    }
+    #privacy-policy .privacy-content p {
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+ 
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="container">
+      <div class="logo">KnE Services</div>
+      <div class="menu-toggle" id="mobile-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <nav id="mobile-nav">
+        <ul id="navbar-links" class="nav-links">
+          <li class="dropdown">
+            <a>Services</a>
+            <ul class="dropdown-menu">
+              <li><a href="#services-section">Consulting &amp; Advisory</a></li>
+              <li><a href="#services-section">IT &amp; Digital Solutions</a></li>
+              <li><a href="#services-section">Project Management</a></li>
+              <li><a href="#services-section">Facility Management</a></li>
+              <li><a href="#services-section">Logistics &amp; Supply Chain</a></li>
+              <li><a href="#services-section">Digital Marketing</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a>Procurement</a>
+            <ul class="dropdown-menu">
+              <li><a href="#procurement-section">Industrial Equipment</a></li>
+              <li><a href="#procurement-section">Office Supplies &amp; Furniture</a></li>
+              <li><a href="#procurement-section">Medical &amp; Safety Equipment</a></li>
+              <li><a href="#procurement-section">Energy &amp; Utility Supplies</a></li>
+              <li><a href="#procurement-section">IT &amp; Electronics</a></li>
+              <li><a href="#procurement-section">Raw Materials</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a>Training</a>
+            <ul class="dropdown-menu">
+              <li><a href="#training-section">Technical Training</a></li>
+              <li><a href="#training-section">Corporate Training</a></li>
+              <li><a href="#training-section">Health &amp; Safety Training</a></li>
+              <li><a href="#training-section">Digital Skills Training</a></li>
+            </ul>
+          </li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <!-- Hero Section -->
+  <!-- Privacy Policy Section -->
+  <section id="privacy-policy" class="container" style="padding: 40px;">
+    <div class="section-header">
+      <h2>Privacy Policy</h2>
+    </div>
+    <div class="privacy-content">
+      <p><strong>Introduction.</strong> Your privacy is critically important to us. At KnE Services (“we”, “our”, or “us”), we have a few fundamental principles:</p>
+      <ul>
+        <li>We don’t ask you for personal information unless we truly need it.</li>
+        <li>We don’t share your personal information except to comply with the law or protect our rights.</li>
+        <li>We don’t store personal information on our servers unless required for the ongoing operation of our services.</li>
+      </ul>
+      <p><strong>Mobile Data.</strong> No mobile information will be shared with third parties/affiliates for marketing or promotional purposes. All other categories exclude text messaging originator opt-in data and consent; this information will not be shared with any third parties.</p>
+      <p><strong>KnE Services has a focus on both privacy and security.</strong> We recognize that the information being held by KnE Services is sensitive and it is treated as such. With user privacy and security in mind we created the following principles:</p>
+      <ul>
+        <li>We will never sell or rent your personally identifiable information to third parties for marketing purposes.</li>
+        <li>We will never share your contact information with another user without consent.</li>
+        <li>All personally identifiable information you provide will be secured using industry-standard protocols and technology.</li>
+        <li>Users have the ability to change what is public but the default setting errs on the side of less public disclosure rather than more.</li>
+      </ul>
+      <p><strong>Personal Information Collected.</strong> The primary method of collecting personal information is through forms and the registration process. KnE Services requires a large amount of personal information during the registration process to ensure accuracy and to verify your information when necessary. By default, this information is not displayed; however users over the age of 18 can elect to make some of their personal information public.</p>
+      <p><strong>Cookies.</strong> Like most websites, KnE Services uses cookies and web log files to track site usage. A cookie is a tiny data file which resides on your computer and allows KnE Services to recognize you when you return to our site using the same device and browser. If your browser settings do not allow cookies, you will not be able to use our website. Cookie and log-file data is used to customize your experience on the site. We may allow authorized third parties to place or recognize a unique cookie on your browser to serve ads or optimize services; any information provided is not personally identifiable but may include general segment information (e.g., industry or geographic location). KnE Services does not store personally identifiable information in cookies.</p>
+      <p><strong>Log Files, IP Addresses &amp; Computer Information.</strong> When you visit KnE Services, we automatically receive the URL of the site you came from and the site you go to when you leave. We also log your IP address, operating system, browser type, email patterns, and ISP name. This data helps us analyze trends and improve our services. We never link your IP address with your personal information except with your permission or when required by law.</p>
+      <p><strong>Legal Disclaimer.</strong> We may disclose personal information when required by law—e.g., to comply with a court order or legal process, or to defend our legal rights.</p>
+      <p><strong>Disclosures to Others.</strong> In the event of a reorganization or sale of KnE Services’ assets, we may transfer your personal data to the new owner, provided they uphold the privacy protections described here.</p>
+      <p><strong>Changes to This Privacy Policy.</strong> We may update this policy. If significant changes occur, we will post a notice on our site. Continued use of KnE Services after such updates constitutes your consent to the new practices.</p>
+      <p><strong>Security.</strong> Access to your KnE Services data is password-protected. Sensitive data (like payment details) is encrypted via SSL during transmission. We also audit our systems regularly and host in a tier-one secured-access data center. You are responsible for safeguarding your login credentials.</p>
+      <p><strong>Children’s Privacy.</strong> Our services are not intended for anyone under 13. We do not knowingly collect personal data from children under 13.</p>
+      <p><strong>Your Rights.</strong> Depending on your jurisdiction, you may have rights to access, correct, update, or delete your personal data. To exercise these rights, please contact us at the address below.</p>
+      <p><strong>Contact Us.</strong> If you have questions about this Privacy Policy, feel free to contact us</p>
+      <address>
+        KnE Services<br>
+       <br>
+       
+      </address>
+    </div>
+  </section>
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 KnE Services. All rights reserved.</p>
+    </div>
+  </footer>
+  <!-- JavaScript for Mobile Menu Toggle and Form Validation -->
+  <script>
+    const mobileMenu = document.getElementById('mobile-menu');
+    const navbarLinks = document.getElementById('navbar-links');
+    const mobileNav = document.getElementById('mobile-nav');
+
+    mobileMenu.addEventListener('click', () => {
+      // Toggle active classes on both the menu toggle and the nav panel
+      mobileMenu.classList.toggle('active');
+      mobileNav.classList.toggle('active');
+    });
+
+    // Close mobile menu when a link is clicked
+    document.querySelectorAll('.nav-links li a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileNav.classList.remove('active');
+        mobileMenu.classList.remove('active');
+      });
+    });
+
+    // Dropdown menu click toggle for mobile
+    document.querySelectorAll('.dropdown > a').forEach(menu => {
+      menu.addEventListener('click', function(event) {
+        event.preventDefault();
+        this.nextElementSibling.classList.toggle('active');
+      });
+    });
+
+    // Contact form submission validation
+    document.querySelector("form").addEventListener("submit", function(event) {
+      const name = document.querySelector("[name='name']").value.trim();
+      const email = document.querySelector("[name='email']").value.trim();
+      const message = document.querySelector("[name='message']").value.trim();
+      if (!name || !email || !message) {
+        alert("Please fill in all fields before submitting.");
+        event.preventDefault();
+      }
+    });
+  </script>
+  <!-- AOS Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
+</body>
+</html>
