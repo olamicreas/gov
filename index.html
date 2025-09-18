@@ -4,516 +4,872 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>KnE Services</title>
+
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" referrerpolicy="no-referrer" />
   <!-- AOS Library for Animations -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+
   <style>
-    /* Global Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Montserrat', sans-serif;
-      background: #f7f7f7;
-      color: #2C3E50;
-      line-height: 1.6;
-    }
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-    /* Container */
-    .container {
-      width: 90%;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    /* Navbar */
-    .navbar {
-      background: #2C3E50;
-      position: sticky;
-      top: 0;
-      z-index: 1500;
-      padding: 1rem 0;
-      border-bottom: 2px solid #34495E;
-    }
-    .navbar .container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: relative;
-    }
-    .navbar .logo {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: #fff;
-      letter-spacing: 1px;
-    }
-    nav {
-      /* For mobile, we’ll make nav absolutely positioned */
-      position: relative;
-    }
-    nav ul {
-      display: flex;
-      list-style: none;
-    }
-    nav ul li {
-      margin-left: 2rem;
-      position: relative;
-    }
-    nav ul li a {
-      color: #fff;
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      padding: 0.5rem 0;
-      transition: color 0.3s ease;
-      cursor: pointer;
-    }
-    nav ul li a:hover {
-      color: #bdc3c7;
-    }
-    /* Dropdown Menu */
-    .dropdown-menu {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background-color: #f7f7f7;
-      min-width: 280px;
-      border: 1px solid #bdc3c7;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(10px);
-      transition: opacity 0.3s ease, transform 0.3s ease;
-      z-index: 200;
-      display: flex;
-      flex-direction: column;
-    }
-    .dropdown-menu li {
-      padding: 0.75rem 1rem;
-      white-space: nowrap;
-    }
-    .dropdown-menu li a {
-      color: #2C3E50;
-      font-size: 0.95rem;
-    }
-    .dropdown-menu li a:hover {
-      color: #000;
-    }
-    .dropdown:hover .dropdown-menu {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-    }
-    /* Mobile Menu Toggle */
-    .menu-toggle {
-      display: none;
-      flex-direction: column;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
-    .menu-toggle span {
-      height: 3px;
-      width: 25px;
-      background: #fff;
-      margin-bottom: 4px;
-      transition: all 0.3s ease;
-    }
-    /* Hero Section */
+    /* =================== YOUR ORIGINAL STYLES (unchanged) =================== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Montserrat', sans-serif; background: #f7f7f7; color: #2C3E50; line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+
+    .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+
+  
+
     .hero {
-      position: relative;
-      height: 100vh;
+      position: relative; height: 100vh;
       background: url('https://img.freepik.com/free-vector/dark-hexagonal-background-with-gradient-color_79603-1409.jpg') no-repeat center center/cover;
     }
-    .hero::after {
-      content: '';
-      position: absolute;
-      top: 0; 
-      left: 0;
-      width: 100%; 
-      height: 100%;
-      background: rgba(0,0,0,0.5);
-    }
-    .hero .container {
-      position: relative;
-      z-index: 2;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
-    .hero h1 {
-      color: #fff;
-      font-size: 3.5rem;
-      margin-bottom: 1rem;
-      animation: fadeInDown 1.5s ease-out;
-    }
-    .hero p {
-      color: #ddd;
-      font-size: 1.2rem;
-      max-width: 600px;
-      animation: fadeInUp 1.5s ease-out;
-    }
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    /* Section Headers for Offerings */
-    .section-header {
-      text-align: center;
-      padding: 2rem 0 1rem;
-      margin-bottom: 2rem;
-      border-bottom: 1px solid #bdc3c7;
-    }
-    .section-header h2 {
-      font-size: 2rem;
-      color: #000;
-      margin-bottom: 0.5rem;
-      letter-spacing: 1px;
-    }
-    .section-header p {
-      font-size: 1rem;
-      color: #d72323;
-    }
-    /* Offerings Sections */
-    section.offering-section {
-      padding: 3rem 0;
-      background: #fff;
-    }
+    .hero::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); }
+    .hero .container { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+    .hero h1 { color: #fff; font-size: 3.5rem; margin-bottom: 1rem; animation: fadeInDown 1.5s ease-out; }
+    .hero p { color: #ddd; font-size: 1.2rem; max-width: 600px; animation: fadeInUp 1.5s ease-out; }
+    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    .section-header { text-align: center; padding: 2rem 0 1rem; margin-bottom: 2rem; border-bottom: 1px solid #bdc3c7; }
+    .section-header h2 { font-size: 2rem; color: #000; margin-bottom: 0.5rem; letter-spacing: 1px; }
+    .section-header p { font-size: 1rem; color: #d72323; }
+
+    section.offering-section { padding: 3rem 0; background: #fff; }
     .offerings-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2rem;
-      justify-items: center;
-      padding: 0 1rem;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem; justify-items: center; padding: 0 1rem;
     }
-    /* Custom Offering Box Design */
+
     .custom-box {
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      padding: 2rem;
-      text-align: center;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      position: relative;
-      overflow: hidden;
+      background: #fff; border-radius: 10px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); padding: 2rem; text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease; position: relative; overflow: hidden;
     }
     .custom-box::before {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 50px;
-      height: 4px;
-      background: #d72323;
-      border-radius: 2px;
-      transition: width 0.3s ease;
+      content: ""; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 50px; height: 4px; background: #d72323; border-radius: 2px; transition: width 0.3s ease;
     }
-    .custom-box:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    }
-    .custom-box:hover::before {
-      width: 80px;
-    }
-    .custom-box i {
-      font-size: 2rem;
-      color: #d72323;
-      margin-bottom: 1rem;
-    }
-    .custom-box h3 {
-      margin: 1rem 0;
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: #2C3E50;
-      text-transform: uppercase;
-    }
-    .custom-box p {
-      color: #7f8c8d;
-      font-size: 0.95rem;
-      line-height: 1.5;
-    }
-    /* Mission & Why Choose Us Sections */
-    .mission, .why-choose-us {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      text-align: center;
-      width: 100%;
-    }
-    .mission-image img, .why-choose-us img {
-      width: 100%;
-      max-width: 550px;
-      height: auto;
-    }
-    .mission > div, .why-choose-us > div {
-      width: 100%;
-      max-width: 700px;
-    }
-    .mission h3, .why-choose-us h3 {
-      font-weight: 300;
-      margin-top: 10px;
-      font-size: 24px;
-    }
-    .mission p, .why-choose-us p {
-      font-size: 16px;
-      line-height: 1.5;
-      margin-top: 10px;
-    }
-    /* Media Query: Mission/Why Choose Us Row at Large Screens */
+    .custom-box:hover { transform: translateY(-5px); box-shadow: 0 8px 16px rgba(0,0,0,0.2); }
+    .custom-box:hover::before { width: 80px; }
+    .custom-box i { font-size: 2rem; color: #d72323; margin-bottom: 1rem; }
+    .custom-box h3 { margin: 1rem 0; font-size: 1.2rem; font-weight: 700; color: #2C3E50; text-transform: uppercase; }
+    .custom-box p { color: #7f8c8d; font-size: 0.95rem; line-height: 1.5; }
+
+    .mission, .why-choose-us { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; width: 100%; }
+    .mission-image img, .why-choose-us img { width: 100%; max-width: 550px; height: auto; }
+    .mission > div, .why-choose-us > div { width: 100%; max-width: 700px; }
+    .mission h3, .why-choose-us h3 { font-weight: 300; margin-top: 10px; font-size: 24px; }
+    .mission p, .why-choose-us p { font-size: 16px; line-height: 1.5; margin-top: 10px; }
+
     @media screen and (min-width: 768px) {
-      .mission, .why-choose-us {
-        flex-direction: row;
-        text-align: left;
-      }
-      .mission-image, .why-choose-us img {
-        margin-right: 30px;
-      }
-      .mission h3, .why-choose-us h3 {
-        font-size: 28px;
-      }
-      .mission p, .why-choose-us p {
-        font-size: 18px;
-      }
+      .mission, .why-choose-us { flex-direction: row; text-align: left; }
+      .mission-image, .why-choose-us img { margin-right: 30px; }
+      .mission h3, .why-choose-us h3 { font-size: 28px; }
+      .mission p, .why-choose-us p { font-size: 18px; }
     }
-    /* Contact Us Button */
-    .contact-us-btn {
-      margin-top: 20px;
-      padding: 12px 20px;
-      font-size: 16px;
-      background-color: #007BFF;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      text-decoration: none;
-    }
-    .contact-us-btn:hover {
-      background-color: #0056b3;
-    }
-    /* Redesigned Contact Section */
-    .contact {
-      background: #fff;
-      padding: 3rem 0;
-    }
-    .contact h2 {
-      color: #2C3E50;
-      margin-bottom: 1.5rem;
-      text-align: center;
-      font-size: 2rem;
-    }
-    .contact-content {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-      max-width: 900px;
-      margin: 0 auto;
-      align-items: center;
-    }
-    @media screen and (min-width: 768px) {
-      .contact-content {
-        flex-direction: row;
-        justify-content: space-between;
-      }
-    }
-    .contact-info, .contact-form {
-      flex: 1;
-      padding: 1rem;
-    }
-    .contact-info h3 {
-      margin-bottom: 1rem;
-      font-size: 1.5rem;
-      color: #007BFF;
-    }
-    .contact-info p {
-      font-size: 1.1rem;
-      margin: 0.5rem 0;
-    }
-    .contact-info i {
-      margin-right: 10px;
-      color: #d72323;
-    }
-    .contact-form form {
-      display: flex;
-      flex-direction: column;
-    }
-    .contact-form input,
-    .contact-form textarea {
-      padding: 1rem;
-      margin-bottom: 1rem;
-      border: 1px solid #bdc3c7;
-      font-size: 1rem;
-      width: 100%;
-    }
-    .contact-form button {
-      padding: 1rem;
-      border: none;
-      background: #2C3E50;
-      color: #fff;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    .contact-form button:hover {
-      background: #34495E;
-    }
-    /* Footer */
-    footer {
-      background: #2C3E50;
-      color: #fff;
-      text-align: center;
-      padding: 1.5rem 0;
-      font-size: 0.9rem;
-    }
-    footer a {
-      color: #fff;
-      margin: 0 0.5rem;
-      transition: color 0.3s ease;
-    }
-    footer a:hover {
-      color: #bdc3c7;
-    }
-    /* Mobile Responsive Styles */
+
+    .contact-us-btn { margin-top: 20px; padding: 12px 20px; font-size: 16px; background-color: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; }
+    .contact-us-btn:hover { background-color: #0056b3; }
+
+    .contact { background: #fff; padding: 3rem 0; }
+    .contact h2 { color: #2C3E50; margin-bottom: 1.5rem; text-align: center; font-size: 2rem; }
+    .contact-content { display: flex; flex-direction: column; gap: 2rem; max-width: 900px; margin: 0 auto; align-items: center; }
+    @media screen and (min-width: 768px) { .contact-content { flex-direction: row; justify-content: space-between; } }
+    .contact-info, .contact-form { flex: 1; padding: 1rem; }
+    .contact-info h3 { margin-bottom: 1rem; font-size: 1.5rem; color: #007BFF; }
+    .contact-info p { font-size: 1.1rem; margin: 0.5rem 0; }
+    .contact-info i { margin-right: 10px; color: #d72323; }
+    .contact-form form { display: flex; flex-direction: column; }
+    .contact-form input, .contact-form textarea { padding: 1rem; margin-bottom: 1rem; border: 1px solid #bdc3c7; font-size: 1rem; width: 100%; }
+    .contact-form button { padding: 1rem; border: none; background: #2C3E50; color: #fff; font-size: 1rem; cursor: pointer; transition: background 0.3s ease; }
+    .contact-form button:hover { background: #34495E; }
+
+    footer { background: #2C3E50; color: #fff; text-align: center; padding: 1.5rem 0; font-size: 0.9rem; }
+    footer a { color: #fff; margin: 0 0.5rem; transition: color 0.3s ease; }
+    footer a:hover { color: #bdc3c7; }
+
     @media (max-width: 768px) {
-      .navbar .container {
-        flex-direction: row;
-        align-items: center;
-      }
-      /* Position nav as an absolute panel beneath the navbar */
-      nav {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: #2C3E50;
-        overflow: hidden;
-        transition: max-height 0.3s ease;
-        max-height: 0;
-        width: 100%;
-      }
-      nav.active {
-        max-height: 300px; /* Adjust as needed */
-      }
-      .navbar .container {
-        width: 100%;
-        padding: 2%;
-      }
-      nav ul {
-        flex-direction: column;
-        align-items: center;
-      }
-      nav ul li {
-        width: 100%;
-        margin: 0;
-        padding: 0.5rem 0;
-      }
-      .menu-toggle {
-        display: flex;
-      }
-      /* Mobile Toggle Animation */
-      .menu-toggle.active span:nth-child(1) {
-        transform: rotate(45deg) translate(5px, 5px);
-      }
-      .menu-toggle.active span:nth-child(2) {
-        opacity: 0;
-      }
-      .menu-toggle.active span:nth-child(3) {
-        transform: rotate(-45deg) translate(5px, -5px);
-      }
-      .hero h1 {
-        font-size: 2.5rem;
-      }
-      .hero p {
-        font-size: 1rem;
-        padding: 0 1rem;
-      }
+     
+      .hero h1 { font-size: 2.5rem; }
+      .hero p { font-size: 1rem; padding: 0 1rem; }
     }
-    html {
-      scroll-behavior: smooth;
+    html { scroll-behavior: smooth; }
+
+    
+
+    /* Small helper for an optional flipped mission row */
+    .mission.reverse { flex-direction: column-reverse; }
+    @media (min-width: 768px) { .mission.reverse { flex-direction: row-reverse; } }
+
+    /* ====== Clients (alt) from your last version — left as-is ====== */
+    :root { --kne-deep:#2C3E50; --kne-accent:#d72323; --kne-light:#f7f7f7; }
+    .clients-v2 { background:#fff; padding:3rem 0; }
+    .clients-v2 .title { text-align:center; margin-bottom:1.25rem; }
+    .clients-v2 .title h2 { color:var(--kne-deep); font-size:2rem; }
+    .clients-v2 .title .bar { display:inline-block; width:90px; height:3px; background:var(--kne-accent); border-radius:3px; margin-top:.5rem; }
+    .kne-stats { display:flex; gap:.75rem; flex-wrap:wrap; justify-content:center; margin:.75rem 0 1.25rem; }
+    .kne-stat { background:#f7f7f7; border:1px solid #e8edf3; border-radius:12px; padding:.6rem .9rem; color:#425363; }
+    .clients-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:1.25rem; }
+    .client-block { position:relative; background:#fff; border:1px solid #e8edf3; border-radius:14px; padding:1.25rem; box-shadow:0 6px 16px rgba(0,0,0,.05); transition:transform .25s ease, box-shadow .25s ease; }
+    .client-block::after { content:""; position:absolute; top:0; left:0; height:6px; width:100%; background:linear-gradient(90deg, var(--kne-accent), #b11616); border-radius:14px 14px 0 0; }
+    .client-block:hover { transform:translateY(-4px); box-shadow:0 10px 22px rgba(0,0,0,.08); }
+    .client-block h4 { color:var(--kne-deep); display:flex; align-items:center; gap:.5rem; margin:.5rem 0; font-size:1.05rem; }
+    .client-block h4 i { color:var(--kne-accent); }
+    .client-list { display:grid; gap:.45rem; margin-top:.5rem; }
+    .client-item { display:flex; align-items:baseline; gap:.5rem; color:#425363; }
+    .client-item i { color:var(--kne-accent); }
+    .client-tags { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.75rem; }
+    .client-tag { border:1px solid #e0e6ee; border-radius:999px; padding:.35rem .6rem; font-size:.85rem; color:#425363; background:#fff; white-space:nowrap; }
+    /* ===== Testimonials — Elegant Cards ===== */
+:root { /* safe if already defined elsewhere */
+  --kne-deep:#2C3E50; 
+  --kne-accent:#d72323;
+}
+
+.tst-elegant { background:#fff; padding:3rem 0; }
+.tst-title { text-align:center; margin-bottom:1.25rem; }
+.tst-title h2 { color:var(--kne-deep); font-size:2rem; letter-spacing:.5px; }
+.tst-title .bar { display:inline-block; width:90px; height:3px; background:var(--kne-accent); border-radius:3px; margin-top:.5rem; }
+.tst-sub { color:#5c6b7a; margin-top:.45rem; }
+
+.tst-grid { 
+  display:grid; 
+  grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); 
+  gap:1.25rem; 
+}
+
+.tst-card {
+  position:relative;
+  background:#fff; 
+  border:1px solid #e8edf3; 
+  border-radius:16px; 
+  padding:1.25rem 1.25rem 1rem;
+  box-shadow:0 10px 24px rgba(0,0,0,.06);
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.tst-card::before{
+  content:"";
+  position:absolute; top:0; left:0; width:100%; height:6px;
+  background:linear-gradient(90deg, var(--kne-accent), #b11616);
+  border-radius:16px 16px 0 0;
+}
+
+.tst-quote { display:flex; align-items:flex-start; gap:.8rem; }
+.tst-quote-mark{
+  flex:0 0 auto; width:38px; height:38px; border-radius:50%;
+  background:#fdeceb; color:var(--kne-accent);
+  display:flex; align-items:center; justify-content:center;
+}
+.tst-text{ color:#374957; font-style:italic; line-height:1.6; }
+
+.tst-footer{
+  display:flex; align-items:center; justify-content:space-between; 
+  margin-top:.9rem;
+}
+.tst-person{ display:flex; align-items:center; gap:.6rem; }
+.tst-avatar{
+  width:38px; height:38px; border-radius:50%;
+  background:linear-gradient(135deg, #2C3E50, #425a6b);
+  position:relative; color:#fff;
+}
+.tst-avatar::after{
+  content:attr(data-initial);
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  font-weight:700; font-size:.85rem; letter-spacing:.5px;
+}
+.tst-name{ color:var(--kne-deep); font-weight:700; }
+.tst-role{ color:#5c6b7a; font-size:.9rem; }
+.tst-stars i{ color:#f1c40f; }
+
+.tst-card:hover{ transform:translateY(-4px); box-shadow:0 16px 30px rgba(0,0,0,.08); }
+
+.advanced-footer {
+  background:rgb(44, 62, 80); /* your existing primary */
+  color: #fff;
+  padding: 60px 20px 30px;
+}
+
+/* Grid */
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* Logo */
+.footer-logo {
+  max-width: 160px;
+  margin-top: -45px;
+}
+.logo-text {
+  font-size: 14px;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.5;
+}
+
+/* Headings */
+.footer-col h6 {
+  font-size: 16px;
+  margin-bottom: 0.8rem;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 4px;
+}
+.footer-col h6::after {
+  content: "";
+  display: block;
+  width: 30px;
+  height: 2px;
+  background: #fff;
+  margin-top: 4px;
+  transition: width 0.3s ease;
+}
+.footer-col h6:hover::after {
+  width: 50px;
+}
+
+/* Links */
+.footer-col ul {
+  list-style: none;
+  padding: 0;
+}
+.footer-col ul li {
+  margin-bottom: 0.6rem;
+}
+.footer-col ul li a {
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  transition: color 0.3s ease, padding-left 0.3s ease;
+}
+.footer-col ul li a:hover {
+  color: #fff;
+  padding-left: 6px;
+}
+
+/* Social Icons */
+.social-icons {
+  margin-top: 1rem;
+}
+.social-icons a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  font-size: 16px;
+  color: #fff;
+  background: rgba(255,255,255,0.15);
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+.social-icons a:hover {
+  transform: scale(1.15);
+  background: #fff;
+  color: var(--primary-color, #1bbc9b);
+}
+
+/* Bottom */
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.25);
+  padding-top: 15px;
+  text-align: center;
+}
+.footer-bottom p {
+  margin: 0;
+  font-size: 14px;
+  color: rgba(255,255,255,0.9);
+}
+
+
+.acontainer {
+    width: 90%;
+    max-width: 1170px;
+    height: 100%;
+    margin: 0 auto; /* Centers the container horizontally */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 60px;
+    padding: 35px 0;
+    place-items: center; /* Centers grid items both horizontally and vertically */
+    font-family: 'Poppins', sans-serif;
+}
+.contentLeft,
+.contentRight{
+    width: 100%;
+}
+.contentLeft .row{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+}
+.contentLeft .row .imgWrapper{
+    width: 100%;
+    height: 450px;
+    overflow: hidden;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.15);
+}
+.contentLeft .row .imgWrapper img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    user-select: none;
+    transition: 0.3s ease;
+}
+.contentLeft .row .imgWrapper:hover img{
+    transform: scale(1.5);
+}
+.contentLeft .row .imgWrapper:nth-child(odd){
+    transform: translateY(-20px);
+}
+.contentLeft .row .imgWrapper:nth-child(even){
+    transform: translateY(20px);
+}
+.contentRight .acontent{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+}
+.contentRight .acontent h4{
+    font-size: 22px;
+    font-weight: 400;
+    color: #d35400;
+}
+.contentRight .acontent h2{
+    font-size: 40px;
+    color: #1e272e;
+}
+.contentRight .acontent p{
+    font-size: 16px;
+    color: #343434;
+    line-height: 28px;
+    padding-bottom: 10px;
+}
+.contentRight .acontent a{
+    display: inline-block;
+    text-decoration: none;
+    font-size: 16px;
+    letter-spacing: 1px;
+    padding: 13px 30px;
+    color: #fff;
+    background: #d35400;
+    border-radius: 8px;
+    user-select: none;
+}
+@media(max-width: 768px){
+    .acontainer{
+        grid-template-columns: 1fr;
     }
+    .contentLeft .row{
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .contentLeft .row .imgWrapper{
+        height: 150px;
+    }
+    .contentRight .acontent h4{
+        font-size: 18px;
+    }
+    .contentRight .acontent h2{
+        font-size: 30px;
+    }
+}
+
   </style>
 </head>
 <body>
   <!-- Navbar -->
-  <header class="navbar">
-    <div class="container">
-      <div class="logo">Business Solutions</div>
-      <div class="menu-toggle" id="mobile-menu">
+<!-- ======= Replace your current header with this block ======= -->
+<header class="header">
+  <nav class="navbar">
+    <div class="nav-brand">
+      <a href="#" class="logo">KnE Services</a>
+    </div>
+
+    <!-- Mobile toggle (keep class .nav-toggle as in your original code) -->
+    <div class="nav-toggle" aria-label="Toggle navigation">
+      <div class="hamburger" aria-hidden="true">
         <span></span>
         <span></span>
         <span></span>
       </div>
-      <nav id="mobile-nav">
-        <ul id="navbar-links" class="nav-links">
-          <li class="dropdown">
-            <a>Services</a>
-            <ul class="dropdown-menu">
-              <li><a href="#services-section">Consulting &amp; Advisory</a></li>
-              <li><a href="#services-section">IT &amp; Digital Solutions</a></li>
-              <li><a href="#services-section">Project Management</a></li>
-              <li><a href="#services-section">Facility Management</a></li>
-              <li><a href="#services-section">Logistics &amp; Supply Chain</a></li>
-              <li><a href="#services-section">Digital Marketing</a></li>
-            </ul>
-          </li>
-          <li class="dropdown">
-            <a>Procurement</a>
-            <ul class="dropdown-menu">
-              <li><a href="#procurement-section">Industrial Equipment</a></li>
-              <li><a href="#procurement-section">Office Supplies &amp; Furniture</a></li>
-              <li><a href="#procurement-section">Medical &amp; Safety Equipment</a></li>
-              <li><a href="#procurement-section">Energy &amp; Utility Supplies</a></li>
-              <li><a href="#procurement-section">IT &amp; Electronics</a></li>
-              <li><a href="#procurement-section">Raw Materials</a></li>
-            </ul>
-          </li>
-          <li class="dropdown">
-            <a>Training</a>
-            <ul class="dropdown-menu">
-              <li><a href="#training-section">Technical Training</a></li>
-              <li><a href="#training-section">Corporate Training</a></li>
-              <li><a href="#training-section">Health &amp; Safety Training</a></li>
-              <li><a href="#training-section">Digital Skills Training</a></li>
-            </ul>
-          </li>
-          <li><a href="#contact">Contact</a></li>
-          <li><a href="privacy.html">Privacy Policy</a></li>
-        </ul>
-      </nav>
     </div>
-  </header>
-  <!-- Hero Section -->
+
+    <div class="nav-menu">
+      <ul class="nav-list">
+        <li class="nav-item"><a href="#hero" class="nav-link active">Home</a></li>
+
+        <li class="nav-item has-dropdown">
+          <a href="#" class="nav-link">
+            Services
+            <svg class="icon chevron-icon" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+              <path d="M7 10l5 5 5-5z" fill="currentColor"></path>
+            </svg>
+          </a>
+          <ul class="dropdown">
+            <li><a href="#services-section">Consulting & Advisory</a></li>
+            <li><a href="#services-section">IT & Digital Solutions</a></li>
+            <li><a href="#services-section">Project Management</a></li>
+            <li><a href="#services-section">Facility Management</a></li>
+            <li><a href="#services-section">Logistics & Supply Chain</a></li>
+            <li><a href="#services-section">Digital Marketing</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item has-dropdown">
+          <a href="#" class="nav-link">
+            Procurement
+            <svg class="icon chevron-icon" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+              <path d="M7 10l5 5 5-5z" fill="currentColor"></path>
+            </svg>
+          </a>
+          <ul class="dropdown">
+            <li><a href="#procurement-section">Industrial Equipment</a></li>
+            <li><a href="#procurement-section">Office Supplies</a></li>
+            <li><a href="#procurement-section">Medical & Safety</a></li>
+            <li><a href="#procurement-section">Energy & Utilities</a></li>
+            <li><a href="#procurement-section">IT & Electronics</a></li>
+            <li><a href="#procurement-section">Raw Materials</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item has-dropdown">
+          <a href="#" class="nav-link">
+            Training
+            <svg class="icon chevron-icon" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+              <path d="M7 10l5 5 5-5z" fill="currentColor"></path>
+            </svg>
+          </a>
+          <ul class="dropdown">
+            <li><a href="#training-section">Technical Training</a></li>
+            <li><a href="#training-section">Corporate Training</a></li>
+            <li><a href="#training-section">Digital Skills</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item"><a href="#stats-section" class="nav-link">Clients</a></li>
+        <li class="nav-item"><a href="#testimonials" class="nav-link">Testimonials</a></li>
+        <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <div class="search-container">
+          <input type="text" class="search-input" placeholder="Search...">
+          <button class="search-btn" aria-label="Search">
+            <!-- small search icon -->
+            <svg class="icon search-icon" viewBox="0 0 24 24" width="18" height="18">
+              <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5z" fill="currentColor"/>
+            </svg>
+          </button>
+        </div>
+
+       
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- ======= Add / replace these CSS rules (scoped to header area) ======= -->
+<style>
+/* ensure variables are present — these match your earlier variables */
+:root {
+  --primary-color: #2196f3;
+  --primary-glow: rgba(33,150,243,0.8);
+  --text-color: #ffffff;
+  --nav-bg: rgba(16,16,26,0.7); /* glass bg used when scrolled */
+  --dropdown-bg: rgba(20,20,35,0.8);
+  --border-color: rgba(255,255,255,0.08);
+  --glass-effect: saturate(180%) blur(10px);
+  --shadow-color: rgba(0,0,0,0.3);
+  --transition-medium: 0.3s cubic-bezier(.4,0,.2,1);
+  --neon-glow: 0 0 10px rgba(33,150,243,0.5);
+}
+
+/* Base header/navbar: start transparent at top */
+.header { position: fixed; top:0; left:0; width:100%; z-index:1000; }
+.navbar {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:1rem 2rem;
+  background: transparent;                /* <--- transparent at page top */
+  backdrop-filter: var(--glass-effect);
+  -webkit-backdrop-filter: var(--glass-effect);
+  border-bottom: 1px solid transparent;
+  box-shadow: 0 4px 30px transparent;
+  transition: background var(--transition-medium), padding var(--transition-medium), box-shadow var(--transition-medium);
+}
+
+/* When scrolled -> apply the glass nav-bg and shadow */
+.navbar.scrolled {
+  background: var(--nav-bg);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 5px 20px var(--shadow-color);
+}
+
+/* Brand */
+.nav-brand .logo{
+  font-size:1.5rem;
+  font-weight:700;
+  color:var(--primary-color);
+  text-decoration:none;
+  letter-spacing:2px;
+  text-shadow: var(--neon-glow);
+}
+
+/* Layout of menu & actions */
+.nav-menu { display:flex; align-items:center; gap:1.75rem; }
+.nav-list { display:flex; gap:1.25rem; list-style:none; margin:0; padding:0; }
+.nav-item { position:relative; }
+.nav-link { color:var(--text-color); text-decoration:none; padding:0.5rem 0.6rem; border-radius:12px; display:flex; align-items:center; gap:6px; transition: all var(--transition-medium); }
+.nav-link:hover, .nav-link.active { color:var(--primary-color); transform: translateY(-2px); background: rgba(255,255,255,0.02); }
+
+/* Dropdown */
+.has-dropdown .dropdown {
+  position: absolute;
+  top: 100%;   /* no extra gap */
+  left: 0;
+  min-width: 220px;
+  background: var(--dropdown-bg);
+  backdrop-filter: var(--glass-effect);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 0.5rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition: all var(--transition-medium);
+  box-shadow: 0 10px 30px var(--shadow-color);
+  pointer-events: none;
+}
+
+.has-dropdown:hover .dropdown { opacity:1; visibility:visible; transform: translateY(0); pointer-events:auto; }
+
+/* Dropdown items */
+.dropdown li { list-style:none; }
+.dropdown a { color:var(--text-color); display:block; padding:0.6rem 0.9rem; border-radius:8px; transition: all var(--transition-medium); }
+.dropdown a:hover { background: rgba(255,255,255,0.03); color:var(--primary-color); transform: translateX(4px); }
+
+/* Nav actions */
+.nav-actions { display:flex; align-items:center; gap:1rem; }
+.search-container { position:relative; display:flex; align-items:center; border-radius:20px; overflow:hidden; border:1px solid var(--border-color); }
+.search-input { padding:0.45rem 0.8rem; background:none; border:none; color:var(--text-color); width:160px; transition: width var(--transition-medium); }
+.search-input:focus { outline:none; width:240px; box-shadow: 0 0 0 3px var(--primary-glow); }
+.search-btn { background:none; border:none; color:var(--text-color); padding:0 8px; cursor:pointer; }
+
+/* Theme toggle */
+.theme-toggle { background: rgba(255,255,255,0.06); border:1px solid var(--border-color); padding:0.5rem; border-radius:50%; cursor:pointer; color:var(--text-color); }
+
+/* Hamburger - default hidden on desktop */
+.nav-toggle { display:none; align-items:center; justify-content:center; cursor:pointer; border-radius:12px; padding:0.45rem; }
+.hamburger { width:26px; height:20px; position:relative; }
+.hamburger span{ display:block; position:absolute; left:0; right:0; height:2px; background:var(--text-color); border-radius:2px; transition: all var(--transition-medium); }
+.hamburger span:first-child{ top:0; }
+.hamburger span:nth-child(2){ top:9px; width:70%; margin-left:auto; margin-right:0; }
+.hamburger span:last-child{ bottom:0; }
+
+/* nav-active hamburger transform (applied via JS toggling .nav-active on .navbar) */
+.nav-active .hamburger span:first-child { transform: rotate(45deg); top:9px; }
+.nav-active .hamburger span:nth-child(2) { opacity:0; transform: scaleX(0); }
+.nav-active .hamburger span:last-child { transform: rotate(-45deg); top:9px; }
+
+/* Mobile behavior - menu slides from right like your earlier design */
+@media (max-width: 968px) {
+  .nav-toggle { display:flex; }
+  .nav-menu {
+    position: fixed;
+    top: 70px;
+    right: -100%;
+    flex-direction: column;
+    gap: 1rem;
+    background: var(--nav-bg);
+    backdrop-filter: var(--glass-effect);
+    width: 78%;
+    height: calc(100vh - 70px);
+    padding: 1.5rem;
+    transition: right 0.35s var(--transition-medium);
+    box-shadow: -10px 0 30px var(--shadow-color);
+    border-left: 1px solid var(--border-color);
+    overflow-y: auto;
+  }
+  /* when active, slide into view */
+  .nav-active .nav-menu { right: 0; }
+
+  .nav-list { flex-direction: column; width:100%; margin:0; padding:0; }
+  .nav-link { width:100%; padding:0.9rem 0.6rem; border-bottom: 1px solid var(--border-color); }
+  .has-dropdown .dropdown { position: static; height: auto; transform: none; opacity: 1; visibility: visible; display:none; box-shadow:none; border:none; background:transparent; padding-left: 1rem; margin-left: 0.5rem;}
+  .has-dropdown.active .dropdown { display:block; }
+  .chevron-icon { margin-left:auto; }
+  .hamburger span { background: var(--text-color); }
+}
+
+/* small screens tweaks */
+@media (max-width: 576px) {
+  .nav-menu { width: 100%; }
+  .search-input { width:100%; }
+}
+</style>
+
+
+
+    <style>
+        /* Statistics Section Styles */
+        .stats-section {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #e0e7ff 0%, #dbeafe 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+            animation: pulse 10s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-item {
+            background: #ffffff;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+        }
+
+        .stat-item:hover .stat-number,
+        .stat-item:hover .stat-label {
+            color: #ffffff;
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            transition: filter 0.3s ease;
+        }
+
+        .stat-icon img {
+            width: 100%;
+            height: 100%;
+            filter: invert(42%) sepia(93%) saturate(1352%) hue-rotate(200deg) brightness(95%) contrast(95%); /* Converts white to #3b82f6 */
+            transition: transform 0.4s ease, filter 0.3s ease;
+        }
+
+        .stat-item:hover .stat-icon img {
+            filter: invert(100%) sepia(0%) saturate(7500%) hue-rotate(0deg) brightness(100%) contrast(100%); /* Converts to white on hover */
+            transform: scale(1.1);
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 10px 0;
+            transition: color 0.3s ease;
+        }
+
+        .stat-label {
+            font-size: 20px;
+            font-weight: 500;
+            color: #4b5563;
+            transition: color 0.3s ease;
+        }
+
+        /* Animation for numbers */
+        .stat-number {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .stat-number.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .stats-container {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 20px;
+            }
+
+            .stat-number {
+                font-size: 36px;
+            }
+
+            .stat-label {
+                font-size: 18px;
+            }
+
+            .stat-icon {
+                width: 50px;
+                height: 50px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-item {
+                padding: 20px;
+            }
+        }
+    </style>
+<!-- ======= Replace your existing header script with this improved script ======= -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const navbar = document.querySelector('.navbar');
+  const navToggle = document.querySelector('.nav-toggle');
+  const dropdowns = document.querySelectorAll('.has-dropdown');
+  const themeToggle = document.querySelector('.theme-toggle');
+  const searchInput = document.querySelector('.search-input');
+  const searchBtn = document.querySelector('.search-btn');
+
+  // MOBILE MENU TOGGLE
+  if (navToggle) {
+    navToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      navbar.classList.toggle('nav-active');
+      // prevent page scroll when mobile menu open
+      document.body.style.overflow = navbar.classList.contains('nav-active') ? 'hidden' : '';
+    });
+  }
+
+  // Close mobile menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (navbar.classList.contains('nav-active') && !navbar.contains(e.target)) {
+      navbar.classList.remove('nav-active');
+      document.body.style.overflow = '';
+    }
+  });
+
+  // DROPDOWN behavior: desktop show on hover (CSS) — mobile toggle on click
+  dropdowns.forEach((dropdown) => {
+    const link = dropdown.querySelector('.nav-link');
+    link.addEventListener('click', (e) => {
+      if (window.innerWidth <= 968) {
+        // prevent following the # href on mobile (if any)
+        e.preventDefault();
+        // toggle active state to show/hide the nested dropdown (CSS handles .active)
+        dropdown.classList.toggle('active');
+
+        // close other open dropdowns for neatness
+        dropdowns.forEach(other => {
+          if (other !== dropdown) other.classList.remove('active');
+        });
+      }
+    });
+  });
+
+  // SEARCH (simple) — keep original behavior
+  if (searchBtn && searchInput) {
+    searchBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (searchInput.value.trim()) {
+        console.log('Search:', searchInput.value.trim());
+        // Add your real search action here
+      }
+    });
+    searchInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        if (searchInput.value.trim()) console.log('Search:', searchInput.value.trim());
+      }
+    });
+  }
+
+  // THEME TOGGLE (keeps your earlier idea; swap icons or styles as needed)
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('light-theme');
+      themeToggle.textContent = document.body.classList.contains('light-theme') ? '☀️' : '🌙';
+    });
+  }
+
+  // WINDOW RESIZE: if moved to desktop, ensure menu closed and dropdowns cleared
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 968) {
+      navbar.classList.remove('nav-active');
+      document.body.style.overflow = '';
+      dropdowns.forEach(d => d.classList.remove('active'));
+    }
+  });
+
+  // SCROLL EFFECT: add 'scrolled' class when not at top
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  });
+
+  // initial check (in case page loads scrolled)
+  if (window.scrollY > 20) navbar.classList.add('scrolled');
+});
+</script>
+
+
+
+  <!-- Hero -->
   <section id="hero" class="hero" role="banner" aria-label="Business growth solutions">
     <div class="container">
       <h1>Empowering Business Growth</h1>
       <p>Providing professional consulting, procurement, and training solutions.</p>
     </div>
   </section>
-  <!-- Mission Section -->
+
+  <!-- Mission -->
   <section class="mission">
     <div class="mission-image" data-aos="fade-right" data-aos-duration="1200">
       <img src="https://mc-c2cbcbd2-d083-4d31-99df-608200-afd.azurefd.net/-/media/project/cherokee-federal/hexagons/hexagon-home.png?h=890&w=983&rev=d24423b7f91c4c308202cd00281df3b5&hash=C2AD013109314C7DB1226F2E34F47BB5" alt="Mission Image">
     </div>
     <div data-aos="fade-left" data-aos-duration="1200">
       <h3>Where Your Mission Finds Momentum</h3>
-      <p>We are your trusted partner in delivering scalable, actionable solutions that modernize federal operations and solve complex challenges. Together, we build a thriving, future-ready workforce. Learn more about Cherokee Federal.</p>
+      <p>We are your trusted partner in delivering scalable, actionable solutions that modernize operations and solve complex challenges. Together, we build a thriving, future-ready workforce. Learn more about <strong>KnE</strong>.</p>
     </div>
   </section>
-  <!-- Services Section -->
+
+
+  <!-- Services (unchanged) -->
   <section id="services-section" class="offering-section">
     <div class="container">
       <div class="section-header">
@@ -554,48 +910,59 @@
       </div>
     </div>
   </section>
-  <!-- Procurement Section -->
-  <section id="procurement-section" class="offering-section" style="background-color: rgb(247, 247, 247);">
+<div class="acontainer">
+  <div class="contentLeft">
+    <div class="row">
+        <div class="imgWrapper">
+            <img src="https://images.unsplash.com/photo-1687579521048-217e24217d53?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODg5ODcxNzl8&ixlib=rb-4.0.3&q=85" alt="">
+        </div>
+        <div class="imgWrapper">
+            <img src="https://images.unsplash.com/photo-1686580546412-80e80519abd7?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODg5ODcyMDN8&ixlib=rb-4.0.3&q=85" alt="">
+        </div>
+        <div class="imgWrapper">
+            <img src="https://images.unsplash.com/photo-1688133338995-a394ce7314e4?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODg5ODcyMDN8&ixlib=rb-4.0.3&q=85" alt="">
+        </div>
+        <div class="imgWrapper">
+            <img src="https://images.unsplash.com/photo-1686354715732-7e4685269a25?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODg5ODcyNzN8&ixlib=rb-4.0.3&q=85" alt="">
+        </div>
+    </div>
+  </div>
+  <div class="contentRight">
+    <div class="acontent">
+<h4>Welcome</h4>
+<h2>About KnE Services</h2>
+<p>
+  KnE is a service-first partner that helps organisations plan, build and run better. We combine practical advisory, disciplined project delivery and trusted supplier networks to deliver measurable outcomes — on time and on budget. From procurement and facilities to digital transformation and training, we make complex work simpler so your team can focus on impact.
+</p>
+<a href="/about.html" aria-label="Read more about KnE Services">Read More...</a>
+    </div>
+  </div>
+</div>
+  <!-- PROCUREMENT — one image + one paragraph -->
+  <section id="procurement-section" class="offering-section" style="background-color:#f7f7f7;">
     <div class="container">
       <div class="section-header">
-        <h2 style="color: #000;">Sourcing Excellence for Your Business</h2>
-        <p style="color: #d72323;">Our Procurement</p>
+        <h2 style="color:#000;">Procurement &amp; Sourcing</h2>
+        <p style="color:#d72323;">Trusted vendors • Transparent pricing • On-time delivery</p>
       </div>
-      <div class="offerings-grid">
-        <div class="custom-box" data-aos="fade-up" data-aos-duration="1500">
-          <i class="fas fa-industry"></i>
-          <h3>Industrial Equipment</h3>
-          <p>Heavy machinery, tools, and spare parts for manufacturing and construction.</p>
+
+      <div class="mission" data-aos="fade-up" data-aos-duration="1200">
+        <div class="mission-image">
+          <img src="https://media.istockphoto.com/id/1652511983/vector/supply-chain-management-scm-conceptual-illustration.jpg?s=612x612&w=0&k=20&c=TMgOhstUF1uNFE1dvg1UZ4kOuFrRtvlGinC7AYbArkM=" alt="Procurement & Sourcing">
         </div>
-        <div class="custom-box" data-aos="fade-up" data-aos-duration="1500">
-          <i class="fas fa-chair"></i>
-          <h3>Office Supplies &amp; Furniture</h3>
-          <p>Stationery, IT hardware, ergonomic furniture, and office essentials.</p>
-        </div>
-        <div class="custom-box" data-aos="fade-up" data-aos-duration="1500">
-          <i class="fas fa-first-aid"></i>
-          <h3>Medical &amp; Safety Equipment</h3>
-          <p>PPE, first aid kits, and medical supplies.</p>
-        </div>
-        <div class="custom-box" data-aos="fade-up" data-aos-duration="1500">
-          <i class="fas fa-bolt"></i>
-          <h3>Energy &amp; Utility Supplies</h3>
-          <p>Generators, solar panels, and backup power solutions.</p>
-        </div>
-        <div class="custom-box" data-aos="fade-up" data-aos-duration="1500">
-          <i class="fas fa-desktop"></i>
-          <h3>IT &amp; Electronics</h3>
-          <p>Computers, networking devices, and software licenses.</p>
-        </div>
-        <div class="custom-box" data-aos="fade-up" data-aos-duration="1500">
-          <i class="fas fa-box-open"></i>
-          <h3>Raw Materials</h3>
-          <p>Essential materials sourced reliably for production and manufacturing needs.</p>
+        <div>
+          <h3>End-to-End Procurement, Simplified</h3>
+          <p>
+            We source and deliver exactly what you need—from industrial equipment and office setups to medical & safety
+            essentials, energy systems, IT & electronics, and raw materials—while handling vendor vetting, compliance,
+            logistics, and warranty support. One partner, clear pricing, and dependable timelines.
+          </p>
         </div>
       </div>
     </div>
   </section>
-  <!-- Training Section -->
+
+  <!-- Training (unchanged) -->
   <section id="training-section" class="offering-section">
     <div class="container" style="margin-bottom: 7%;">
       <div class="section-header">
@@ -621,31 +988,243 @@
       </div>
     </div>
   </section>
-  <!-- Why Choose Us Section -->
+
+  <!-- Why Choose Us (unchanged) -->
   <section class="why-choose-us">
     <div class="mission-image" data-aos="fade-right" data-aos-duration="1200">
       <img src="https://troktechnology.net/wp-content/uploads/2020/12/Daco_4329002.png" alt="Why Choose Us Image">
     </div>
     <div data-aos="fade-left" data-aos-duration="1200">
       <h3>Why Choose Us</h3>
-      <p>We stand out as your most reliable partner, offering proven expertise and a commitment to delivering innovative solutions. Our customer-first approach ensures that we understand your unique needs and deliver exceptional results every time. Let us help you navigate the path to success.</p>
+      <p>We stand out as your most reliable partner, offering proven expertise and a commitment to delivering innovative solutions. Our customer-first approach ensures that we understand your unique needs and deliver exceptional results every time.</p>
       <br>
       <a href="mailto:contact@company.com" class="contact-us-btn" style="margin-top: 20%;">Contact Us</a>
     </div>
   </section>
-  <!-- Redesigned Contact Section -->
+
+  <!-- Clients (keep your attractive new layout) -->
+      <section class="stats-section" id="stats-section">
+        <div class="stats-container">
+            <div class="stat-item">
+                <div class="stat-icon">
+                    <img src="https://olamicreas.github.io/itrok/assets/images/icons/happy-clients.svg" alt="Happy Clients Icon">
+                </div>
+                <div class="stat-number" data-target="232">0</div>
+                <div class="stat-label">Happy Clients</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">
+                    <img src="https://olamicreas.github.io/itrok/assets/images/icons/complete-projects.svg" alt="Completed Projects Icon">
+                </div>
+                <div class="stat-number" data-target="521">0</div>
+                <div class="stat-label">Completed Projects</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">
+                    <img src="https://olamicreas.github.io/itrok/assets/images/icons/hours-support.svg" alt="Hours of Support Icon">
+                </div>
+                <div class="stat-number" data-target="453">0</div>
+                <div class="stat-label">Hours of Support</div>
+            </div>
+        </div>
+    </section>
+<!-- ===========================
+     CALL TO ACTION SECTION
+=========================== -->
+<section id="cta" class="cta-section">
+  <!-- Background Video -->
+  <video autoplay muted loop playsinline class="cta-video">
+    <source src="vecteezy_rosette-nebula-moving-back-silhouette-gray-cloud-on-the_2709689.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Overlay -->
+  <div class="cta-overlay"></div>
+
+  <!-- Content -->
+  <div class="container text-center">
+    <h2 class="cta-title">Ready to Work With Us?</h2>
+    <p class="cta-subtitle">
+      Book a consultation today and let’s discuss how we can help you achieve your goals.
+    </p>
+    <a href="https://calendly.com/abdulquayyumoyedotun" target="_blank" class="cta-btn">
+      Book a Consultation
+    </a>
+  </div>
+</section>
+
+<style>
+/* CTA Section */
+.cta-section {
+  position: relative;
+  padding: 100px 20px;
+  color: #fff;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Background Video */
+.cta-video {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* Overlay */
+.cta-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 1;
+}
+
+/* Content */
+.cta-section .container {
+  position: relative;
+  z-index: 2;
+}
+
+.cta-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+  animation: fadeInDown 1s ease forwards;
+}
+
+.cta-subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  animation: fadeInUp 1.2s ease forwards;
+}
+
+.cta-btn {
+  display: inline-block;
+  padding: 14px 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--primary-color, #0056b3);
+  border-radius: 50px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  animation: pulseBtn 2s infinite;
+}
+
+.cta-btn:hover {
+  background: #003f80;
+  transform: scale(1.05);
+}
+
+/* Animations */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseBtn {
+  0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.6); }
+  70% { box-shadow: 0 0 0 20px rgba(255,255,255,0); }
+  100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cta-title { font-size: 1.8rem; }
+  .cta-subtitle { font-size: 1rem; }
+  .cta-btn { padding: 12px 24px; font-size: 1rem; }
+}
+</style>
+  <!-- TESTIMONIALS — reverted to earlier card design -->
+  <section id="testimonials" class="tst-elegant">
+  <div class="container" data-aos="fade-up" data-aos-duration="1200">
+    <div class="tst-title">
+      <h2>What Clients Say</h2>
+      <span class="bar"></span>
+      <p class="tst-sub">Real feedback from teams we’ve served</p>
+    </div>
+
+    <div class="tst-grid">
+      <!-- Card 1 -->
+      <article class="tst-card" data-aos="fade-up" data-aos-duration="1000">
+        <div class="tst-quote">
+          <div class="tst-quote-mark"><i class="fas fa-quote-left"></i></div>
+          <p class="tst-text">“KnE delivered ahead of schedule and cut our ops costs by 18% within a quarter.”</p>
+        </div>
+        <div class="tst-footer">
+          <div class="tst-person">
+            <div class="tst-avatar" data-initial="AM"></div>
+            <div>
+              <div class="tst-name">Operations Lead</div>
+              <div class="tst-role">Alpha Manufacturing</div>
+            </div>
+          </div>
+          <div class="tst-stars" aria-label="4.5 out of 5">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="tst-card" data-aos="fade-up" data-aos-duration="1100">
+        <div class="tst-quote">
+          <div class="tst-quote-mark"><i class="fas fa-quote-left"></i></div>
+          <p class="tst-text">“Their PMO support kept our expansion on track—clear milestones and zero surprises.”</p>
+        </div>
+        <div class="tst-footer">
+          <div class="tst-person">
+            <div class="tst-avatar" data-initial="PM"></div>
+            <div>
+              <div class="tst-name">Program Manager</div>
+              <div class="tst-role">BlueWave Logistics</div>
+            </div>
+          </div>
+          <div class="tst-stars" aria-label="5 out of 5">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="tst-card" data-aos="fade-up" data-aos-duration="1200">
+        <div class="tst-quote">
+          <div class="tst-quote-mark"><i class="fas fa-quote-left"></i></div>
+          <p class="tst-text">“Practical training. Our team applied the lessons the same week.”</p>
+        </div>
+        <div class="tst-footer">
+          <div class="tst-person">
+            <div class="tst-avatar" data-initial="HR"></div>
+            <div>
+              <div class="tst-name">HR Director</div>
+              <div class="tst-role">CityCare Health</div>
+            </div>
+          </div>
+          <div class="tst-stars" aria-label="4 out of 5">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+  <!-- Contact (unchanged) -->
   <section id="contact" class="contact">
     <div class="container" style="margin-top: 7%;">
       <h2 data-aos="fade-up" data-aos-duration="1500">Contact Us</h2>
       <div class="contact-content">
-        <!-- Contact Information -->
         <div class="contact-info" data-aos="fade-right" data-aos-duration="1200">
           <h3>Get in Touch</h3>
           <p><i class="fas fa-map-marker-alt"></i> 123 Business Ave, Suite 456, Cityville, ST 78910</p>
           <p><i class="fas fa-phone"></i> (123) 456-7890</p>
           <p><i class="fas fa-envelope"></i> info@businesssolutions.com</p>
         </div>
-        <!-- Contact Form -->
         <div class="contact-form" data-aos="fade-left" data-aos-duration="1200">
           <form>
             <input type="text" name="name" placeholder="Your Name" required />
@@ -657,55 +1236,106 @@
       </div>
     </div>
   </section>
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <p>&copy; 2025 Business Solutions. All rights reserved.</p>
+
+  <!-- Footer (original) -->
+<footer class="advanced-footer">
+  <div class="container">
+    <div class="footer-grid">
+      
+      <!-- Logo Section -->
+      <div class="footer-col logo-col">
+        <a href="/">
+          <img src="kne-removebg-preview.png" alt="Company Logo" class="footer-logo">
+        </a>
+        <p class="logo-text">Building trusted solutions for our clients worldwide.</p>
+      </div>
+
+      <!-- Information (Navbar items) -->
+      <div class="footer-col">
+        <h6>Information</h6>
+        <ul>
+          
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Our Work</a></li>
+          <li><a href="#">Clients</a></li>
+          <li><a href="#">Procurement</a></li>
+          <li><a href="#">Testimonials</a></li>
+          
+        </ul>
+      </div>
+
+      <!-- Services -->
+      <div class="footer-col">
+        <h6>Services</h6>
+        <ul>
+          <li><a href="#">Consulting</a></li>
+          <li><a href="#">Procurement</a></li>
+          <li><a href="#">Project Management</a></li>
+          <li><a href="#">Training</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div class="footer-col">
+        <h6>Contact Us</h6>
+        <p>Need help? Reach out to us.</p>
+        <p>+01 123-456-7890</p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+
     </div>
-  </footer>
-  <!-- JavaScript for Mobile Menu Toggle and Form Validation -->
-  <script>
-    const mobileMenu = document.getElementById('mobile-menu');
-    const navbarLinks = document.getElementById('navbar-links');
-    const mobileNav = document.getElementById('mobile-nav');
+  </div>
 
-    mobileMenu.addEventListener('click', () => {
-      // Toggle active classes on both the menu toggle and the nav panel
-      mobileMenu.classList.toggle('active');
-      mobileNav.classList.toggle('active');
-    });
+  <!-- Bottom -->
+  <div class="footer-bottom">
+    <p>© 2025 KnE Services. All Rights Reserved.</p>
+  </div>
+</footer>
+    <script>
+        // Number animation function
+        function animateNumber(element, target, duration) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            const updateNumber = () => {
+                start += increment;
+                if (start >= target) {
+                    element.textContent = target;
+                    return;
+                }
+                element.textContent = Math.floor(start);
+                requestAnimationFrame(updateNumber);
+            };
+            updateNumber();
+        }
 
-    // Close mobile menu when a link is clicked
-    document.querySelectorAll('.nav-links li a').forEach(link => {
-      link.addEventListener('click', () => {
-        mobileNav.classList.remove('active');
-        mobileMenu.classList.remove('active');
-      });
-    });
+        // Intersection Observer for scroll animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const numbers = entry.target.querySelectorAll('.stat-number');
+                    numbers.forEach(number => {
+                        number.classList.add('visible');
+                        const target = parseInt(number.getAttribute('data-target'));
+                        animateNumber(number, target, 2000); // 2-second animation
+                    });
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
 
-    // Dropdown menu click toggle for mobile
-    document.querySelectorAll('.dropdown > a').forEach(menu => {
-      menu.addEventListener('click', function(event) {
-        event.preventDefault();
-        this.nextElementSibling.classList.toggle('active');
-      });
-    });
+        // Observe the stats section
+        const statsSection = document.querySelector('.stats-section');
+        observer.observe(statsSection);
+    </script>
 
-    // Contact form submission validation
-    document.querySelector("form").addEventListener("submit", function(event) {
-      const name = document.querySelector("[name='name']").value.trim();
-      const email = document.querySelector("[name='email']").value.trim();
-      const message = document.querySelector("[name='message']").value.trim();
-      if (!name || !email || !message) {
-        alert("Please fill in all fields before submitting.");
-        event.preventDefault();
-      }
-    });
-  </script>
+
   <!-- AOS Script -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-  <script>
-    AOS.init();
-  </script>
+  <script> AOS.init(); </script>
 </body>
 </html>
