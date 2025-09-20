@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About KnE Services</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- AOS Library for Animations -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-color: #1a3c34; /* Deep teal */
+      --secondary-color: #1e272e;
+      --accent-color: #2a5c50; /* Lighter teal for hover effects */
+      --brand-orange: #d35400; /* Orange accent for other sections */
+      --brand-blue: #007bff; /* Blue for navbar hover/active */
+      --text-color: #ffffff;
+      --nav-bg: rgba(26, 37, 47, 0.9); /* For scrolled state */
+      --dropdown-bg: rgba(26, 37, 47, 0.9);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --glass-effect: blur(8px); /* Slight blur, no saturation */
+      --shadow-color: rgba(0, 0, 0, 0.35);
+      --transition-medium: 0.38s cubic-bezier(0.2,0.9,0.2,1);
+      --neon-glow: 0 0 10px rgba(26, 60, 52, 0.45);
+      --background-light: #f8f9fa;
+      --background-dark: #0f1419;
+      --cta-bg: #1a252f;
+      --header-height: 84px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Poppins',sans-serif;background:var(--background-light);color:#222;line-height:1.7;scroll-behavior:smooth;overflow-x:hidden} /* Removed padding-top */
+    h1,h2,h3{font-family:'Playfair Display',serif}
+    section{scroll-margin-top:calc(var(--header-height) + 12px)}
+
+    /* Navbar */
+    .header { position: fixed; top:0; width:100%; z-index:1000; }
+     .navbar {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:1rem 2rem;
+    background: transparent;                /* <--- transparent at page top */
+    backdrop-filter: var(--glass-effect);
+    -webkit-backdrop-filter: var(--glass-effect);
+    border-bottom: 1px solid transparent;
+    box-shadow: 0 4px 30px transparent;
+    transition: background var(--transition-medium), padding var(--transition-medium), box-shadow var(--transition-medium);
+  }
+
+  /* When scrolled -> apply the glass nav-bg and shadow */
+  .navbar.scrolled {
+    background: var(--nav-bg);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 5px 20px var(--shadow-color);
+  }
+
+  /* Brand */
+  .nav-brand .logo{
+    font-size:1.5rem;
+    font-weight:700;
+    color:var(--brand-blue);
+    text-decoration:none;
+    letter-spacing:2px;
+    text-shadow: var(--neon-glow);
+  }
+
+  /* Layout of menu & actions */
+  .nav-menu { display:flex; align-items:center; gap:1.75rem; }
+  .nav-list { display:flex; gap:1.25rem; list-style:none; margin:0; padding:0; }
+  .nav-item { position:relative; }
+  .nav-link { color:var(--text-color); text-decoration:none; padding:0.5rem 0.6rem; border-radius:12px; display:flex; align-items:center; gap:6px; transition: all var(--transition-medium); }
+  .nav-link:hover, .nav-link.active {color:var(--brand-blue); transform: translateY(-2px); background: rgba(255,255,255,0.02); }
+
+  /* Dropdown */
+  .has-dropdown .dropdown {
+    position: absolute;
+    top: 100%;   /* no extra gap */
+    left: 0;
+    min-width: 220px;
+    background: var(--dropdown-bg);
+    backdrop-filter: var(--glass-effect);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 0.5rem;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(6px);
+    transition: all var(--transition-medium);
+    box-shadow: 0 10px 30px var(--shadow-color);
+    pointer-events: none;
+  }
+
+  .has-dropdown:hover .dropdown { opacity:1; visibility:visible; transform: translateY(0); pointer-events:auto; }
+
+  /* Dropdown items */
+  .dropdown li { list-style:none; }
+  .dropdown a { color:var(--text-color); display:block; padding:0.6rem 0.9rem; border-radius:8px; transition: all var(--transition-medium); }
+  .dropdown a:hover { background: rgba(255,255,255,0.03); color:var(--primary-color); transform: translateX(4px); }
+
+  /* Nav actions */
+  .nav-actions { display:flex; align-items:center; gap:1rem; }
+  .search-container { position:relative; display:flex; align-items:center; border-radius:20px; overflow:hidden; border:1px solid var(--border-color); }
+  .search-input { padding:0.45rem 0.8rem; background:none; border:none; color:var(--text-color); width:160px; transition: width var(--transition-medium); }
+  .search-input:focus { outline:none; width:240px; box-shadow: 0 0 0 3px var(--primary-glow); }
+  .search-btn { background:none; border:none; color:var(--text-color); padding:0 8px; cursor:pointer; }
+
+  /* Theme toggle */
+  .theme-toggle { background: rgba(255,255,255,0.06); border:1px solid var(--border-color); padding:0.5rem; border-radius:50%; cursor:pointer; color:var(--text-color); }
+
+  /* Hamburger - default hidden on desktop */
+  .nav-toggle { display:none; align-items:center; justify-content:center; cursor:pointer; border-radius:12px; padding:0.45rem; }
+  .hamburger { width:26px; height:20px; position:relative; }
+  .hamburger span{ display:block; position:absolute; left:0; right:0; height:2px; background:var(--text-color); border-radius:2px; transition: all var(--transition-medium); }
+  .hamburger span:first-child{ top:0; }
+  .hamburger span:nth-child(2){ top:9px; width:70%; margin-left:auto; margin-right:0; }
+  .hamburger span:last-child{ bottom:0; }
+
+  /* nav-active hamburger transform (applied via JS toggling .nav-active on .navbar) */
+  .nav-active .hamburger span:first-child { transform: rotate(45deg); top:9px; }
+  .nav-active .hamburger span:nth-child(2) { opacity:0; transform: scaleX(0); }
+  .nav-active .hamburger span:last-child { transform: rotate(-45deg); top:9px; }
+
+  /* Mobile behavior - menu slides from right like your earlier design */
+  @media (max-width: 1024px) {
+    .nav-toggle { display:flex; }
+    .nav-menu {
+      position: fixed;
+      top: 70px;
+      right: -100%;
+      flex-direction: column;
+      gap: 1rem;
+      background: var(--nav-bg);
+      backdrop-filter: var(--glass-effect);
+      width: 100%;
+      height: calc(100vh - 70px);
+      padding: 1.5rem;
+      transition: right 0.35s var(--transition-medium);
+      box-shadow: -10px 0 30px var(--shadow-color);
+      border-left: 1px solid var(--border-color);
+      overflow-y: auto;
+    }
+    /* when active, slide into view */
+    .nav-active .nav-menu { right: 0; }
+
+    .nav-list { flex-direction: column; width:100%; margin:0; padding:0; }
+    .nav-link { width:100%; padding:0.9rem 0.6rem; border-bottom: 1px solid var(--border-color); }
+    .has-dropdown .dropdown { position: static; height: auto; transform: none; opacity: 1; visibility: visible; display:none; box-shadow:none; border:none; background:transparent; padding-left: 1rem; margin-left: 0.5rem;}
+    .has-dropdown.active .dropdown { display:block; }
+    .chevron-icon { margin-left:auto; }
+    .hamburger span { background: var(--text-color); }
+  }
+
+  /* small screens tweaks */
+  @media (max-width: 576px) {
+    .nav-menu { width: 100%; }
+    .search-input { width:100%; }
+  }
+
+    /* Hero */
+    .hero{position:relative;min-height:72vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:calc(var(--header-height) + 56px) 20px 56px;color:#fff;overflow:hidden;background:var(--secondary-color);backdrop-filter:var(--glass-effect);-webkit-backdrop-filter:var(--glass-effect);z-index:1}
+    .hero-bg{position:absolute;top:0;left:0;right:0;bottom:0;background-image:url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1600&q=80');background-size:cover;background-position:center;opacity:0.3;filter:contrast(1.05) saturate(0.9);transform:scale(1.03);z-index:-1} /* Adjusted z-index and positioning */
+    .hero-content{position:relative;z-index:2;max-width:980px;padding:12px}
+    .hero h1{font-size:2.8rem;margin-bottom:10px;letter-spacing:0.2px}
+    .hero p{font-size:1.05rem;margin-bottom:18px;max-width:720px;margin-left:auto;margin-right:auto;opacity:0.95}
+    .hero .cta{display:inline-block;padding:12px 36px;border-radius:999px;background:var(--brand-orange);color:#fff;text-decoration:none;font-weight:700;box-shadow:0 10px 30px rgba(211,84,0,0.12);transform:translateZ(0);transition:all var(--transition-medium)}
+    .hero .cta:hover{transform:translateY(-6px);box-shadow:0 18px 46px rgba(211,84,0,0.18)}
+    .hero h1::after{content:'';display:block;height:3px;width:54px;background:linear-gradient(90deg,var(--brand-orange),rgba(211,84,0,0.7));margin:12px auto 0;border-radius:6px;transform-origin:left;animation:underline 1.2s ease both}
+    @keyframes underline{0%{transform:scaleX(0)}100%{transform:scaleX(1)}}
+
+    /* About / Our Story */
+    .about-section{padding:84px 20px;background:var(--background-light)}
+    .about-container{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+    .about-image{border-radius:16px;overflow:hidden;background:#fff}
+    .about-image img{width:100%;height:auto;display:block}
+    .about-content h2{font-size:2.2rem;color:var(--secondary-color);margin-bottom:12px}
+    .about-content p{font-size:1.05rem;color:#333;line-height:1.85;margin-bottom:12px}
+    .about-content .highlight,.about-content .highlight-orange{color:var(--brand-orange);font-weight:700}
+    .about-content a{display:inline-block;padding:10px 26px;border-radius:999px;background:var(--brand-orange);color:#fff;text-decoration:none;font-weight:600;transition:all var(--transition-medium);box-shadow:0 8px 24px rgba(211,84,0,0.12)}
+    .about-content a:hover{transform:translateY(-6px);box-shadow:0 18px 46px rgba(211,84,0,0.18)}
+    .story-accent{display:inline-block;position:relative;padding-right:6px}
+    .story-accent::after{content:'';position:absolute;left:0;right:0;bottom:0;height:8px;background:linear-gradient(90deg,rgba(211,84,0,0.25),rgba(211,84,0,0.06));z-index:-1;border-radius:4px}
+
+    /* Mission & Values */
+    .mission-values{padding:80px 20px;background:linear-gradient(180deg,#f6f9fc 0%,#ffffff 100%)}
+    .mission-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center}
+    .mission-image{border-radius:14px;overflow:hidden;box-shadow:0 12px 30px rgba(0,0,0,0.06);transform:translateZ(0)}
+    .mission-image .frame{padding:0;background:linear-gradient(180deg,rgba(255,255,255,0.8),rgba(248,249,250,0.9))}
+    .mission-image img{width:100%;height:420px;object-fit:cover;display:block}
+    .mission-content h2{font-size:2rem;color:var(--secondary-color);margin-bottom:14px}
+    .mission-content p{color:var(--secondary-color);font-size:1.03rem;line-height:1.75;margin-bottom:18px}
+    .values-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+    .value-item{background:#fff;border-radius:12px;padding:20px;box-shadow:0 8px 20px rgba(0,0,0,0.04);transition:transform .28s ease,box-shadow .28s ease}
+    .value-item:hover{transform:translateY(-6px);box-shadow:0 18px 38px rgba(0,0,0,0.06)}
+    .value-item i{font-size:22px;color:var(--brand-orange);display:block;margin-bottom:10px}
+
+    /* Team */
+    .team-section{padding:80px 20px;background:var(--background-light)}
+    .team-section h2{text-align:center;color:var(--secondary-color);margin-bottom:24px}
+    .team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;max-width:1200px;margin:0 auto}
+    .team-member{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,0.05);transition:transform .32s ease}
+    .team-member:hover{transform:translateY(-8px)}
+    .team-member img{width:100%;height:320px;object-fit:cover;display:block}
+    .team-member .info{padding:16px}
+    .social-icons{display:flex;gap:10px}
+    .social-icons a{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:8px;background:rgba(0,0,0,0.02);color:var(--primary-color);text-decoration:none}
+    .social-icons a:hover{background:var(--brand-orange);color:#fff;transform:translateY(-2px)}
+
+    /* CTA & Footer */
+    .cta-section{padding:80px 20px;background:var(--cta-bg);color:#fff;text-align:center}
+    .cta-section h2{font-size:2rem;margin-bottom:8px}
+    .cta-section p{max-width:780px;margin:0 auto 18px;color:rgba(255,255,255,0.92)}
+    .cta-section a{display:inline-block;padding:12px 34px;border-radius:999px;background:#fff;color:var(--primary-color);font-weight:700;box-shadow:0 12px 30px rgba(0,0,0,0.18)}
+
+    .advanced-footer {
+      background:rgb(44, 62, 80);
+      color: #fff;
+      padding: 60px 20px 30px;
+    }
+
+    /* Grid */
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    /* Logo */
+    .footer-logo {
+      max-width: 160px;
+      margin-top: -45px;
+    }
+    .logo-text {
+      font-size: 14px;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.5;
+    }
+
+    /* Headings */
+    .footer-col h6 {
+      font-size: 16px;
+      margin-bottom: 0.8rem;
+      position: relative;
+      display: inline-block;
+      padding-bottom: 4px;
+    }
+    .footer-col h6::after {
+      content: "";
+      display: block;
+      width: 30px;
+      height: 2px;
+      background: #fff;
+      margin-top: 4px;
+      transition: width 0.3s ease;
+    }
+    .footer-col h6:hover::after {
+      width: 50px;
+    }
+
+    /* Links */
+    .footer-col ul {
+      list-style: none;
+      padding: 0;
+    }
+    .footer-col ul li {
+      margin-bottom: 0.6rem;
+    }
+    .footer-col ul li a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      transition: color 0.3s ease, padding-left 0.3s ease;
+    }
+    .footer-col ul li a:hover {
+      color: #fff;
+      padding-left: 6px;
+    }
+
+    /* Social Icons */
+    .social-icons {
+      margin-top: 1rem;
+    }
+    .social-icons a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+      font-size: 16px;
+      color: #fff;
+      background: rgba(255,255,255,0.15);
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+    .social-icons a:hover {
+      transform: scale(1.15);
+      background: #fff;
+      color: var(--primary-color, #1bbc9b);
+    }
+
+    /* Bottom */
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.25);
+      padding-top: 15px;
+      text-align: center;
+    }
+    .footer-bottom p {
+      margin: 0;
+      font-size: 14px;
+      color: rgba(255,255,255,0.9);
+    }
+
+    /* Responsive tweaks */
+    @media(max-width:900px){
+      .about-container,.mission-inner{grid-template-columns:1fr}
+      .mission-image img{height:260px}
+      .hero h1{font-size:2rem}
+      .hero{padding:calc(var(--header-height) + 40px) 20px 40px}
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="header">
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+      <div class="nav-brand"><a href="index.html" class="logo">KnE Services</a></div>
+      <div class="nav-toggle" aria-label="Toggle navigation"><div class="hamburger" aria-hidden="true"><span></span><span></span><span></span></div></div>
+      <div class="nav-menu">
+        <ul class="nav-list">
+          <li class="nav-item"><a href="index.html#hero" class="nav-link active">Home</a></li>
+          <li class="nav-item has-dropdown">
+            <a href="/index.html#services-section" class="nav-link">Services <svg class="icon chevron-icon" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M7 10l5 5 5-5z" fill="currentColor"></path></svg></a>
+            <ul class="dropdown">
+              <li><a href="index.html#services-section">Consulting & Advisory</a></li>
+              <li><a href="index.html#services-section">IT & Digital Solutions</a></li>
+              <li><a href="index.html#services-section">Project Management</a></li>
+              <li><a href="index.html#services-section">Facility Management</a></li>
+              <li><a href="index.html#services-section">Logistics & Supply Chain</a></li>
+              <li><a href="index.html#services-section">Digital Marketing</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a href="index.html#procurement-section" class="nav-link">Procurement</a></li>
+          <li class="nav-item has-dropdown">
+            <a href="index.html#training-section" class="nav-link">Training <svg class="icon chevron-icon" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M7 10l5 5 5-5z" fill="currentColor"></path></svg></a>
+            <ul class="dropdown">
+              <li><a href="index.html#training-section">Technical Training</a></li>
+              <li><a href="index.html#training-section">Corporate Training</a></li>
+              <li><a href="index.html#training-section">Digital Skills Training</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a href="index.html#stats-section" class="nav-link">Clients</a></li>
+          <li class="nav-item"><a href="index.html#testimonials" class="nav-link">Testimonials</a></li>
+          <li class="nav-item"><a href="index.html#contact" class="nav-link">Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+          <div class="search-container"><input class="search-input" type="text" placeholder="Search..." aria-label="Search site"><button class="search-btn" aria-label="Search"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5z" fill="currentColor"></path></svg></button></div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section id="hero" class="hero" role="banner" aria-label="About KnE Services">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-content" data-aos="fade-up">
+      <h1>Discover KnE Services</h1>
+      <p>Empowering businesses with innovative solutions and unparalleled expertise.</p>
+      <a class="cta" href="index.html#contact" aria-label="Get Started with KnE Services">Get Started</a>
+    </div>
+  </section>
+
+  <!-- About / Our Story -->
+  <section id="about" class="about-section" aria-label="About KnE Services">
+    <div class="about-container">
+      <div class="about-image" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80" alt="Team collaborating in a modern office">
+      </div>
+      <div class="about-content" data-aos="fade-left">
+        <h2>Our Story</h2>
+        <p>At <span class="highlight">KnE Services</span>, we are passionate about transforming businesses through strategic solutions. Founded with a vision to <span class="story-accent">simplify complexity</span>, we specialize in <span class="highlight">consulting</span>, <span class="highlight-orange">procurement</span>, <span class="highlight">project management</span>, and <span class="highlight">training</span>, delivering results that drive growth and efficiency.</p>
+        <p>Our approach combines deep industry expertise with a client-centric focus, ensuring every project is executed with precision and care. From digital transformation to facility optimization, we partner with organizations worldwide to achieve measurable success.</p>
+        <a href="/index.html#contact" aria-label="Get in touch with KnE Services">Get in Touch</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission & Values -->
+  <section id="mission" class="mission-values" aria-label="Our Mission and Values">
+    <div class="mission-inner">
+      <div class="mission-image" data-aos="fade-up">
+        <div class="frame"><img src="https://images.unsplash.com/photo-1494173853739-c21f58b16055?auto=format&fit=crop&w=1200&q=80" alt="Mission - strategic planning and teamwork"></div>
+      </div>
+      <div class="mission-content" data-aos="fade-up" data-aos-duration="800" data-aos-delay="120">
+        <h2>Our Mission & Core Values</h2>
+        <p>To empower businesses with innovative, reliable, and tailored solutions that unlock their full potential. We deliver this through a culture of integrity, innovation and deep collaboration with our clients.</p>
+        <div class="values-grid">
+          <div class="value-item" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="80">
+            <i class="fas fa-bullseye"></i>
+            <h3>Mission</h3>
+            <p>Deliver measurable outcomes that drive growth and operational excellence.</p>
+          </div>
+          <div class="value-item" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="160">
+            <i class="fas fa-handshake"></i>
+            <h3>Integrity</h3>
+            <p>Uphold transparency, honesty and ethical practice in every engagement.</p>
+          </div>
+          <div class="value-item" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="240">
+            <i class="fas fa-rocket"></i>
+            <h3>Innovation</h3>
+            <p>Use modern tools and practical thinking to create lasting impact.</p>
+          </div>
+          <div class="value-item" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="320">
+            <i class="fas fa-users"></i>
+            <h3>Collaboration</h3>
+            <p>Partner closely with clients to deliver tailored, measurable results.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section id="team" class="team-section" aria-label="Our Team">
+    <h2>Our Expert Team</h2>
+    <div class="team-grid">
+      <div class="team-member" data-aos="fade-up">
+        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=1200&q=80" alt="John Doe, CEO & Founder">
+        <div class="info">
+          <h3>John Doe</h3>
+          <p>CEO & Founder</p>
+          <div class="social-icons"><a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a><a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a></div>
+        </div>
+      </div>
+      <div class="team-member" data-aos="fade-up" data-aos-duration="800" data-aos-delay="80">
+        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1200&q=80" alt="Jane Smith, COO">
+        <div class="info">
+          <h3>Jane Smith</h3>
+          <p>Chief Operations Officer</p>
+          <div class="social-icons"><a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a><a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a></div>
+        </div>
+      </div>
+      <div class="team-member" data-aos="fade-up" data-aos-duration="800" data-aos-delay="160">
+        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=1200&q=80" alt="Michael Brown, Head of Consulting">
+        <div class="info">
+          <h3>Michael Brown</h3>
+          <p>Head of Consulting</p>
+          <div class="social-icons"><a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a><a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" aria-label="Call to action">
+    <h2>Transform Your Business Today</h2>
+    <p>Join forces with KnE Services to unlock your organization’s potential with tailored, innovative solutions.</p>
+    <a href="/index.html#contact" aria-label="Contact KnE Services">Contact Us Now</a>
+  </section>
+
+  <!-- Footer -->
+  <footer class="advanced-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col logo-col" data-aos="fade-up">
+          <a href="/index.html"><img src="kne-removebg-preview.png" alt="KnE Services Logo" class="footer-logo"></a>
+          <p class="logo-text">Delivering trusted solutions for global business success.</p>
+        </div>
+        <div class="footer-col" data-aos="fade-up" data-aos-duration="800" data-aos-delay="80">
+          <h6>Information</h6>
+          <ul>
+            <li><a href="/index.html#about">About Us</a></li>
+            <li><a href="/index.html#our-work">Our Work</a></li>
+            <li><a href="/index.html#stats-section">Clients</a></li>
+            <li><a href="/index.html#procurement-section">Procurement</a></li>
+            <li><a href="/index.html#testimonials">Testimonials</a></li>
+          </ul>
+        </div>
+        <div class="footer-col" data-aos="fade-up" data-aos-duration="800" data-aos-delay="160">
+          <h6>Services</h6>
+          <ul>
+            <li><a href="/index.html#services-section">Consulting</a></li>
+            <li><a href="/index.html#procurement-section">Procurement</a></li>
+            <li><a href="/index.html#services-section">Project Management</a></li>
+            <li><a href="/index.html#training-section">Training</a></li>
+          </ul>
+        </div>
+        <div class="footer-col" data-aos="fade-up" data-aos-duration="800" data-aos-delay="240">
+          <h6>Contact Us</h6>
+          <p>Need assistance? We're here to help.</p>
+          <a href="tel:+011234567890" class="contact-link" aria-label="Call KnE Services at +01 123-456-7890">+01 123-456-7890</a>
+          <a href="mailto:info@kneservices.com" class="contact-link" aria-label="Email KnE Services at info@kneservices.com">info@kneservices.com</a>
+          <a href="/index.html#contact" class="contact-btn" aria-label="Contact KnE Services">Contact Us</a>
+          <div class="social-icons">
+            <a href="#" aria-label="Visit KnE Services on Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Visit KnE Services on Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Visit KnE Services on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" aria-label="Visit KnE Services on Instagram"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2025 KnE Services. All Rights Reserved.</div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    AOS.init({duration:900,once:true,easing:'ease-out'});
+
+    document.addEventListener('DOMContentLoaded',()=>{
+      const navbar=document.querySelector('.navbar');
+      const navToggle=document.querySelector('.nav-toggle');
+      const dropdowns=document.querySelectorAll('.has-dropdown');
+      const searchInput=document.querySelector('.search-input');
+      const searchBtn=document.querySelector('.search-btn');
+      const navLinks=document.querySelectorAll('.nav-link');
+      const dropdownLinks=document.querySelectorAll('.dropdown a');
+
+      // Toggle mobile menu
+      if(navToggle){
+        navToggle.addEventListener('click',e=>{
+          e.stopPropagation();
+          navbar.classList.toggle('nav-active');
+          document.body.style.overflow=navbar.classList.contains('nav-active')?'hidden':'';
+        });
+      }
+
+      // Close mobile menu when clicking outside
+      document.addEventListener('click',e=>{
+        if(navbar.classList.contains('nav-active')&&!navbar.contains(e.target)){
+          navbar.classList.remove('nav-active');
+          document.body.style.overflow='';
+        }
+      });
+
+      // Handle dropdown toggle on mobile
+      dropdowns.forEach(dropdown=>{
+        const link=dropdown.querySelector('.nav-link');
+        link.addEventListener('click',e=>{
+          if(window.innerWidth<=968){
+            e.preventDefault();
+            dropdown.classList.toggle('active');
+            dropdowns.forEach(other=>{
+              if(other!==dropdown)other.classList.remove('active');
+            });
+          }
+        });
+      });
+
+      // Handle scroll and blur effect for dropdown links on desktop
+      dropdownLinks.forEach(link=>{
+        link.addEventListener('click',e=>{
+          if(window.innerWidth>968){
+            e.preventDefault();
+            const href=link.getAttribute('href');
+            const targetSection=document.querySelector(href);
+            if(targetSection){
+              targetSection.scrollIntoView({behavior:'smooth'});
+              navLinks.forEach(navLink=>navLink.classList.add('blurred'));
+              dropdownLinks.forEach(dLink=>dLink.classList.add('blurred'));
+              link.classList.remove('blurred');
+              navLinks.forEach(navLink=>navLink.classList.remove('active'));
+              const parentNavLink=link.closest('.has-dropdown')?.querySelector('.nav-link');
+              if(parentNavLink)parentNavLink.classList.add('active');
+            }
+          }
+        });
+      });
+
+      // Handle main nav links (non-dropdown) to remove blur and scroll
+      navLinks.forEach(link => {
+        link.addEventListener('click', e => {
+          if (window.innerWidth > 968 && !link.closest('.dropdown')) {
+            const href = link.getAttribute('href');
+            const targetSection = document.querySelector(href);
+            if (targetSection) {
+              e.preventDefault();
+              targetSection.scrollIntoView({ behavior: 'smooth' });
+              navLinks.forEach(navLink => navLink.classList.remove('blurred'));
+              dropdownLinks.forEach(dLink => dLink.classList.remove('blurred'));
+              navLinks.forEach(navLink => navLink.classList.remove('active'));
+              link.classList.add('active');
+            }
+          }
+        });
+      });
+
+      // Remove blur on any click outside navbar
+      document.addEventListener('click',e=>{
+        if(!navbar.contains(e.target)){
+          navLinks.forEach(link=>link.classList.remove('blurred'));
+          dropdownLinks.forEach(link=>link.classList.remove('blurred'));
+        }
+      });
+
+      // Search functionality
+      if(searchBtn&&searchInput){
+        searchBtn.addEventListener('click',e=>{
+          e.preventDefault();
+          if(searchInput.value.trim())console.log('Search:',searchInput.value.trim());
+        });
+        searchInput.addEventListener('keypress',e=>{
+          if(e.key==='Enter'){
+            e.preventDefault();
+            if(searchInput.value.trim())console.log('Search:',searchInput.value.trim());
+          }
+        });
+      }
+
+      // Reset mobile menu and blur on resize
+      window.addEventListener('resize',()=>{
+        if(window.innerWidth>968){
+          navbar.classList.remove('nav-active');
+          document.body.style.overflow='';
+          dropdowns.forEach(d=>d.classList.remove('active'));
+          navLinks.forEach(link=>link.classList.remove('blurred'));
+          dropdownLinks.forEach(link=>link.classList.remove('blurred'));
+        }
+      });
+
+      // Scroll behavior for navbar background
+      window.addEventListener('scroll',()=>{
+        if(window.scrollY>20){
+          navbar.classList.add('scrolled');
+        }else{
+          navbar.classList.remove('scrolled');
+        }
+      });
+      if(window.scrollY>20){
+        navbar.classList.add('scrolled');
+      }
+    });
+  </script>
+</body>
+</html>
