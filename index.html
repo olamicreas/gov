@@ -30,16 +30,270 @@
       margin-right: auto;
    }
 
-    .hero {
-      position: relative; height: 100vh;
-      background: url('https://img.freepik.com/free-vector/dark-hexagonal-background-with-gradient-color_79603-1409.jpg') no-repeat center center/cover;
-    }
-    .hero::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); }
-    .hero .container { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-    .hero h1 { color: #fff; font-size: 3.5rem; margin-bottom: 1rem; animation: fadeInDown 1.5s ease-out; }
-    .hero p { color: #ddd; font-size: 1.2rem; max-width: 600px; animation: fadeInUp 1.5s ease-out; }
-    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+/* Hero Slider Styles */
+/* Hero Slider Styles */
+.hero {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  background: none;
+  z-index: 1;
+}
+
+.hero-slider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  transition: transform 0.8s ease-in-out; /* Smooth slide transition */
+  will-change: transform; /* GPU acceleration */
+}
+
+.hero-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  background: no-repeat center center/cover;
+  position: relative;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+}
+
+.hero-slide.active {
+  opacity: 1;
+}
+
+.hero-slide::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(33, 150, 243, 0.3)); /* Dynamic gradient overlay */
+  z-index: 3;
+}
+
+.hero-slide .container {
+  position: relative;
+  z-index: 4;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+  padding: 0 20px;
+}
+
+.hero-slide h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 3.8rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.hero-slide p {
+  font-size: 1.3rem;
+  max-width: 650px;
+  margin-bottom: 2rem;
+  line-height: 1.8;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out 0.2s, transform 0.6s ease-out 0.2s;
+}
+
+.hero-slide .booking-btn {
+  display: inline-block;
+  padding: 14px 30px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  background: linear-gradient(135deg, #007BFF, #0056b3); /* Gradient button */
+  color: white;
+  border: 2px solid transparent;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  align-self: flex-end; /* Align right */
+  margin-right: 40px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out 0.4s, transform 0.6s ease-out 0.4s;
+}
+
+.hero-slide.active h1,
+.hero-slide.active p,
+.hero-slide.active .booking-btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-slide .booking-btn:hover {
+  background: linear-gradient(135deg, #0056b3, #003d82);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Slider Controls */
+.slider-controls {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 15px;
+  z-index: 5;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+  padding: 8px 16px;
+}
+
+.slider-dot {
+  width: 14px;
+  height: 14px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.slider-dot.active {
+  background: var(--primary-color, #2196f3);
+  transform: scale(1.3);
+}
+
+.slider-dot:hover {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.slider-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  backdrop-filter: blur(2px);
+  color: #fff;
+  border: none;
+  padding: 12px 16px;
+  cursor: pointer;
+  font-size: 1.8rem;
+  z-index: 5;
+  
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.slider-arrow:hover {
+ 
+  transform: translateY(-50%) scale(1.1);
+}
+
+.slider-arrow.prev {
+  left: 30px;
+}
+
+.slider-arrow.next {
+  right: 30px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .hero-slide h1 {
+    font-size: 3rem;
+  }
+
+  .hero-slide p {
+    font-size: 1.2rem;
+    max-width: 500px;
+  }
+
+  .hero-slide .booking-btn {
+    margin-right: 20px;
+  }
+
+  .slider-arrow {
+    padding: 10px 14px;
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-slide h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero-slide p {
+    font-size: 1rem;
+    padding: 0 15px;
+  }
+
+  .hero-slide .booking-btn {
+    align-self: center; /* Center on mobile */
+    margin-right: 0;
+    padding: 12px 25px;
+    font-size: 1rem;
+  }
+
+  .slider-controls {
+    bottom: 30px;
+    padding: 6px 12px;
+  }
+
+  .slider-dot {
+    width: 12px;
+    height: 12px;
+  }
+
+  .slider-arrow {
+    padding: 8px 12px;
+    font-size: 1.3rem;
+  }
+
+  .slider-arrow.prev {
+    left: 15px;
+  }
+
+  .slider-arrow.next {
+    right: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-slide h1 {
+    font-size: 2rem;
+  }
+
+  .hero-slide p {
+    font-size: 0.9rem;
+  }
+
+  .hero-slide .booking-btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+
+  .slider-controls {
+    bottom: 20px;
+  }
+
+  .slider-dot {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+
+
+
+
 
     .section-header { text-align: center; padding: 2rem 0 1rem; margin-bottom: 2rem; border-bottom: 1px solid #bdc3c7; }
     .section-header h2 { font-size: 2rem; color: #000; margin-bottom: 0.5rem; letter-spacing: 1px; }
@@ -389,241 +643,61 @@
     }
 }
 
-  </style>
-</head>
-<body>
-  <!-- Navbar -->
-<!-- ======= Replace your current header with this block ======= -->
-<header class="header">
-  <nav class="navbar">
-    <div class="nav-brand">
-      <a href="#" class="logo">KnE Services</a>
-    </div>
 
-    <!-- Mobile toggle (keep class .nav-toggle as in your original code) -->
-    <div class="nav-toggle" aria-label="Toggle navigation">
-      <div class="hamburger" aria-hidden="true">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </div>
 
-    <div class="nav-menu">
-      <ul class="nav-list">
-        <li class="nav-item"><a href="#hero" class="nav-link active">Home</a></li>
 
-        <li class="nav-item has-dropdown">
-          <a href="#" class="nav-link">
-            Services
-            <svg class="icon chevron-icon" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
-              <path d="M7 10l5 5 5-5z" fill="currentColor"></path>
-            </svg>
-          </a>
-          <ul class="dropdown">
-            <li><a href="#services-section">Consulting & Advisory</a></li>
-            <li><a href="#services-section">IT & Digital Solutions</a></li>
-            <li><a href="#services-section">Project Management</a></li>
-            <li><a href="#services-section">Facility Management</a></li>
-            <li><a href="#services-section">Logistics & Supply Chain</a></li>
-            <li><a href="#services-section">Digital Marketing</a></li>
-          </ul>
-        </li>
 
-        <li class="nav-item has-dropdown">
-          <a href="#" class="nav-link">
-            Procurement
-            <svg class="icon chevron-icon" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
-              <path d="M7 10l5 5 5-5z" fill="currentColor"></path>
-            </svg>
-          </a>
-          <ul class="dropdown">
-            <li><a href="#procurement-section">Industrial Equipment</a></li>
-            <li><a href="#procurement-section">Office Supplies</a></li>
-            <li><a href="#procurement-section">Medical & Safety</a></li>
-            <li><a href="#procurement-section">Energy & Utilities</a></li>
-            <li><a href="#procurement-section">IT & Electronics</a></li>
-            <li><a href="#procurement-section">Raw Materials</a></li>
-          </ul>
-        </li>
 
-        <li class="nav-item has-dropdown">
-          <a href="#" class="nav-link">
-            Training
-            <svg class="icon chevron-icon" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
-              <path d="M7 10l5 5 5-5z" fill="currentColor"></path>
-            </svg>
-          </a>
-          <ul class="dropdown">
-            <li><a href="#training-section">Technical Training</a></li>
-            <li><a href="#training-section">Corporate Training</a></li>
-            <li><a href="#training-section">Digital Skills</a></li>
-          </ul>
-        </li>
 
-        <li class="nav-item"><a href="#stats-section" class="nav-link">Clients</a></li>
-        <li class="nav-item"><a href="#testimonials" class="nav-link">Testimonials</a></li>
-        <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
-      </ul>
 
-      <div class="nav-actions">
-        <div class="search-container">
-          <input type="text" class="search-input" placeholder="Search...">
-          <button class="search-btn" aria-label="Search">
-            <!-- small search icon -->
-            <svg class="icon search-icon" viewBox="0 0 24 24" width="18" height="18">
-              <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5z" fill="currentColor"/>
-            </svg>
-          </button>
-        </div>
-
-       
-      </div>
-    </div>
-  </nav>
-</header>
-
-<!-- ======= Add / replace these CSS rules (scoped to header area) ======= -->
-<style>
-/* ensure variables are present — these match your earlier variables */
-:root {
-  --primary-color: #2196f3;
-  --primary-glow: rgba(33,150,243,0.8);
-  --text-color: #ffffff;
-  --nav-bg: rgba(16,16,26,0.7); /* glass bg used when scrolled */
-  --dropdown-bg: rgba(20,20,35,0.8);
-  --border-color: rgba(255,255,255,0.08);
-  --glass-effect: saturate(180%) blur(10px);
-  --shadow-color: rgba(0,0,0,0.3);
-  --transition-medium: 0.3s cubic-bezier(.4,0,.2,1);
-  --neon-glow: 0 0 10px rgba(33,150,243,0.5);
+/* Services Section Enhancements for Blur and Visibility */
+.offering-section {
+  position: relative;
+  transition: all 0.5s ease; /* Smooth transition for section */
 }
 
-/* Base header/navbar: start transparent at top */
-.header { position: fixed; top:0; width:100%; z-index:1000; }
-.navbar {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:1rem 2rem;
-  background: transparent;                /* <--- transparent at page top */
-  backdrop-filter: var(--glass-effect);
-  -webkit-backdrop-filter: var(--glass-effect);
-  border-bottom: 1px solid transparent;
-  box-shadow: 0 4px 30px transparent;
-  transition: background var(--transition-medium), padding var(--transition-medium), box-shadow var(--transition-medium);
+.custom-box {
+  transition: filter 0.5s ease, opacity 0.5s ease, transform 0.5s ease; /* Animated blur, opacity, and scale */
+  will-change: filter, opacity, transform; /* GPU acceleration */
 }
 
-/* When scrolled -> apply the glass nav-bg and shadow */
-.navbar.scrolled {
-  background: var(--nav-bg);
-  border-bottom: 1px solid var(--border-color);
-  box-shadow: 0 5px 20px var(--shadow-color);
+.custom-box.blurred {
+  filter: blur(5px);
+  opacity: 0.3;
+  transform: scale(0.95); /* Slight shrink for fancy effect */
 }
 
-/* Brand */
-.nav-brand .logo{
-  font-size:1.5rem;
-  font-weight:700;
-  color:var(--primary-color);
-  text-decoration:none;
-  letter-spacing:2px;
-  text-shadow: var(--neon-glow);
+.custom-box.selected {
+  filter: blur(0);
+  opacity: 1;
+  transform: scale(1.05); /* Slight enlarge for highlight */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+  z-index: 2; /* Bring forward */
 }
 
-/* Layout of menu & actions */
-.nav-menu { display:flex; align-items:center; gap:1.75rem; }
-.nav-list { display:flex; gap:1.25rem; list-style:none; margin:0; padding:0; }
-.nav-item { position:relative; }
-.nav-link { color:var(--text-color); text-decoration:none; padding:0.5rem 0.6rem; border-radius:12px; display:flex; align-items:center; gap:6px; transition: all var(--transition-medium); }
-.nav-link:hover, .nav-link.active { color:var(--primary-color); transform: translateY(-2px); background: rgba(255,255,255,0.02); }
-
-/* Dropdown */
-.has-dropdown .dropdown {
-  position: absolute;
-  top: 100%;   /* no extra gap */
-  left: 0;
-  min-width: 220px;
-  background: var(--dropdown-bg);
-  backdrop-filter: var(--glass-effect);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 0.5rem;
+/* Hide blurred boxes after animation (to make only selected visible) */
+.custom-box.blurred.hidden {
   opacity: 0;
-  visibility: hidden;
-  transform: translateY(6px);
-  transition: all var(--transition-medium);
-  box-shadow: 0 10px 30px var(--shadow-color);
-  pointer-events: none;
+  display: none; /* Hide after fade */
 }
 
-.has-dropdown:hover .dropdown { opacity:1; visibility:visible; transform: translateY(0); pointer-events:auto; }
-
-/* Dropdown items */
-.dropdown li { list-style:none; }
-.dropdown a { color:var(--text-color); display:block; padding:0.6rem 0.9rem; border-radius:8px; transition: all var(--transition-medium); }
-.dropdown a:hover { background: rgba(255,255,255,0.03); color:var(--primary-color); transform: translateX(4px); }
-
-/* Nav actions */
-.nav-actions { display:flex; align-items:center; gap:1rem; }
-.search-container { position:relative; display:flex; align-items:center; border-radius:20px; overflow:hidden; border:1px solid var(--border-color); }
-.search-input { padding:0.45rem 0.8rem; background:none; border:none; color:var(--text-color); width:160px; transition: width var(--transition-medium); }
-.search-input:focus { outline:none; width:240px; box-shadow: 0 0 0 3px var(--primary-glow); }
-.search-btn { background:none; border:none; color:var(--text-color); padding:0 8px; cursor:pointer; }
-
-/* Theme toggle */
-.theme-toggle { background: rgba(255,255,255,0.06); border:1px solid var(--border-color); padding:0.5rem; border-radius:50%; cursor:pointer; color:var(--text-color); }
-
-/* Hamburger - default hidden on desktop */
-.nav-toggle { display:none; align-items:center; justify-content:center; cursor:pointer; border-radius:12px; padding:0.45rem; }
-.hamburger { width:26px; height:20px; position:relative; }
-.hamburger span{ display:block; position:absolute; left:0; right:0; height:2px; background:var(--text-color); border-radius:2px; transition: all var(--transition-medium); }
-.hamburger span:first-child{ top:0; }
-.hamburger span:nth-child(2){ top:9px; width:70%; margin-left:auto; margin-right:0; }
-.hamburger span:last-child{ bottom:0; }
-
-/* nav-active hamburger transform (applied via JS toggling .nav-active on .navbar) */
-.nav-active .hamburger span:first-child { transform: rotate(45deg); top:9px; }
-.nav-active .hamburger span:nth-child(2) { opacity:0; transform: scaleX(0); }
-.nav-active .hamburger span:last-child { transform: rotate(-45deg); top:9px; }
-
-/* Mobile behavior - menu slides from right like your earlier design */
-@media (max-width: 1024px) {
-  .nav-toggle { display:flex; }
-  .nav-menu {
-    position: fixed;
-    top: 70px;
-    right: -100%;
-    flex-direction: column;
-    gap: 1rem;
-    background: var(--nav-bg);
-    backdrop-filter: var(--glass-effect);
-    width: 100%;
-    height: calc(100vh - 70px);
-    padding: 1.5rem;
-    transition: right 0.35s var(--transition-medium);
-    box-shadow: -10px 0 30px var(--shadow-color);
-    border-left: 1px solid var(--border-color);
-    overflow-y: auto;
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .offerings-grid {
+    grid-template-columns: 1fr; /* Single column on mobile */
   }
-  /* when active, slide into view */
-  .nav-active .nav-menu { right: 0; }
 
-  .nav-list { flex-direction: column; width:100%; margin:0; padding:0; }
-  .nav-link { width:100%; padding:0.9rem 0.6rem; border-bottom: 1px solid var(--border-color); }
-  .has-dropdown .dropdown { position: static; height: auto; transform: none; opacity: 1; visibility: visible; display:none; box-shadow:none; border:none; background:transparent; padding-left: 1rem; margin-left: 0.5rem;}
-  .has-dropdown.active .dropdown { display:block; }
-  .chevron-icon { margin-left:auto; }
-  .hamburger span { background: var(--text-color); }
+  .custom-box.selected {
+    transform: scale(1); /* No enlarge on mobile to avoid overflow */
+  }
 }
 
-/* small screens tweaks */
-@media (max-width: 576px) {
-  .nav-menu { width: 100%; }
-  .search-input { width:100%; }
+@media (max-width: 480px) {
+  .custom-box {
+    padding: 1.5rem; /* Adjust padding for small screens */
+  }
 }
-</style>
-
+  </style>
 
 
     <style>
@@ -761,6 +835,233 @@
             }
         }
     </style>
+</head>
+<body>
+  <!-- Navbar -->
+<!-- ======= Replace your current header with this block ======= -->
+<header class="header">
+  <nav class="navbar">
+    <div class="nav-brand">
+      <a href="#" class="logo">KnE Services</a>
+    </div>
+
+    <!-- Mobile toggle (keep class .nav-toggle as in your original code) -->
+    <div class="nav-toggle" aria-label="Toggle navigation">
+      <div class="hamburger" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <div class="nav-menu">
+      <ul class="nav-list">
+        <li class="nav-item"><a href="#hero" class="nav-link active">Home</a></li>
+
+        <li class="nav-item has-dropdown">
+          <a href="#services-section" class="nav-link">
+            Services
+            <svg class="icon chevron-icon" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+              <path d="M7 10l5 5 5-5z" fill="currentColor"></path>
+            </svg>
+          </a>
+          <ul class="dropdown">
+            <li><a href="#services-section">Consulting & Advisory</a></li>
+            <li><a href="#services-section">IT & Digital Solutions</a></li>
+            <li><a href="#services-section">Project Management</a></li>
+            <li><a href="#services-section">Facility Management</a></li>
+            <li><a href="#services-section">Logistics & Supply Chain</a></li>
+            <li><a href="#services-section">Digital Marketing</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a href="#procurement-section" class="nav-link">
+            Procurement
+            
+          </a>
+         
+        </li>
+
+        <li class="nav-item has-dropdown">
+          <a href="#training-section" class="nav-link">
+            Training
+            <svg class="icon chevron-icon" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+              <path d="M7 10l5 5 5-5z" fill="currentColor"></path>
+            </svg>
+          </a>
+          <ul class="dropdown">
+            <li><a href="#training-section">Technical Training</a></li>
+            <li><a href="#training-section">Corporate Training</a></li>
+            <li><a href="#training-section">Digital Skills Training</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item"><a href="#stats-section" class="nav-link">Clients</a></li>
+        <li class="nav-item"><a href="#testimonials" class="nav-link">Testimonials</a></li>
+        <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <div class="search-container">
+          <input type="text" class="search-input" placeholder="Search...">
+          <button class="search-btn" aria-label="Search">
+            <!-- small search icon -->
+            <svg class="icon search-icon" viewBox="0 0 24 24" width="18" height="18">
+              <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5z" fill="currentColor"/>
+            </svg>
+          </button>
+        </div>
+
+       
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- ======= Add / replace these CSS rules (scoped to header area) ======= -->
+<style>
+  /* ensure variables are present — these match your earlier variables */
+  :root {
+    --primary-color: #2196f3;
+    --primary-glow: rgba(33,150,243,0.8);
+    --text-color: #ffffff;
+    --nav-bg: rgba(16,16,26,0.7); /* glass bg used when scrolled */
+    --dropdown-bg: rgba(20,20,35,0.8);
+    --border-color: rgba(255,255,255,0.08);
+    --glass-effect: saturate(180%) blur(10px);
+    --shadow-color: rgba(0,0,0,0.3);
+    --transition-medium: 0.3s cubic-bezier(.4,0,.2,1);
+    --neon-glow: 0 0 10px rgba(33,150,243,0.5);
+  }
+
+  /* Base header/navbar: start transparent at top */
+  .header { position: fixed; top:0; width:100%; z-index:1000; }
+  .navbar {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:1rem 2rem;
+    background: transparent;                /* <--- transparent at page top */
+    backdrop-filter: var(--glass-effect);
+    -webkit-backdrop-filter: var(--glass-effect);
+    border-bottom: 1px solid transparent;
+    box-shadow: 0 4px 30px transparent;
+    transition: background var(--transition-medium), padding var(--transition-medium), box-shadow var(--transition-medium);
+  }
+
+  /* When scrolled -> apply the glass nav-bg and shadow */
+  .navbar.scrolled {
+    background: var(--nav-bg);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 5px 20px var(--shadow-color);
+  }
+
+  /* Brand */
+  .nav-brand .logo{
+    font-size:1.5rem;
+    font-weight:700;
+    color:var(--primary-color);
+    text-decoration:none;
+    letter-spacing:2px;
+    text-shadow: var(--neon-glow);
+  }
+
+  /* Layout of menu & actions */
+  .nav-menu { display:flex; align-items:center; gap:1.75rem; }
+  .nav-list { display:flex; gap:1.25rem; list-style:none; margin:0; padding:0; }
+  .nav-item { position:relative; }
+  .nav-link { color:var(--text-color); text-decoration:none; padding:0.5rem 0.6rem; border-radius:12px; display:flex; align-items:center; gap:6px; transition: all var(--transition-medium); }
+  .nav-link:hover, .nav-link.active { color:var(--primary-color); transform: translateY(-2px); background: rgba(255,255,255,0.02); }
+
+  /* Dropdown */
+  .has-dropdown .dropdown {
+    position: absolute;
+    top: 100%;   /* no extra gap */
+    left: 0;
+    min-width: 220px;
+    background: var(--dropdown-bg);
+    backdrop-filter: var(--glass-effect);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 0.5rem;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(6px);
+    transition: all var(--transition-medium);
+    box-shadow: 0 10px 30px var(--shadow-color);
+    pointer-events: none;
+  }
+
+  .has-dropdown:hover .dropdown { opacity:1; visibility:visible; transform: translateY(0); pointer-events:auto; }
+
+  /* Dropdown items */
+  .dropdown li { list-style:none; }
+  .dropdown a { color:var(--text-color); display:block; padding:0.6rem 0.9rem; border-radius:8px; transition: all var(--transition-medium); }
+  .dropdown a:hover { background: rgba(255,255,255,0.03); color:var(--primary-color); transform: translateX(4px); }
+
+  /* Nav actions */
+  .nav-actions { display:flex; align-items:center; gap:1rem; }
+  .search-container { position:relative; display:flex; align-items:center; border-radius:20px; overflow:hidden; border:1px solid var(--border-color); }
+  .search-input { padding:0.45rem 0.8rem; background:none; border:none; color:var(--text-color); width:160px; transition: width var(--transition-medium); }
+  .search-input:focus { outline:none; width:240px; box-shadow: 0 0 0 3px var(--primary-glow); }
+  .search-btn { background:none; border:none; color:var(--text-color); padding:0 8px; cursor:pointer; }
+
+  /* Theme toggle */
+  .theme-toggle { background: rgba(255,255,255,0.06); border:1px solid var(--border-color); padding:0.5rem; border-radius:50%; cursor:pointer; color:var(--text-color); }
+
+  /* Hamburger - default hidden on desktop */
+  .nav-toggle { display:none; align-items:center; justify-content:center; cursor:pointer; border-radius:12px; padding:0.45rem; }
+  .hamburger { width:26px; height:20px; position:relative; }
+  .hamburger span{ display:block; position:absolute; left:0; right:0; height:2px; background:var(--text-color); border-radius:2px; transition: all var(--transition-medium); }
+  .hamburger span:first-child{ top:0; }
+  .hamburger span:nth-child(2){ top:9px; width:70%; margin-left:auto; margin-right:0; }
+  .hamburger span:last-child{ bottom:0; }
+
+  /* nav-active hamburger transform (applied via JS toggling .nav-active on .navbar) */
+  .nav-active .hamburger span:first-child { transform: rotate(45deg); top:9px; }
+  .nav-active .hamburger span:nth-child(2) { opacity:0; transform: scaleX(0); }
+  .nav-active .hamburger span:last-child { transform: rotate(-45deg); top:9px; }
+
+  /* Mobile behavior - menu slides from right like your earlier design */
+  @media (max-width: 1024px) {
+    .nav-toggle { display:flex; }
+    .nav-menu {
+      position: fixed;
+      top: 70px;
+      right: -100%;
+      flex-direction: column;
+      gap: 1rem;
+      background: var(--nav-bg);
+      backdrop-filter: var(--glass-effect);
+      width: 100%;
+      height: calc(100vh - 70px);
+      padding: 1.5rem;
+      transition: right 0.35s var(--transition-medium);
+      box-shadow: -10px 0 30px var(--shadow-color);
+      border-left: 1px solid var(--border-color);
+      overflow-y: auto;
+    }
+    /* when active, slide into view */
+    .nav-active .nav-menu { right: 0; }
+
+    .nav-list { flex-direction: column; width:100%; margin:0; padding:0; }
+    .nav-link { width:100%; padding:0.9rem 0.6rem; border-bottom: 1px solid var(--border-color); }
+    .has-dropdown .dropdown { position: static; height: auto; transform: none; opacity: 1; visibility: visible; display:none; box-shadow:none; border:none; background:transparent; padding-left: 1rem; margin-left: 0.5rem;}
+    .has-dropdown.active .dropdown { display:block; }
+    .chevron-icon { margin-left:auto; }
+    .hamburger span { background: var(--text-color); }
+  }
+
+  /* small screens tweaks */
+  @media (max-width: 576px) {
+    .nav-menu { width: 100%; }
+    .search-input { width:100%; }
+  }
+</style>
+
+
+
 <!-- ======= Replace your existing header script with this improved script ======= -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -857,14 +1158,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-  <!-- Hero -->
-  <section id="hero" class="hero" role="banner" aria-label="Business growth solutions">
-    <div class="container">
-      <h1>Empowering Business Growth</h1>
-      <p>Providing professional consulting, procurement, and training solutions.</p>
-    </div>
-  </section>
 
+<!-- Hero Slider Section -->
+<section id="hero" class="hero" role="banner" aria-label="Business growth solutions">
+  <div class="hero-slider">
+  <div class="hero-slide active" style="background-image: url('https://img.freepik.com/free-vector/dark-hexagonal-background-with-gradient-color_79603-1409.jpg')">
+    <div class="container">
+      <h1 data-aos="fade-down" data-aos-duration="800" data-aos-delay="100">Empowering Business Growth</h1>
+      <p data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
+        We deliver consulting, procurement, and training services that help businesses cut costs, improve performance, and achieve sustainable growth.
+      </p>
+      <a href="#cta" class="booking-btn" aria-label="Book a consultation" data-aos="fade-up" data-aos-duration="800" data-aos-delay="500">Book Now</a>
+    </div>
+  </div>
+
+  <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODg5ODcyNzN8&ixlib=rb-4.0.3&q=85')">
+    <div class="container">
+      <h1 data-aos="fade-down" data-aos-duration="800" data-aos-delay="100">Innovative Solutions</h1>
+      <p data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
+        Our tailored strategies and digital tools streamline operations, boost efficiency, and drive measurable results for your organization.
+      </p>
+      <a href="#cta" class="booking-btn" aria-label="Book a consultation" data-aos="fade-up" data-aos-duration="800" data-aos-delay="500">Book Now</a>
+    </div>
+  </div>
+
+  <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1556761175-5973dc0f32e7?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODg5ODcyNzN8&ixlib=rb-4.0.3&q=85')">
+    <div class="container">
+      <h1 data-aos="fade-down" data-aos-duration="800" data-aos-delay="100">Global Expertise</h1>
+      <p data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
+        With worldwide reach and local knowledge, we provide reliable procurement and customized training to strengthen your competitive edge.
+      </p>
+      <a href="#cta" class="booking-btn" aria-label="Book a consultation" data-aos="fade-up" data-aos-duration="800" data-aos-delay="500">Book Now</a>
+    </div>
+  </div>
+</div>
+
+  <div class="slider-controls">
+    <div class="slider-dot active" aria-label="Slide 1"></div>
+    <div class="slider-dot" aria-label="Slide 2"></div>
+    <div class="slider-dot" aria-label="Slide 3"></div>
+  </div>
+  <button class="slider-arrow prev" aria-label="Previous slide">&#10094;</button>
+  <button class="slider-arrow next" aria-label="Next slide">&#10095;</button>
+</section>
   <!-- Mission -->
   <section class="mission">
     <div class="mission-image" data-aos="fade-right" data-aos-duration="1200">
@@ -942,7 +1278,7 @@ document.addEventListener('DOMContentLoaded', () => {
 <p>
   KnE is a service-first partner that helps organisations plan, build and run better. We combine practical advisory, disciplined project delivery and trusted supplier networks to deliver measurable outcomes — on time and on budget. From procurement and facilities to digital transformation and training, we make complex work simpler so your team can focus on impact.
 </p>
-<a href="/about.html" aria-label="Read more about KnE Services">Read More...</a>
+<a href="about.html" aria-label="Read more about KnE Services">Read More...</a>
     </div>
   </div>
 </div>
@@ -1039,7 +1375,7 @@ document.addEventListener('DOMContentLoaded', () => {
 <!-- ===========================
      CALL TO ACTION SECTION
 =========================== -->
-<section id="cta" class="cta-section">
+<section id="cta" class="cta-section" >
   <!-- Background Video -->
   <video autoplay muted loop playsinline class="cta-video">
     <source src="bb.mp4" type="video/mp4">
@@ -1055,7 +1391,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <p class="cta-subtitle">
       Book a consultation today and let’s discuss how we can help you achieve your goals.
     </p>
-    <a href="https://calendly.com/abdulquayyumoyedotun" target="_blank" class="cta-btn">
+    <a href="https://calendly.com/abdulquayyumoyedotun" target="_blank" class="cta-btn" >
       Book a Consultation
     </a>
   </div>
@@ -1342,7 +1678,191 @@ Gulfport, MS 39501-2104</p>
         const statsSection = document.querySelector('.stats-section');
         observer.observe(statsSection);
     </script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const slider = document.querySelector('.hero-slider');
+  const slides = document.querySelectorAll('.hero-slide');
+  const dots = document.querySelectorAll('.slider-dot');
+  const prevArrow = document.querySelector('.slider-arrow.prev');
+  const nextArrow = document.querySelector('.slider-arrow.next');
+  let currentSlide = 0;
+  let slideInterval;
+  let isSliding = false;
 
+  // Function to update slider position
+  function updateSlider() {
+    if (isSliding) return;
+    isSliding = true;
+    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('active', i === currentSlide);
+      dots[i].classList.toggle('active', i === currentSlide);
+    });
+    setTimeout(() => {
+      isSliding = false;
+    }, 800); // Match CSS transition duration
+  }
+
+  // Function to show a specific slide
+  function showSlide(index) {
+    currentSlide = index % slides.length;
+    if (currentSlide < 0) currentSlide += slides.length;
+    updateSlider();
+  }
+
+  // Function to start auto-slide
+  function startSlideShow() {
+    slideInterval = setInterval(() => {
+      showSlide(currentSlide + 1);
+    }, 6000); // Change slide every 6 seconds
+  }
+
+  // Function to stop auto-slide
+  function stopSlideShow() {
+    clearInterval(slideInterval);
+  }
+
+  // Event listeners for manual controls
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      if (isSliding) return;
+      stopSlideShow();
+      showSlide(index);
+      startSlideShow();
+    });
+  });
+
+  if (prevArrow && nextArrow) {
+    prevArrow.addEventListener('click', () => {
+      if (isSliding) return;
+      stopSlideShow();
+      showSlide(currentSlide - 1);
+      startSlideShow();
+    });
+
+    nextArrow.addEventListener('click', () => {
+      if (isSliding) return;
+      stopSlideShow();
+      showSlide(currentSlide + 1);
+      startSlideShow();
+    });
+  }
+
+  // Initialize slider
+  updateSlider();
+  startSlideShow();
+
+  // Fallback: Ensure slides are visible if JavaScript fails
+  window.addEventListener('load', () => {
+    slides.forEach(slide => {
+      slide.style.opacity = 1;
+    });
+    slider.style.transform = 'translateX(0)';
+  });
+
+  // Reinitialize AOS animations on slide change
+  if (window.AOS) {
+    slider.addEventListener('transitionend', () => {
+      const activeSlide = slides[currentSlide];
+      const elements = activeSlide.querySelectorAll('[data-aos]');
+      elements.forEach(el => {
+        el.classList.remove('aos-animate');
+        setTimeout(() => el.classList.add('aos-animate'), 50);
+      });
+    });
+  }
+});
+</script>
+<script>
+  // Services Dropdown Click Handler
+document.addEventListener('DOMContentLoaded', () => {
+  // Handle both Services and Training dropdowns
+  const sections = [
+    {
+      dropdownSelector: '.has-dropdown .dropdown a[href="#services-section"]',
+      sectionSelector: '#services-section',
+      mainLinkSelector: '.has-dropdown > .nav-link[href="#services-section"]'
+    },
+    {
+      dropdownSelector: '.has-dropdown .dropdown a[href="#training-section"]',
+      sectionSelector: '#training-section',
+      mainLinkSelector: '.has-dropdown > .nav-link[href="#training-section"]'
+    }
+  ];
+
+  sections.forEach(({ dropdownSelector, sectionSelector, mainLinkSelector }) => {
+    const dropdownLinks = document.querySelectorAll(dropdownSelector);
+    const section = document.querySelector(sectionSelector);
+    const serviceBoxes = section.querySelectorAll('.custom-box');
+    const mainLink = document.querySelector(mainLinkSelector);
+
+    // Function to filter and animate boxes
+    function filterBoxes(serviceName) {
+      serviceBoxes.forEach(box => {
+        const boxTitle = box.querySelector('h3').textContent.trim().toLowerCase();
+        if (boxTitle === serviceName.toLowerCase()) {
+          box.classList.add('selected');
+          box.classList.remove('blurred', 'hidden');
+          // Reinitialize AOS for selected box
+          if (window.AOS) {
+            box.classList.remove('aos-animate');
+            setTimeout(() => box.classList.add('aos-animate'), 50);
+          }
+        } else {
+          box.classList.add('blurred');
+          box.classList.remove('selected');
+          // Hide after animation
+          setTimeout(() => {
+            box.classList.add('hidden');
+          }, 500); // Match transition duration
+        }
+      });
+    }
+
+    // Function to reset all boxes
+    function resetBoxes() {
+      serviceBoxes.forEach(box => {
+        box.classList.remove('blurred', 'selected', 'hidden');
+        box.style.opacity = 1;
+        box.style.display = 'block';
+        // Reinitialize AOS for all boxes
+        if (window.AOS) {
+          box.classList.remove('aos-animate');
+          setTimeout(() => box.classList.add('aos-animate'), 50);
+        }
+      });
+    }
+
+    // Event listener for dropdown links
+    dropdownLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const serviceName = link.textContent.trim();
+
+        // Reset before filtering
+        resetBoxes();
+
+        // Smooth scroll to section
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        // Filter after scroll
+        setTimeout(() => {
+          filterBoxes(serviceName);
+        }, 200); // Adjust based on scroll duration
+      });
+    });
+
+    // Reset on clicking main section link
+    if (mainLink) {
+      mainLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        resetBoxes();
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+  });
+});
+</script>
 
   <!-- AOS Script -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
