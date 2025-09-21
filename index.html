@@ -1,453 +1,229 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KnE Services</title>
+  <title>About KnE Services</title>
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
   <!-- Font Awesome for Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <!-- AOS Library for Animations -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
 
   <style>
-    /* =================== YOUR ORIGINAL STYLES (unchanged) =================== */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Montserrat', sans-serif; background: #f7f7f7; color: #2C3E50; line-height: 1.6; }
-    
-    a { text-decoration: none; color: inherit; }
-
-    html, body {
-      overflow-x: hidden;
+    :root {
+      --primary-color: #1a3c34; /* Deep teal */
+      --secondary-color: #1e272e;
+      --accent-color: #2a5c50; /* Lighter teal for hover effects */
+      --brand-orange: #d35400; /* Orange accent for other sections */
+      --brand-blue: #007bff; /* Blue for navbar hover/active */
+      --text-color: #ffffff;
+      --nav-bg: rgba(26, 37, 47, 0.9); /* For scrolled state */
+      --dropdown-bg: rgba(26, 37, 47, 0.9);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --glass-effect: blur(8px); /* Slight blur, no saturation */
+      --shadow-color: rgba(0, 0, 0, 0.35);
+      --transition-medium: 0.38s cubic-bezier(0.2,0.9,0.2,1);
+      --neon-glow: 0 0 10px rgba(26, 60, 52, 0.45);
+      --background-light: #f8f9fa;
+      --background-dark: #0f1419;
+      --cta-bg: #1a252f;
+      --header-height: 84px;
     }
 
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Poppins',sans-serif;background:var(--background-light);color:#222;line-height:1.7;scroll-behavior:smooth;overflow-x:hidden} /* Removed padding-top */
+    h1,h2,h3{font-family:'Playfair Display',serif}
+    section{scroll-margin-top:calc(var(--header-height) + 12px)}
+
+    /* Navbar */
+    .header { position: fixed; top:0; width:100%; z-index:1000; }
+     .navbar {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:1rem 2rem;
+    background: transparent;                /* <--- transparent at page top */
+    backdrop-filter: var(--glass-effect);
+    -webkit-backdrop-filter: var(--glass-effect);
+    border-bottom: 1px solid transparent;
+    box-shadow: 0 4px 30px transparent;
+    transition: background var(--transition-medium), padding var(--transition-medium), box-shadow var(--transition-medium);
+  }
+
+  /* When scrolled -> apply the glass nav-bg and shadow */
+  .navbar.scrolled {
+    background: var(--nav-bg);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 5px 20px var(--shadow-color);
+  }
+
+  /* Brand */
+  .nav-brand .logo{
+    font-size:1.5rem;
+    font-weight:700;
+    color:var(--brand-blue);
+    text-decoration:none;
+    letter-spacing:2px;
+    text-shadow: var(--neon-glow);
+  }
   .container {
       width: 100%;
       max-width: 1200px;
       margin-left: auto;
       margin-right: auto;
    }
+  /* Layout of menu & actions */
+  .nav-menu { display:flex; align-items:center; gap:1.75rem; }
+  .nav-list { display:flex; gap:1.25rem; list-style:none; margin:0; padding:0; }
+  .nav-item { position:relative; }
+  .nav-link { color:var(--text-color); text-decoration:none; padding:0.5rem 0.6rem; border-radius:12px; display:flex; align-items:center; gap:6px; transition: all var(--transition-medium); }
+  .nav-link:hover, .nav-link.active {color:var(--brand-blue); transform: translateY(-2px); background: rgba(255,255,255,0.02); }
 
-/* Hero Slider Styles */
-/* Hero Slider Styles */
-.hero {
-  position: relative;
-  height: 100vh;
-  overflow: hidden;
-  background: none;
-  z-index: 1;
-}
-
-.hero-slider {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-wrap: nowrap;
-  transition: transform 0.8s ease-in-out; /* Smooth slide transition */
-  will-change: transform; /* GPU acceleration */
-}
-
-.hero-slide {
-  flex: 0 0 100%;
-  width: 100%;
-  height: 100%;
-  background: no-repeat center center/cover;
-  position: relative;
-  opacity: 0;
-  transition: opacity 0.8s ease-in-out;
-}
-
-.hero-slide.active {
-  opacity: 1;
-}
-
-.hero-slide::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(33, 150, 243, 0.3)); /* Dynamic gradient overlay */
-  z-index: 3;
-}
-
-.hero-slide .container {
-  position: relative;
-  z-index: 4;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  color: #fff;
-  padding: 0 20px;
-}
-
-.hero-slide h1 {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 3.8rem;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
-  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-
-.hero-slide p {
-  font-size: 1.3rem;
-  max-width: 650px;
-  margin-bottom: 2rem;
-  line-height: 1.8;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease-out 0.2s, transform 0.6s ease-out 0.2s;
-}
-
-.hero-slide .booking-btn {
-  display: inline-block;
-  padding: 14px 30px;
-  font-size: 1.1rem;
-  font-weight: 500;
-  background: linear-gradient(135deg, #007BFF, #0056b3); /* Gradient button */
-  color: white;
-  border: 2px solid transparent;
-  border-radius: 50px;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  align-self: flex-end; /* Align right */
-  margin-right: 40px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease-out 0.4s, transform 0.6s ease-out 0.4s;
-}
-
-.hero-slide.active h1,
-.hero-slide.active p,
-.hero-slide.active .booking-btn {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.hero-slide .booking-btn:hover {
-  background: linear-gradient(135deg, #0056b3, #003d82);
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-}
-
-/* Slider Controls */
-.slider-controls {
-  position: absolute;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 15px;
-  z-index: 5;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(8px);
-  border-radius: 20px;
-  padding: 8px 16px;
-}
-
-.slider-dot {
-  width: 14px;
-  height: 14px;
-  background: rgba(255, 255, 255, 0.4);
-  border-radius: 50%;
-  cursor: pointer;
-  transition: background 0.3s ease, transform 0.3s ease;
-}
-
-.slider-dot.active {
-  background: var(--primary-color, #2196f3);
-  transform: scale(1.3);
-}
-
-.slider-dot:hover {
-  background: rgba(255, 255, 255, 0.8);
-}
-
-.slider-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: transparent;
-  backdrop-filter: blur(2px);
-  color: #fff;
-  border: none;
-  padding: 12px 16px;
-  cursor: pointer;
-  font-size: 1.8rem;
-  z-index: 5;
-  
-  transition: background 0.3s ease, transform 0.3s ease;
-}
-
-.slider-arrow:hover {
- 
-  transform: translateY(-50%) scale(1.1);
-}
-
-.slider-arrow.prev {
-  left: 30px;
-}
-
-.slider-arrow.next {
-  right: 30px;
-}
-
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .hero-slide h1 {
-    font-size: 3rem;
+  /* Dropdown */
+  .has-dropdown .dropdown {
+    position: absolute;
+    top: 100%;   /* no extra gap */
+    left: 0;
+    min-width: 220px;
+    background: var(--dropdown-bg);
+    backdrop-filter: var(--glass-effect);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 0.5rem;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(6px);
+    transition: all var(--transition-medium);
+    box-shadow: 0 10px 30px var(--shadow-color);
+    pointer-events: none;
   }
 
-  .hero-slide p {
-    font-size: 1.2rem;
-    max-width: 500px;
-  }
+  .has-dropdown:hover .dropdown { opacity:1; visibility:visible; transform: translateY(0); pointer-events:auto; }
 
-  .hero-slide .booking-btn {
-    margin-right: 20px;
-  }
+  /* Dropdown items */
+  .dropdown li { list-style:none; }
+  .dropdown a { color:var(--text-color); display:block; padding:0.6rem 0.9rem; border-radius:8px; transition: all var(--transition-medium); }
+  .dropdown a:hover { background: rgba(255,255,255,0.03); color:var(--primary-color); transform: translateX(4px); }
 
-  .slider-arrow {
-    padding: 10px 14px;
-    font-size: 1.5rem;
-  }
-}
+  /* Nav actions */
+  .nav-actions { display:flex; align-items:center; gap:1rem; }
+  .search-container { position:relative; display:flex; align-items:center; border-radius:20px; overflow:hidden; border:1px solid var(--border-color); }
+  .search-input { padding:0.45rem 0.8rem; background:none; border:none; color:var(--text-color); width:160px; transition: width var(--transition-medium); }
+  .search-input:focus { outline:none; width:240px; box-shadow: 0 0 0 3px var(--primary-glow); }
+  .search-btn { background:none; border:none; color:var(--text-color); padding:0 8px; cursor:pointer; }
 
-@media (max-width: 768px) {
-  .hero-slide h1 {
-    font-size: 2.5rem;
-  }
+  /* Theme toggle */
+  .theme-toggle { background: rgba(255,255,255,0.06); border:1px solid var(--border-color); padding:0.5rem; border-radius:50%; cursor:pointer; color:var(--text-color); }
 
-  .hero-slide p {
-    font-size: 1rem;
-    padding: 0 15px;
-  }
+  /* Hamburger - default hidden on desktop */
+  .nav-toggle { display:none; align-items:center; justify-content:center; cursor:pointer; border-radius:12px; padding:0.45rem; }
+  .hamburger { width:26px; height:20px; position:relative; }
+  .hamburger span{ display:block; position:absolute; left:0; right:0; height:2px; background:var(--text-color); border-radius:2px; transition: all var(--transition-medium); }
+  .hamburger span:first-child{ top:0; }
+  .hamburger span:nth-child(2){ top:9px; width:70%; margin-left:auto; margin-right:0; }
+  .hamburger span:last-child{ bottom:0; }
 
-  .hero-slide .booking-btn {
-    align-self: center; /* Center on mobile */
-    margin-right: 0;
-    padding: 12px 25px;
-    font-size: 1rem;
-  }
+  /* nav-active hamburger transform (applied via JS toggling .nav-active on .navbar) */
+  .nav-active .hamburger span:first-child { transform: rotate(45deg); top:9px; }
+  .nav-active .hamburger span:nth-child(2) { opacity:0; transform: scaleX(0); }
+  .nav-active .hamburger span:last-child { transform: rotate(-45deg); top:9px; }
 
-  .slider-controls {
-    bottom: 30px;
-    padding: 6px 12px;
-  }
-
-  .slider-dot {
-    width: 12px;
-    height: 12px;
-  }
-
-  .slider-arrow {
-    padding: 8px 12px;
-    font-size: 1.3rem;
-  }
-
-  .slider-arrow.prev {
-    left: 15px;
-  }
-
-  .slider-arrow.next {
-    right: 15px;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero-slide h1 {
-    font-size: 2rem;
-  }
-
-  .hero-slide p {
-    font-size: 0.9rem;
-  }
-
-  .hero-slide .booking-btn {
-    padding: 10px 20px;
-    font-size: 0.9rem;
-  }
-
-  .slider-controls {
-    bottom: 20px;
-  }
-
-  .slider-dot {
-    width: 10px;
-    height: 10px;
-  }
-}
-
-
-
-
-
-
-    .section-header { text-align: center; padding: 2rem 0 1rem; margin-bottom: 2rem; border-bottom: 1px solid #bdc3c7; }
-    .section-header h2 { font-size: 2rem; color: #000; margin-bottom: 0.5rem; letter-spacing: 1px; }
-    .section-header p { font-size: 1rem; color: #d72323; }
-
-    section.offering-section { padding: 3rem 0; background: #fff; }
-    .offerings-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2rem; justify-items: center; padding: 0 1rem;
+  /* Mobile behavior - menu slides from right like your earlier design */
+  @media (max-width: 1024px) {
+    .nav-toggle { display:flex; }
+    .nav-menu {
+      position: fixed;
+      top: 70px;
+      right: -100%;
+      flex-direction: column;
+      gap: 1rem;
+      background: var(--nav-bg);
+      backdrop-filter: var(--glass-effect);
+      width: 100%;
+      height: calc(100vh - 70px);
+      padding: 1.5rem;
+      transition: right 0.35s var(--transition-medium);
+      box-shadow: -10px 0 30px var(--shadow-color);
+      border-left: 1px solid var(--border-color);
+      overflow-y: auto;
     }
+    /* when active, slide into view */
+    .nav-active .nav-menu { right: 0; }
 
-    .custom-box {
-      background: #fff; border-radius: 10px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); padding: 2rem; text-align: center;
-      transition: transform 0.3s ease, box-shadow 0.3s ease; position: relative; overflow: hidden;
-    }
-    .custom-box::before {
-      content: ""; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-      width: 50px; height: 4px; background: #d72323; border-radius: 2px; transition: width 0.3s ease;
-    }
-    .custom-box:hover { transform: translateY(-5px); box-shadow: 0 8px 16px rgba(0,0,0,0.2); }
-    .custom-box:hover::before { width: 80px; }
-    .custom-box i { font-size: 2rem; color: #d72323; margin-bottom: 1rem; }
-    .custom-box h3 { margin: 1rem 0; font-size: 1.2rem; font-weight: 700; color: #2C3E50; text-transform: uppercase; }
-    .custom-box p { color: #7f8c8d; font-size: 0.95rem; line-height: 1.5; }
+    .nav-list { flex-direction: column; width:100%; margin:0; padding:0; }
+    .nav-link { width:100%; padding:0.9rem 0.6rem; border-bottom: 1px solid var(--border-color); }
+    .has-dropdown .dropdown { position: static; height: auto; transform: none; opacity: 1; visibility: visible; display:none; box-shadow:none; border:none; background:transparent; padding-left: 1rem; margin-left: 0.5rem;}
+    .has-dropdown.active .dropdown { display:block; }
+    .chevron-icon { margin-left:auto; }
+    .hamburger span { background: var(--text-color); }
+  }
 
-    .mission, .why-choose-us { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; width: 100%; }
-    .mission-image img, .why-choose-us img { width: 100%; max-width: 550px; height: auto; }
-    .mission > div, .why-choose-us > div { width: 100%; max-width: 700px; }
-    .mission h3, .why-choose-us h3 { font-weight: 300; margin-top: 10px; font-size: 24px; }
-    .mission p, .why-choose-us p { font-size: 16px; line-height: 1.5; margin-top: 10px; }
+  /* small screens tweaks */
+  @media (max-width: 576px) {
+    .nav-menu { width: 100%; }
+    .search-input { width:100%; }
+  }
 
-    @media screen and (min-width: 768px) {
-      .mission, .why-choose-us { flex-direction: row; text-align: left; }
-      .mission-image, .why-choose-us img { margin-right: 30px; }
-      .mission h3, .why-choose-us h3 { font-size: 28px; }
-      .mission p, .why-choose-us p { font-size: 18px; }
-    }
+    /* Hero */
+    .hero{position:relative;min-height:72vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:calc(var(--header-height) + 56px) 20px 56px;color:#fff;overflow:hidden;background:var(--secondary-color);backdrop-filter:var(--glass-effect);-webkit-backdrop-filter:var(--glass-effect);z-index:1}
+    .hero-bg{position:absolute;top:0;left:0;right:0;bottom:0;background-image:url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1600&q=80');background-size:cover;background-position:center;opacity:0.3;filter:contrast(1.05) saturate(0.9);transform:scale(1.03);z-index:-1} /* Adjusted z-index and positioning */
+    .hero-content{position:relative;z-index:2;max-width:980px;padding:12px}
+    .hero h1{font-size:2.8rem;margin-bottom:10px;letter-spacing:0.2px}
+    .hero p{font-size:1.05rem;margin-bottom:18px;max-width:720px;margin-left:auto;margin-right:auto;opacity:0.95}
+    .hero .cta{display:inline-block;padding:12px 36px;border-radius:999px;background:var(--brand-orange);color:#fff;text-decoration:none;font-weight:700;box-shadow:0 10px 30px rgba(211,84,0,0.12);transform:translateZ(0);transition:all var(--transition-medium)}
+    .hero .cta:hover{transform:translateY(-6px);box-shadow:0 18px 46px rgba(211,84,0,0.18)}
+    .hero h1::after{content:'';display:block;height:3px;width:54px;background:linear-gradient(90deg,var(--brand-orange),rgba(211,84,0,0.7));margin:12px auto 0;border-radius:6px;transform-origin:left;animation:underline 1.2s ease both}
+    @keyframes underline{0%{transform:scaleX(0)}100%{transform:scaleX(1)}}
 
-    .contact-us-btn { margin-top: 20px; padding: 12px 20px; font-size: 16px; background-color: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; }
-    .contact-us-btn:hover { background-color: #0056b3; }
+    /* About / Our Story */
+    .about-section{padding:84px 20px;background:var(--background-light)}
+    .about-container{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+    .about-image{border-radius:16px;overflow:hidden;background:#fff}
+    .about-image img{width:100%;height:auto;display:block}
+    .about-content h2{font-size:2.2rem;color:var(--secondary-color);margin-bottom:12px}
+    .about-content p{font-size:1.05rem;color:#333;line-height:1.85;margin-bottom:12px}
+    .about-content .highlight,.about-content .highlight-orange{color:var(--brand-orange);font-weight:700}
+    .about-content a{display:inline-block;padding:10px 26px;border-radius:999px;background:var(--brand-orange);color:#fff;text-decoration:none;font-weight:600;transition:all var(--transition-medium);box-shadow:0 8px 24px rgba(211,84,0,0.12)}
+    .about-content a:hover{transform:translateY(-6px);box-shadow:0 18px 46px rgba(211,84,0,0.18)}
+    .story-accent{display:inline-block;position:relative;padding-right:6px}
+    .story-accent::after{content:'';position:absolute;left:0;right:0;bottom:0;height:8px;background:linear-gradient(90deg,rgba(211,84,0,0.25),rgba(211,84,0,0.06));z-index:-1;border-radius:4px}
 
-    .contact { background: #fff; padding: 3rem 0; }
-    .contact h2 { color: #2C3E50; margin-bottom: 1.5rem; text-align: center; font-size: 2rem; }
-    .contact-content { display: flex; flex-direction: column; gap: 2rem; max-width: 900px; margin: 0 auto; align-items: center; }
-    @media screen and (min-width: 768px) { .contact-content { flex-direction: row; justify-content: space-between; } }
-    .contact-info, .contact-form { flex: 1; padding: 1rem; }
-    .contact-info h3 { margin-bottom: 1rem; font-size: 1.5rem; color: #007BFF; }
-    .contact-info p { font-size: 1.1rem; margin: 0.5rem 0; }
-    .contact-info i { margin-right: 10px; color: #d72323; }
-    .contact-form form { display: flex; flex-direction: column; }
-    .contact-form input, .contact-form textarea { padding: 1rem; margin-bottom: 1rem; border: 1px solid #bdc3c7; font-size: 1rem; width: 100%; }
-    .contact-form button { padding: 1rem; border: none; background: #2C3E50; color: #fff; font-size: 1rem; cursor: pointer; transition: background 0.3s ease; }
-    .contact-form button:hover { background: #34495E; }
+    /* Mission & Values */
+    .mission-values{padding:80px 20px;background:linear-gradient(180deg,#f6f9fc 0%,#ffffff 100%)}
+    .mission-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center}
+    .mission-image{border-radius:14px;overflow:hidden;box-shadow:0 12px 30px rgba(0,0,0,0.06);transform:translateZ(0)}
+    .mission-image .frame{padding:0;background:linear-gradient(180deg,rgba(255,255,255,0.8),rgba(248,249,250,0.9))}
+    .mission-image img{width:100%;height:420px;object-fit:cover;display:block}
+    .mission-content h2{font-size:2rem;color:var(--secondary-color);margin-bottom:14px}
+    .mission-content p{color:var(--secondary-color);font-size:1.03rem;line-height:1.75;margin-bottom:18px}
+    .values-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+    .value-item{background:#fff;border-radius:12px;padding:20px;box-shadow:0 8px 20px rgba(0,0,0,0.04);transition:transform .28s ease,box-shadow .28s ease}
+    .value-item:hover{transform:translateY(-6px);box-shadow:0 18px 38px rgba(0,0,0,0.06)}
+    .value-item i{font-size:22px;color:var(--brand-orange);display:block;margin-bottom:10px}
 
-    footer { background: #2C3E50; color: #fff; text-align: center; padding: 1.5rem 0; font-size: 0.9rem; }
-    footer a { color: #fff; margin: 0 0.5rem; transition: color 0.3s ease; }
-    footer a:hover { color: #bdc3c7; }
+    /* Team */
+    .team-section{padding:80px 20px;background:var(--background-light)}
+    .team-section h2{text-align:center;color:var(--secondary-color);margin-bottom:24px}
+    .team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;max-width:1200px;margin:0 auto}
+    .team-member{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,0.05);transition:transform .32s ease}
+    .team-member:hover{transform:translateY(-8px)}
+    .team-member img{width:100%;height:320px;object-fit:cover;display:block}
+    .team-member .info{padding:16px}
+    .social-icons{display:flex;gap:10px}
+    .social-icons a{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:8px;background:rgba(0,0,0,0.02);color:var(--primary-color);text-decoration:none}
+    .social-icons a:hover{background:var(--brand-orange);color:#fff;transform:translateY(-2px)}
 
-    @media (max-width: 768px) {
-     
-      .hero h1 { font-size: 2.5rem; }
-      .hero p { font-size: 1rem; padding: 0 1rem; }
-    }
-    html { scroll-behavior: smooth; }
+    /* CTA & Footer */
+    .cta-section{padding:80px 20px;background:var(--cta-bg);color:#fff;text-align:center}
+    .cta-section h2{font-size:2rem;margin-bottom:8px}
+    .cta-section p{max-width:780px;margin:0 auto 18px;color:rgba(255,255,255,0.92)}
+    .cta-section a{display:inline-block;padding:12px 34px;border-radius:999px;background:#fff;color:var(--primary-color);font-weight:700;box-shadow:0 12px 30px rgba(0,0,0,0.18)}
 
-    
-
-    /* Small helper for an optional flipped mission row */
-    .mission.reverse { flex-direction: column-reverse; }
-    @media (min-width: 768px) { .mission.reverse { flex-direction: row-reverse; } }
-
-    /* ====== Clients (alt) from your last version — left as-is ====== */
-    :root { --kne-deep:#2C3E50; --kne-accent:#d72323; --kne-light:#f7f7f7; }
-    .clients-v2 { background:#fff; padding:3rem 0; }
-    .clients-v2 .title { text-align:center; margin-bottom:1.25rem; }
-    .clients-v2 .title h2 { color:var(--kne-deep); font-size:2rem; }
-    .clients-v2 .title .bar { display:inline-block; width:90px; height:3px; background:var(--kne-accent); border-radius:3px; margin-top:.5rem; }
-    .kne-stats { display:flex; gap:.75rem; flex-wrap:wrap; justify-content:center; margin:.75rem 0 1.25rem; }
-    .kne-stat { background:#f7f7f7; border:1px solid #e8edf3; border-radius:12px; padding:.6rem .9rem; color:#425363; }
-    .clients-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:1.25rem; }
-    .client-block { position:relative; background:#fff; border:1px solid #e8edf3; border-radius:14px; padding:1.25rem; box-shadow:0 6px 16px rgba(0,0,0,.05); transition:transform .25s ease, box-shadow .25s ease; }
-    .client-block::after { content:""; position:absolute; top:0; left:0; height:6px; width:100%; background:linear-gradient(90deg, var(--kne-accent), #b11616); border-radius:14px 14px 0 0; }
-    .client-block:hover { transform:translateY(-4px); box-shadow:0 10px 22px rgba(0,0,0,.08); }
-    .client-block h4 { color:var(--kne-deep); display:flex; align-items:center; gap:.5rem; margin:.5rem 0; font-size:1.05rem; }
-    .client-block h4 i { color:var(--kne-accent); }
-    .client-list { display:grid; gap:.45rem; margin-top:.5rem; }
-    .client-item { display:flex; align-items:baseline; gap:.5rem; color:#425363; }
-    .client-item i { color:var(--kne-accent); }
-    .client-tags { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.75rem; }
-    .client-tag { border:1px solid #e0e6ee; border-radius:999px; padding:.35rem .6rem; font-size:.85rem; color:#425363; background:#fff; white-space:nowrap; }
-    /* ===== Testimonials — Elegant Cards ===== */
-:root { /* safe if already defined elsewhere */
-  --kne-deep:#2C3E50; 
-  --kne-accent:#d72323;
-}
-
-.tst-elegant { background:#fff; padding:3rem 0; }
-.tst-title { text-align:center; margin-bottom:1.25rem; }
-.tst-title h2 { color:var(--kne-deep); font-size:2rem; letter-spacing:.5px; }
-.tst-title .bar { display:inline-block; width:90px; height:3px; background:var(--kne-accent); border-radius:3px; margin-top:.5rem; }
-.tst-sub { color:#5c6b7a; margin-top:.45rem; }
-
-.tst-grid { 
-  display:grid; 
-  grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); 
-  gap:1.25rem; 
-}
-
-.tst-card {
-  position:relative;
-  background:#fff; 
-  border:1px solid #e8edf3; 
-  border-radius:16px; 
-  padding:1.25rem 1.25rem 1rem;
-  box-shadow:0 10px 24px rgba(0,0,0,.06);
-  transition:transform .25s ease, box-shadow .25s ease;
-}
-.tst-card::before{
-  content:"";
-  position:absolute; top:0; left:0; width:100%; height:6px;
-  background:linear-gradient(90deg, var(--kne-accent), #b11616);
-  border-radius:16px 16px 0 0;
-}
-
-.tst-quote { display:flex; align-items:flex-start; gap:.8rem; }
-.tst-quote-mark{
-  flex:0 0 auto; width:38px; height:38px; border-radius:50%;
-  background:#fdeceb; color:var(--kne-accent);
-  display:flex; align-items:center; justify-content:center;
-}
-.tst-text{ color:#374957; font-style:italic; line-height:1.6; }
-
-.tst-footer{
-  display:flex; align-items:center; justify-content:space-between; 
-  margin-top:.9rem;
-}
-.tst-person{ display:flex; align-items:center; gap:.6rem; }
-.tst-avatar{
-  width:38px; height:38px; border-radius:50%;
-  background:linear-gradient(135deg, #2C3E50, #425a6b);
-  position:relative; color:#fff;
-}
-.tst-avatar::after{
-  content:attr(data-initial);
-  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-  font-weight:700; font-size:.85rem; letter-spacing:.5px;
-}
-.tst-name{ color:var(--kne-deep); font-weight:700; }
-.tst-role{ color:#5c6b7a; font-size:.9rem; }
-.tst-stars i{ color:#f1c40f; }
-
-.tst-card:hover{ transform:translateY(-4px); box-shadow:0 16px 30px rgba(0,0,0,.08); }
-
-.advanced-footer {
+  .advanced-footer {
   background:rgb(44, 62, 80); /* your existing primary */
   color: #fff;
   padding: 60px 20px 30px;
@@ -546,1326 +322,330 @@
   color: rgba(255,255,255,0.9);
 }
 
-
-.acontainer {
-    width: 90%;
-    max-width: 1170px;
-    height: 100%;
-    margin: 0 auto; /* Centers the container horizontally */
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 60px;
-    padding: 35px 0;
-    place-items: center; /* Centers grid items both horizontally and vertically */
-    font-family: 'Poppins', sans-serif;
+.contact-link{
+  color: white;
+  text-decoration: none;
 }
-.contentLeft,
-.contentRight{
-    width: 100%;
-}
-.contentLeft .row{
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 10px;
-}
-.contentLeft .row .imgWrapper{
-    width: 100%;
-    height: 450px;
-    overflow: hidden;
-    border-radius: 10px;
-    cursor: pointer;
-    box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.15);
-}
-.contentLeft .row .imgWrapper img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    user-select: none;
-    transition: 0.3s ease;
-}
-.contentLeft .row .imgWrapper:hover img{
-    transform: scale(1.5);
-}
-.contentLeft .row .imgWrapper:nth-child(odd){
-    transform: translateY(-20px);
-}
-.contentLeft .row .imgWrapper:nth-child(even){
-    transform: translateY(20px);
-}
-.contentRight .acontent{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 15px;
-}
-.contentRight .acontent h4{
-    font-size: 22px;
-    font-weight: 400;
-    color: #d35400;
-}
-.contentRight .acontent h2{
-    font-size: 40px;
-    color: #1e272e;
-}
-.contentRight .acontent p{
-    font-size: 16px;
-    color: #343434;
-    line-height: 28px;
-    padding-bottom: 10px;
-}
-.contentRight .acontent a{
-    display: inline-block;
-    text-decoration: none;
-    font-size: 16px;
-    letter-spacing: 1px;
-    padding: 13px 30px;
-    color: #fff;
-    background: #d35400;
-    border-radius: 8px;
-    user-select: none;
-}
-@media(max-width: 768px){
-    .acontainer{
-        grid-template-columns: 1fr;
+    /* Responsive tweaks */
+    @media(max-width:900px){
+      .about-container,.mission-inner{grid-template-columns:1fr}
+      .mission-image img{height:260px}
+      .hero h1{font-size:2rem}
+      .hero{padding:calc(var(--header-height) + 40px) 20px 40px}
     }
-    .contentLeft .row{
-        grid-template-columns: repeat(2, 1fr);
-    }
-    .contentLeft .row .imgWrapper{
-        height: 150px;
-    }
-    .contentRight .acontent h4{
-        font-size: 18px;
-    }
-    .contentRight .acontent h2{
-        font-size: 30px;
-    }
-}
-
-
-
-
-
-
-
-
-/* Services Section Enhancements for Blur and Visibility */
-.offering-section {
-  position: relative;
-  transition: all 0.5s ease; /* Smooth transition for section */
-}
-
-.custom-box {
-  transition: filter 0.5s ease, opacity 0.5s ease, transform 0.5s ease; /* Animated blur, opacity, and scale */
-  will-change: filter, opacity, transform; /* GPU acceleration */
-}
-
-.custom-box.blurred {
-  filter: blur(5px);
-  opacity: 0.3;
-  transform: scale(0.95); /* Slight shrink for fancy effect */
-}
-
-.custom-box.selected {
-  filter: blur(0);
-  opacity: 1;
-  transform: scale(1.05); /* Slight enlarge for highlight */
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
-  z-index: 2; /* Bring forward */
-}
-
-/* Hide blurred boxes after animation (to make only selected visible) */
-.custom-box.blurred.hidden {
-  opacity: 0;
-  display: none; /* Hide after fade */
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-  .offerings-grid {
-    grid-template-columns: 1fr; /* Single column on mobile */
-  }
-
-  .custom-box.selected {
-    transform: scale(1); /* No enlarge on mobile to avoid overflow */
-  }
-}
-
-@media (max-width: 480px) {
-  .custom-box {
-    padding: 1.5rem; /* Adjust padding for small screens */
-  }
-}
   </style>
-
-
-    <style>
-        /* Statistics Section Styles */
-        .stats-section {
-            padding: 80px 20px;
-            background: linear-gradient(135deg, #e0e7ff 0%, #dbeafe 100%);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stats-section::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
-            animation: pulse 10s infinite ease-in-out;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
-
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .stat-item {
-            background: #ffffff;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-            transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat-item:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-            background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
-        }
-
-        .stat-item:hover .stat-number,
-        .stat-item:hover .stat-label {
-            color: #ffffff;
-        }
-
-        .stat-icon {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 20px;
-            transition: filter 0.3s ease;
-        }
-
-        .stat-icon img {
-            width: 100%;
-            height: 100%;
-            filter: invert(42%) sepia(93%) saturate(1352%) hue-rotate(200deg) brightness(95%) contrast(95%); /* Converts white to #3b82f6 */
-            transition: transform 0.4s ease, filter 0.3s ease;
-        }
-
-        .stat-item:hover .stat-icon img {
-            filter: invert(100%) sepia(0%) saturate(7500%) hue-rotate(0deg) brightness(100%) contrast(100%); /* Converts to white on hover */
-            transform: scale(1.1);
-        }
-
-        .stat-number {
-            font-size: 48px;
-            font-weight: 700;
-            color: #1f2937;
-            margin: 10px 0;
-            transition: color 0.3s ease;
-        }
-
-        .stat-label {
-            font-size: 20px;
-            font-weight: 500;
-            color: #4b5563;
-            transition: color 0.3s ease;
-        }
-
-        /* Animation for numbers */
-        .stat-number {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-
-        .stat-number.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .stats-container {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                gap: 20px;
-            }
-
-            .stat-number {
-                font-size: 36px;
-            }
-
-            .stat-label {
-                font-size: 18px;
-            }
-
-            .stat-icon {
-                width: 50px;
-                height: 50px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .stats-container {
-                grid-template-columns: 1fr;
-            }
-
-            .stat-item {
-                padding: 20px;
-            }
-        }
-    </style>
 </head>
 <body>
   <!-- Navbar -->
-<!-- ======= Replace your current header with this block ======= -->
-<header class="header">
-  <nav class="navbar">
-    <div class="nav-brand">
-      <a href="#" class="logo">KnE Services</a>
-    </div>
-
-    <!-- Mobile toggle (keep class .nav-toggle as in your original code) -->
-    <div class="nav-toggle" aria-label="Toggle navigation">
-      <div class="hamburger" aria-hidden="true">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </div>
-
-    <div class="nav-menu">
-      <ul class="nav-list">
-        <li class="nav-item"><a href="#hero" class="nav-link active">Home</a></li>
-
-        <li class="nav-item has-dropdown">
-          <a href="#services-section" class="nav-link">
-            Services
-            <svg class="icon chevron-icon" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
-              <path d="M7 10l5 5 5-5z" fill="currentColor"></path>
-            </svg>
-          </a>
-          <ul class="dropdown">
-            <li><a href="#services-section">Consulting & Advisory</a></li>
-            <li><a href="#services-section">IT & Digital Solutions</a></li>
-            <li><a href="#services-section">Project Management</a></li>
-            <li><a href="#services-section">Facility Management</a></li>
-            <li><a href="#services-section">Logistics & Supply Chain</a></li>
-            <li><a href="#services-section">Digital Marketing</a></li>
-          </ul>
-        </li>
-
-        <li class="nav-item">
-          <a href="#procurement-section" class="nav-link">
-            Procurement
-            
-          </a>
-         
-        </li>
-
-        <li class="nav-item has-dropdown">
-          <a href="#training-section" class="nav-link">
-            Training
-            <svg class="icon chevron-icon" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
-              <path d="M7 10l5 5 5-5z" fill="currentColor"></path>
-            </svg>
-          </a>
-          <ul class="dropdown">
-            <li><a href="#training-section">Technical Training</a></li>
-            <li><a href="#training-section">Corporate Training</a></li>
-            <li><a href="#training-section">Digital Skills Training</a></li>
-          </ul>
-        </li>
-
-        <li class="nav-item"><a href="#stats-section" class="nav-link">Clients</a></li>
-        <li class="nav-item"><a href="#testimonials" class="nav-link">Testimonials</a></li>
-        <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
-      </ul>
-
-      <div class="nav-actions">
-        <div class="search-container">
-          <input type="text" class="search-input" placeholder="Search...">
-          <button class="search-btn" aria-label="Search">
-            <!-- small search icon -->
-            <svg class="icon search-icon" viewBox="0 0 24 24" width="18" height="18">
-              <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5z" fill="currentColor"/>
-            </svg>
-          </button>
+  <header class="header">
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+      <div class="nav-brand"><a href="index.html" class="logo">KnE Services</a></div>
+      <div class="nav-toggle" aria-label="Toggle navigation"><div class="hamburger" aria-hidden="true"><span></span><span></span><span></span></div></div>
+      <div class="nav-menu">
+        <ul class="nav-list">
+          <li class="nav-item"><a href="index.html#hero" class="nav-link active">Home</a></li>
+          <li class="nav-item has-dropdown">
+            <a href="/index.html#services-section" class="nav-link">Services <svg class="icon chevron-icon" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M7 10l5 5 5-5z" fill="currentColor"></path></svg></a>
+            <ul class="dropdown">
+              <li><a href="index.html#services-section">Consulting & Advisory</a></li>
+              <li><a href="index.html#services-section">IT & Digital Solutions</a></li>
+              <li><a href="index.html#services-section">Project Management</a></li>
+              <li><a href="index.html#services-section">Facility Management</a></li>
+              <li><a href="index.html#services-section">Logistics & Supply Chain</a></li>
+              <li><a href="index.html#services-section">Digital Marketing</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a href="index.html#procurement-section" class="nav-link">Procurement</a></li>
+          <li class="nav-item has-dropdown">
+            <a href="index.html#training-section" class="nav-link">Training <svg class="icon chevron-icon" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M7 10l5 5 5-5z" fill="currentColor"></path></svg></a>
+            <ul class="dropdown">
+              <li><a href="index.html#training-section">Technical Training</a></li>
+              <li><a href="index.html#training-section">Corporate Training</a></li>
+              <li><a href="index.html#training-section">Digital Skills Training</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a href="index.html#stats-section" class="nav-link">Clients</a></li>
+          <li class="nav-item"><a href="index.html#testimonials" class="nav-link">Testimonials</a></li>
+          <li class="nav-item"><a href="index.html#contact" class="nav-link">Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+          <div class="search-container"><input class="search-input" type="text" placeholder="Search..." aria-label="Search site"><button class="search-btn" aria-label="Search"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5z" fill="currentColor"></path></svg></button></div>
         </div>
+      </div>
+    </nav>
+  </header>
 
-       
+  <!-- Hero -->
+  <section id="hero" class="hero" role="banner" aria-label="About KnE Services">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-content" data-aos="fade-up">
+      <h1>Discover KnE Services</h1>
+      <p>Empowering businesses with innovative solutions and unparalleled expertise.</p>
+      <a class="cta" href="index.html#contact" aria-label="Get Started with KnE Services">Get Started</a>
+    </div>
+  </section>
+
+  <!-- About / Our Story -->
+  <section id="about" class="about-section" aria-label="About KnE Services">
+    <div class="about-container">
+      <div class="about-image" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80" alt="Team collaborating in a modern office">
+      </div>
+      <div class="about-content" data-aos="fade-left">
+        <h2>Our Story</h2>
+        <p>At <span class="highlight">KnE Services</span>, we are passionate about transforming businesses through strategic solutions. Founded with a vision to <span class="story-accent">simplify complexity</span>, we specialize in <span class="highlight">consulting</span>, <span class="highlight-orange">procurement</span>, <span class="highlight">project management</span>, and <span class="highlight">training</span>, delivering results that drive growth and efficiency.</p>
+        <p>Our approach combines deep industry expertise with a client-centric focus, ensuring every project is executed with precision and care. From digital transformation to facility optimization, we partner with organizations worldwide to achieve measurable success.</p>
+        <a href="/index.html#contact" aria-label="Get in touch with KnE Services">Get in Touch</a>
       </div>
     </div>
-  </nav>
-</header>
+  </section>
 
-<!-- ======= Add / replace these CSS rules (scoped to header area) ======= -->
-<style>
-  /* ensure variables are present — these match your earlier variables */
-  :root {
-    --primary-color: #2196f3;
-    --primary-glow: rgba(33,150,243,0.8);
-    --text-color: #ffffff;
-    --nav-bg: rgba(16,16,26,0.7); /* glass bg used when scrolled */
-    --dropdown-bg: rgba(20,20,35,0.8);
-    --border-color: rgba(255,255,255,0.08);
-    --glass-effect: saturate(180%) blur(10px);
-    --shadow-color: rgba(0,0,0,0.3);
-    --transition-medium: 0.3s cubic-bezier(.4,0,.2,1);
-    --neon-glow: 0 0 10px rgba(33,150,243,0.5);
-  }
+  <!-- Mission & Values -->
+  <section id="mission" class="mission-values" aria-label="Our Mission and Values">
+    <div class="mission-inner">
+      <div class="mission-image" data-aos="fade-up">
+        <div class="frame"><img src="https://images.unsplash.com/photo-1494173853739-c21f58b16055?auto=format&fit=crop&w=1200&q=80" alt="Mission - strategic planning and teamwork"></div>
+      </div>
+      <div class="mission-content" data-aos="fade-up" data-aos-duration="800" data-aos-delay="120">
+        <h2>Our Mission & Core Values</h2>
+        <p>To empower businesses with innovative, reliable, and tailored solutions that unlock their full potential. We deliver this through a culture of integrity, innovation and deep collaboration with our clients.</p>
+        <div class="values-grid">
+          <div class="value-item" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="80">
+            <i class="fas fa-bullseye"></i>
+            <h3>Mission</h3>
+            <p>Deliver measurable outcomes that drive growth and operational excellence.</p>
+          </div>
+          <div class="value-item" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="160">
+            <i class="fas fa-handshake"></i>
+            <h3>Integrity</h3>
+            <p>Uphold transparency, honesty and ethical practice in every engagement.</p>
+          </div>
+          <div class="value-item" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="240">
+            <i class="fas fa-rocket"></i>
+            <h3>Innovation</h3>
+            <p>Use modern tools and practical thinking to create lasting impact.</p>
+          </div>
+          <div class="value-item" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="320">
+            <i class="fas fa-users"></i>
+            <h3>Collaboration</h3>
+            <p>Partner closely with clients to deliver tailored, measurable results.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  /* Base header/navbar: start transparent at top */
-  .header { position: fixed; top:0; width:100%; z-index:1000; }
-  .navbar {
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:1rem 2rem;
-    background: transparent;                /* <--- transparent at page top */
-    backdrop-filter: var(--glass-effect);
-    -webkit-backdrop-filter: var(--glass-effect);
-    border-bottom: 1px solid transparent;
-    box-shadow: 0 4px 30px transparent;
-    transition: background var(--transition-medium), padding var(--transition-medium), box-shadow var(--transition-medium);
-  }
+  <!-- Team -->
+  <section id="team" class="team-section" aria-label="Our Team">
+    <h2>Our Expert Team</h2>
+    <div class="team-grid">
+      <div class="team-member" data-aos="fade-up">
+        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=1200&q=80" alt="John Doe, CEO & Founder">
+        <div class="info">
+          <h3>xxxxxx</h3>
+          <p>CEO & Founder</p>
+          <div class="social-icons"><a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a><a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a></div>
+        </div>
+      </div>
+      <div class="team-member" data-aos="fade-up" data-aos-duration="800" data-aos-delay="80">
+        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1200&q=80" alt="Jane Smith, COO">
+        <div class="info">
+          <h3>xxx xxxx</h3>
+          <p>Chief Operations Officer</p>
+          <div class="social-icons"><a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a><a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a></div>
+        </div>
+      </div>
+      <div class="team-member" data-aos="fade-up" data-aos-duration="800" data-aos-delay="160">
+        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=1200&q=80" alt="Michael Brown, Head of Consulting">
+        <div class="info">
+          <h3>xxx xxxx</h3>
+          <p>Head of Consulting</p>
+          <div class="social-icons"><a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a><a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  /* When scrolled -> apply the glass nav-bg and shadow */
-  .navbar.scrolled {
-    background: var(--nav-bg);
-    border-bottom: 1px solid var(--border-color);
-    box-shadow: 0 5px 20px var(--shadow-color);
-  }
+  <!-- CTA -->
+  <section class="cta-section" aria-label="Call to action">
+    <h2>Transform Your Business Today</h2>
+    <p>Join forces with KnE Services to unlock your organization’s potential with tailored, innovative solutions.</p>
+    <a href="/index.html#contact" aria-label="Contact KnE Services">Contact Us Now</a>
+  </section>
 
-  /* Brand */
-  .nav-brand .logo{
-    font-size:1.5rem;
-    font-weight:700;
-    color:var(--primary-color);
-    text-decoration:none;
-    letter-spacing:2px;
-    text-shadow: var(--neon-glow);
-  }
+  <!-- Footer -->
+  <footer class="advanced-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col logo-col" data-aos="fade-up">
+          <a href="/index.html"><img src="kne-removebg-preview.png" alt="KnE Services Logo" class="footer-logo"></a>
+          <p class="logo-text">Delivering trusted solutions for global business success.</p>
+        </div>
+        <div class="footer-col" data-aos="fade-up" data-aos-duration="800" data-aos-delay="80">
+          <h6>Information</h6>
+          <ul>
+            <li><a href="/index.html#about">About Us</a></li>
+            <li><a href="/index.html#our-work">Our Work</a></li>
+            <li><a href="/index.html#stats-section">Clients</a></li>
+            <li><a href="/index.html#procurement-section">Procurement</a></li>
+            <li><a href="/index.html#testimonials">Testimonials</a></li>
+          </ul>
+        </div>
+        <div class="footer-col" data-aos="fade-up" data-aos-duration="800" data-aos-delay="160">
+          <h6>Services</h6>
+          <ul>
+            <li><a href="/index.html#services-section">Consulting</a></li>
+            <li><a href="/index.html#procurement-section">Procurement</a></li>
+            <li><a href="/index.html#services-section">Project Management</a></li>
+            <li><a href="/index.html#training-section">Training</a></li>
+          </ul>
+        </div>
+        <div class="footer-col" data-aos="fade-up" data-aos-duration="800" data-aos-delay="240">
+          <h6>Contact Us</h6>
+          <p>Need assistance? We're here to help.</p>
+          <a href="tel:+011234567890" class="contact-link" aria-label="Call KnE Services at +01 123-456-7890">+01 123-456-7890</a>
+          <a href="mailto:info@kneservices.com" class="contact-link" aria-label="Email KnE Services at info@kneservices.com">info@kneservices.com</a>
+          
+          <div class="social-icons">
+            <a href="#" aria-label="Visit KnE Services on Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Visit KnE Services on Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Visit KnE Services on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" aria-label="Visit KnE Services on Instagram"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2025 KnE Services. All Rights Reserved.</div>
+  </footer>
 
-  /* Layout of menu & actions */
-  .nav-menu { display:flex; align-items:center; gap:1.75rem; }
-  .nav-list { display:flex; gap:1.25rem; list-style:none; margin:0; padding:0; }
-  .nav-item { position:relative; }
-  .nav-link { color:var(--text-color); text-decoration:none; padding:0.5rem 0.6rem; border-radius:12px; display:flex; align-items:center; gap:6px; transition: all var(--transition-medium); }
-  .nav-link:hover, .nav-link.active { color:var(--primary-color); transform: translateY(-2px); background: rgba(255,255,255,0.02); }
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    AOS.init({duration:900,once:true,easing:'ease-out'});
 
-  /* Dropdown */
-  .has-dropdown .dropdown {
-    position: absolute;
-    top: 100%;   /* no extra gap */
-    left: 0;
-    min-width: 220px;
-    background: var(--dropdown-bg);
-    backdrop-filter: var(--glass-effect);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 0.5rem;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(6px);
-    transition: all var(--transition-medium);
-    box-shadow: 0 10px 30px var(--shadow-color);
-    pointer-events: none;
-  }
+    document.addEventListener('DOMContentLoaded',()=>{
+      const navbar=document.querySelector('.navbar');
+      const navToggle=document.querySelector('.nav-toggle');
+      const dropdowns=document.querySelectorAll('.has-dropdown');
+      const searchInput=document.querySelector('.search-input');
+      const searchBtn=document.querySelector('.search-btn');
+      const navLinks=document.querySelectorAll('.nav-link');
+      const dropdownLinks=document.querySelectorAll('.dropdown a');
 
-  .has-dropdown:hover .dropdown { opacity:1; visibility:visible; transform: translateY(0); pointer-events:auto; }
-
-  /* Dropdown items */
-  .dropdown li { list-style:none; }
-  .dropdown a { color:var(--text-color); display:block; padding:0.6rem 0.9rem; border-radius:8px; transition: all var(--transition-medium); }
-  .dropdown a:hover { background: rgba(255,255,255,0.03); color:var(--primary-color); transform: translateX(4px); }
-
-  /* Nav actions */
-  .nav-actions { display:flex; align-items:center; gap:1rem; }
-  .search-container { position:relative; display:flex; align-items:center; border-radius:20px; overflow:hidden; border:1px solid var(--border-color); }
-  .search-input { padding:0.45rem 0.8rem; background:none; border:none; color:var(--text-color); width:160px; transition: width var(--transition-medium); }
-  .search-input:focus { outline:none; width:240px; box-shadow: 0 0 0 3px var(--primary-glow); }
-  .search-btn { background:none; border:none; color:var(--text-color); padding:0 8px; cursor:pointer; }
-
-  /* Theme toggle */
-  .theme-toggle { background: rgba(255,255,255,0.06); border:1px solid var(--border-color); padding:0.5rem; border-radius:50%; cursor:pointer; color:var(--text-color); }
-
-  /* Hamburger - default hidden on desktop */
-  .nav-toggle { display:none; align-items:center; justify-content:center; cursor:pointer; border-radius:12px; padding:0.45rem; }
-  .hamburger { width:26px; height:20px; position:relative; }
-  .hamburger span{ display:block; position:absolute; left:0; right:0; height:2px; background:var(--text-color); border-radius:2px; transition: all var(--transition-medium); }
-  .hamburger span:first-child{ top:0; }
-  .hamburger span:nth-child(2){ top:9px; width:70%; margin-left:auto; margin-right:0; }
-  .hamburger span:last-child{ bottom:0; }
-
-  /* nav-active hamburger transform (applied via JS toggling .nav-active on .navbar) */
-  .nav-active .hamburger span:first-child { transform: rotate(45deg); top:9px; }
-  .nav-active .hamburger span:nth-child(2) { opacity:0; transform: scaleX(0); }
-  .nav-active .hamburger span:last-child { transform: rotate(-45deg); top:9px; }
-
-  /* Mobile behavior - menu slides from right like your earlier design */
-  @media (max-width: 1024px) {
-    .nav-toggle { display:flex; }
-    .nav-menu {
-      position: fixed;
-      top: 70px;
-      right: -100%;
-      flex-direction: column;
-      gap: 1rem;
-      background: var(--nav-bg);
-      backdrop-filter: var(--glass-effect);
-      width: 100%;
-      height: calc(100vh - 70px);
-      padding: 1.5rem;
-      transition: right 0.35s var(--transition-medium);
-      box-shadow: -10px 0 30px var(--shadow-color);
-      border-left: 1px solid var(--border-color);
-      overflow-y: auto;
-    }
-    /* when active, slide into view */
-    .nav-active .nav-menu { right: 0; }
-
-    .nav-list { flex-direction: column; width:100%; margin:0; padding:0; }
-    .nav-link { width:100%; padding:0.9rem 0.6rem; border-bottom: 1px solid var(--border-color); }
-    .has-dropdown .dropdown { position: static; height: auto; transform: none; opacity: 1; visibility: visible; display:none; box-shadow:none; border:none; background:transparent; padding-left: 1rem; margin-left: 0.5rem;}
-    .has-dropdown.active .dropdown { display:block; }
-    .chevron-icon { margin-left:auto; }
-    .hamburger span { background: var(--text-color); }
-  }
-
-  /* small screens tweaks */
-  @media (max-width: 576px) {
-    .nav-menu { width: 100%; }
-    .search-input { width:100%; }
-  }
-</style>
-
-
-
-<!-- ======= Replace your existing header script with this improved script ======= -->
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const navbar = document.querySelector('.navbar');
-  const navToggle = document.querySelector('.nav-toggle');
-  const dropdowns = document.querySelectorAll('.has-dropdown');
-  const themeToggle = document.querySelector('.theme-toggle');
-  const searchInput = document.querySelector('.search-input');
-  const searchBtn = document.querySelector('.search-btn');
-
-  // MOBILE MENU TOGGLE
-  if (navToggle) {
-    navToggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      navbar.classList.toggle('nav-active');
-      // prevent page scroll when mobile menu open
-      document.body.style.overflow = navbar.classList.contains('nav-active') ? 'hidden' : '';
-    });
-  }
-
-  // Close mobile menu when clicking outside
-  document.addEventListener('click', (e) => {
-    if (navbar.classList.contains('nav-active') && !navbar.contains(e.target)) {
-      navbar.classList.remove('nav-active');
-      document.body.style.overflow = '';
-    }
-  });
-
-  // DROPDOWN behavior: desktop show on hover (CSS) — mobile toggle on click
-  dropdowns.forEach((dropdown) => {
-    const link = dropdown.querySelector('.nav-link');
-    link.addEventListener('click', (e) => {
-      if (window.innerWidth <= 968) {
-        // prevent following the # href on mobile (if any)
-        e.preventDefault();
-        // toggle active state to show/hide the nested dropdown (CSS handles .active)
-        dropdown.classList.toggle('active');
-
-        // close other open dropdowns for neatness
-        dropdowns.forEach(other => {
-          if (other !== dropdown) other.classList.remove('active');
+      // Toggle mobile menu
+      if(navToggle){
+        navToggle.addEventListener('click',e=>{
+          e.stopPropagation();
+          navbar.classList.toggle('nav-active');
+          document.body.style.overflow=navbar.classList.contains('nav-active')?'hidden':'';
         });
       }
-    });
-  });
 
-  // SEARCH (simple) — keep original behavior
-  if (searchBtn && searchInput) {
-    searchBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (searchInput.value.trim()) {
-        console.log('Search:', searchInput.value.trim());
-        // Add your real search action here
-      }
-    });
-    searchInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        if (searchInput.value.trim()) console.log('Search:', searchInput.value.trim());
-      }
-    });
-  }
-
-  // THEME TOGGLE (keeps your earlier idea; swap icons or styles as needed)
-  if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
-      document.body.classList.toggle('light-theme');
-      themeToggle.textContent = document.body.classList.contains('light-theme') ? '☀️' : '🌙';
-    });
-  }
-
-  // WINDOW RESIZE: if moved to desktop, ensure menu closed and dropdowns cleared
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 968) {
-      navbar.classList.remove('nav-active');
-      document.body.style.overflow = '';
-      dropdowns.forEach(d => d.classList.remove('active'));
-    }
-  });
-
-  // SCROLL EFFECT: add 'scrolled' class when not at top
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 20) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
-    }
-  });
-
-  // initial check (in case page loads scrolled)
-  if (window.scrollY > 20) navbar.classList.add('scrolled');
-});
-</script>
-
-
-
-
-<!-- Hero Slider Section -->
-<section id="hero" class="hero" role="banner" aria-label="Business growth solutions">
-  <div class="hero-slider">
-  <div class="hero-slide active" style="background-image: url('https://img.freepik.com/free-vector/dark-hexagonal-background-with-gradient-color_79603-1409.jpg')">
-    <div class="container">
-      <h1 data-aos="fade-down" data-aos-duration="800" data-aos-delay="100">Empowering Business Growth</h1>
-      <p data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
-        We deliver consulting, procurement, and training services that help businesses cut costs, improve performance, and achieve sustainable growth.
-      </p>
-      <a href="#cta" class="booking-btn" aria-label="Book a consultation" data-aos="fade-up" data-aos-duration="800" data-aos-delay="500">Book Now</a>
-    </div>
-  </div>
-
-  <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODg5ODcyNzN8&ixlib=rb-4.0.3&q=85')">
-    <div class="container">
-      <h1 data-aos="fade-down" data-aos-duration="800" data-aos-delay="100">Innovative Solutions</h1>
-      <p data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
-        Our tailored strategies and digital tools streamline operations, boost efficiency, and drive measurable results for your organization.
-      </p>
-      <a href="#cta" class="booking-btn" aria-label="Book a consultation" data-aos="fade-up" data-aos-duration="800" data-aos-delay="500">Book Now</a>
-    </div>
-  </div>
-
-  <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1556761175-5973dc0f32e7?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODg5ODcyNzN8&ixlib=rb-4.0.3&q=85')">
-    <div class="container">
-      <h1 data-aos="fade-down" data-aos-duration="800" data-aos-delay="100">Global Expertise</h1>
-      <p data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
-        With worldwide reach and local knowledge, we provide reliable procurement and customized training to strengthen your competitive edge.
-      </p>
-      <a href="#cta" class="booking-btn" aria-label="Book a consultation" data-aos="fade-up" data-aos-duration="800" data-aos-delay="500">Book Now</a>
-    </div>
-  </div>
-</div>
-
-  <div class="slider-controls">
-    <div class="slider-dot active" aria-label="Slide 1"></div>
-    <div class="slider-dot" aria-label="Slide 2"></div>
-    <div class="slider-dot" aria-label="Slide 3"></div>
-  </div>
-  <button class="slider-arrow prev" aria-label="Previous slide">&#10094;</button>
-  <button class="slider-arrow next" aria-label="Next slide">&#10095;</button>
-</section>
-  <!-- Mission -->
-  <section class="mission">
-    <div class="mission-image" data-aos="fade-right" data-aos-duration="1200">
-      <img src="https://mc-c2cbcbd2-d083-4d31-99df-608200-afd.azurefd.net/-/media/project/cherokee-federal/hexagons/hexagon-home.png?h=890&w=983&rev=d24423b7f91c4c308202cd00281df3b5&hash=C2AD013109314C7DB1226F2E34F47BB5" alt="Mission Image">
-    </div>
-    <div data-aos="fade-left" data-aos-duration="1200">
-      <h3>Where Your Mission Finds Momentum</h3>
-      <p>We are your trusted partner in delivering scalable, actionable solutions that modernize operations and solve complex challenges. Together, we build a thriving, future-ready workforce. Learn more about <strong>KnE</strong>.</p>
-    </div>
-  </section>
-
-
-  <!-- Services (unchanged) -->
-  <section id="services-section" class="offering-section">
-    <div class="container">
-      <div class="section-header">
-        <h2 style="color: #000;">Delivering Stellar Services</h2>
-        <p style="color: #d72323;">Our Services</p>
-      </div>
-      <div class="offerings-grid">
-        <div class="custom-box" data-aos="fade-up" data-aos-duration="1500">
-          <i class="fas fa-handshake"></i>
-          <h3>Consulting &amp; Advisory</h3>
-          <p>Strategic guidance for business growth and operational efficiency.</p>
-        </div>
-        <div class="custom-box" data-aos="fade-up" data-aos-duration="1500">
-          <i class="fas fa-laptop-code"></i>
-          <h3>IT &amp; Digital Solutions</h3>
-          <p>Web development, software solutions, cybersecurity, and cloud computing.</p>
-        </div>
-        <div class="custom-box" data-aos="fade-up" data-aos-duration="1500">
-          <i class="fas fa-tasks"></i>
-          <h3>Project Management</h3>
-          <p>Planning, execution, and monitoring for successful delivery.</p>
-        </div>
-        <div class="custom-box" data-aos="fade-up" data-aos-duration="1500">
-          <i class="fas fa-building"></i>
-          <h3>Facility Management</h3>
-          <p>Maintenance, security, and operational support for various industries.</p>
-        </div>
-        <div class="custom-box" data-aos="fade-up" data-aos-duration="1500">
-          <i class="fas fa-truck"></i>
-          <h3>Logistics &amp; Supply Chain</h3>
-          <p>End-to-end logistics solutions including transportation and inventory management.</p>
-        </div>
-        <div class="custom-box" data-aos="fade-up" data-aos-duration="1500">
-          <i class="fas fa-bullhorn"></i>
-          <h3>Digital Marketing</h3>
-          <p>Innovative marketing strategies to boost your brand and reach your target audience.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-<div class="acontainer">
-  <div class="contentLeft">
-    <div class="row">
-        <div class="imgWrapper">
-            <img src="https://images.unsplash.com/photo-1687579521048-217e24217d53?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODg5ODcxNzl8&ixlib=rb-4.0.3&q=85" alt="">
-        </div>
-        <div class="imgWrapper">
-            <img src="https://images.unsplash.com/photo-1686580546412-80e80519abd7?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODg5ODcyMDN8&ixlib=rb-4.0.3&q=85" alt="">
-        </div>
-        <div class="imgWrapper">
-            <img src="https://images.unsplash.com/photo-1688133338995-a394ce7314e4?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODg5ODcyMDN8&ixlib=rb-4.0.3&q=85" alt="">
-        </div>
-        <div class="imgWrapper">
-            <img src="https://images.unsplash.com/photo-1686354715732-7e4685269a25?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODg5ODcyNzN8&ixlib=rb-4.0.3&q=85" alt="">
-        </div>
-    </div>
-  </div>
-  <div class="contentRight">
-    <div class="acontent">
-<h4>Welcome</h4>
-<h2>About KnE Services</h2>
-<p>
-  KnE is a service-first partner that helps organisations plan, build and run better. We combine practical advisory, disciplined project delivery and trusted supplier networks to deliver measurable outcomes — on time and on budget. From procurement and facilities to digital transformation and training, we make complex work simpler so your team can focus on impact.
-</p>
-<a href="about.html" aria-label="Read more about KnE Services">Read More...</a>
-    </div>
-  </div>
-</div>
-  <!-- PROCUREMENT — one image + one paragraph -->
-  <section id="procurement-section" class="offering-section" style="background-color:#f7f7f7;">
-    <div class="container">
-      <div class="section-header">
-        <h2 style="color:#000;">Procurement &amp; Sourcing</h2>
-        <p style="color:#d72323;">Trusted vendors • Transparent pricing • On-time delivery</p>
-      </div>
-
-      <div class="mission" data-aos="fade-up" data-aos-duration="1200">
-        <div class="mission-image">
-          <img src="https://media.istockphoto.com/id/1652511983/vector/supply-chain-management-scm-conceptual-illustration.jpg?s=612x612&w=0&k=20&c=TMgOhstUF1uNFE1dvg1UZ4kOuFrRtvlGinC7AYbArkM=" alt="Procurement & Sourcing">
-        </div>
-        <div>
-          <h3>End-to-End Procurement, Simplified</h3>
-          <p>
-            We source and deliver exactly what you need—from industrial equipment and office setups to medical & safety
-            essentials, energy systems, IT & electronics, and raw materials—while handling vendor vetting, compliance,
-            logistics, and warranty support. One partner, clear pricing, and dependable timelines.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Training (unchanged) -->
-  <section id="training-section" class="offering-section">
-    <div class="container" style="margin-bottom: 7%;">
-      <div class="section-header">
-        <h2 style="color: #000;">Empowering Through Expert Training</h2>
-        <p style="color: #d72323;">Our Training</p>
-      </div>
-      <div class="offerings-grid">
-        <div class="custom-box" data-aos="fade-up" data-aos-duration="1200">
-          <i class="fas fa-tools"></i>
-          <h3>Technical Training</h3>
-          <p>Hands-on workshops for engineering, IT, and manufacturing sectors.</p>
-        </div>
-        <div class="custom-box" data-aos="fade-up" data-aos-duration="1200">
-          <i class="fas fa-user-tie"></i>
-          <h3>Corporate Training</h3>
-          <p>Leadership, team building, and workplace productivity programs.</p>
-        </div>
-        <div class="custom-box" data-aos="fade-up" data-aos-duration="1200">
-          <i class="fas fa-code"></i>
-          <h3>Digital Skills Training</h3>
-          <p>Data analytics, programming, and cloud computing certifications.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Why Choose Us (unchanged) -->
-  <section class="why-choose-us">
-    <div class="mission-image" data-aos="fade-right" data-aos-duration="1200">
-      <img src="https://troktechnology.net/wp-content/uploads/2020/12/Daco_4329002.png" alt="Why Choose Us Image">
-    </div>
-    <div data-aos="fade-left" data-aos-duration="1200">
-      <h3>Why Choose Us</h3>
-      <p>We stand out as your most reliable partner, offering proven expertise and a commitment to delivering innovative solutions. Our customer-first approach ensures that we understand your unique needs and deliver exceptional results every time.</p>
-      <br>
-      <a href="mailto:contact@company.com" class="contact-us-btn" style="margin-top: 20%;">Contact Us</a>
-    </div>
-  </section>
-
-  <!-- Clients (keep your attractive new layout) -->
-      <section class="stats-section" id="stats-section">
-        <div class="stats-container">
-            <div class="stat-item">
-                <div class="stat-icon">
-                    <img src="https://olamicreas.github.io/itrok/assets/images/icons/happy-clients.svg" alt="Happy Clients Icon">
-                </div>
-                <div class="stat-number" data-target="232">0</div>
-                <div class="stat-label">Happy Clients</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-icon">
-                    <img src="https://olamicreas.github.io/itrok/assets/images/icons/complete-projects.svg" alt="Completed Projects Icon">
-                </div>
-                <div class="stat-number" data-target="521">0</div>
-                <div class="stat-label">Completed Projects</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-icon">
-                    <img src="https://olamicreas.github.io/itrok/assets/images/icons/hours-support.svg" alt="Hours of Support Icon">
-                </div>
-                <div class="stat-number" data-target="453">0</div>
-                <div class="stat-label">Hours of Support</div>
-            </div>
-        </div>
-    </section>
-<!-- ===========================
-     CALL TO ACTION SECTION
-=========================== -->
-<section id="cta" class="cta-section" >
-  <!-- Background Video -->
-  <video autoplay muted loop playsinline class="cta-video">
-    <source src="bb.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-
-  <!-- Overlay -->
-  <div class="cta-overlay"></div>
-
-  <!-- Content -->
-  <div class="container text-center">
-    <h2 class="cta-title">Ready to Work With Us?</h2>
-    <p class="cta-subtitle">
-      Book a consultation today and let’s discuss how we can help you achieve your goals.
-    </p>
-    <a href="https://calendly.com/abdulquayyumoyedotun" target="_blank" class="cta-btn" >
-      Book a Consultation
-    </a>
-  </div>
-</section>
-
-<style>
-/* CTA Section */
-.cta-section {
-  position: relative;
-  padding: 100px 20px;
-  color: #fff;
-  text-align: center;
-  overflow: hidden;
-}
-
-/* Background Video */
-.cta-video {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
-  z-index: 0;
-}
-
-/* Overlay */
-.cta-overlay {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.6);
-  z-index: 1;
-}
-
-/* Content */
-.cta-section .container {
-  position: relative;
-  z-index: 2;
-}
-
-.cta-title {
-  font-size: 2.5rem;
-  font-weight: bold;
-  margin-bottom: 15px;
-  animation: fadeInDown 1s ease forwards;
-}
-
-.cta-subtitle {
-  font-size: 1.2rem;
-  margin-bottom: 30px;
-  animation: fadeInUp 1.2s ease forwards;
-}
-
-.cta-btn {
-  display: inline-block;
-  padding: 14px 30px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #fff;
-  background: var(--primary-color, #0056b3);
-  border-radius: 50px;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  animation: pulseBtn 2s infinite;
-}
-
-.cta-btn:hover {
-  background: #003f80;
-  transform: scale(1.05);
-}
-
-/* Animations */
-@keyframes fadeInDown {
-  from { opacity: 0; transform: translateY(-30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes pulseBtn {
-  0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.6); }
-  70% { box-shadow: 0 0 0 20px rgba(255,255,255,0); }
-  100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .cta-title { font-size: 1.8rem; }
-  .cta-subtitle { font-size: 1rem; }
-  .cta-btn { padding: 12px 24px; font-size: 1rem; }
-}
-</style>
-  <!-- TESTIMONIALS — reverted to earlier card design -->
-  <section id="testimonials" class="tst-elegant">
-  <div class="container" data-aos="fade-up" data-aos-duration="1200">
-    <div class="tst-title">
-      <h2>What Clients Say</h2>
-      <span class="bar"></span>
-      <p class="tst-sub">Real feedback from teams we’ve served</p>
-    </div>
-
-    <div class="tst-grid">
-      <!-- Card 1 -->
-      <article class="tst-card" data-aos="fade-up" data-aos-duration="1000">
-        <div class="tst-quote">
-          <div class="tst-quote-mark"><i class="fas fa-quote-left"></i></div>
-          <p class="tst-text">“KnE delivered ahead of schedule and cut our ops costs by 18% within a quarter.”</p>
-        </div>
-        <div class="tst-footer">
-          <div class="tst-person">
-            <div class="tst-avatar" data-initial="AM"></div>
-            <div>
-              <div class="tst-name">Operations Lead</div>
-              <div class="tst-role">Alpha Manufacturing</div>
-            </div>
-          </div>
-          <div class="tst-stars" aria-label="4.5 out of 5">
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-          </div>
-        </div>
-      </article>
-
-      <!-- Card 2 -->
-      <article class="tst-card" data-aos="fade-up" data-aos-duration="1100">
-        <div class="tst-quote">
-          <div class="tst-quote-mark"><i class="fas fa-quote-left"></i></div>
-          <p class="tst-text">“Their PMO support kept our expansion on track—clear milestones and zero surprises.”</p>
-        </div>
-        <div class="tst-footer">
-          <div class="tst-person">
-            <div class="tst-avatar" data-initial="PM"></div>
-            <div>
-              <div class="tst-name">Program Manager</div>
-              <div class="tst-role">BlueWave Logistics</div>
-            </div>
-          </div>
-          <div class="tst-stars" aria-label="5 out of 5">
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-          </div>
-        </div>
-      </article>
-
-      <!-- Card 3 -->
-      <article class="tst-card" data-aos="fade-up" data-aos-duration="1200">
-        <div class="tst-quote">
-          <div class="tst-quote-mark"><i class="fas fa-quote-left"></i></div>
-          <p class="tst-text">“Practical training. Our team applied the lessons the same week.”</p>
-        </div>
-        <div class="tst-footer">
-          <div class="tst-person">
-            <div class="tst-avatar" data-initial="HR"></div>
-            <div>
-              <div class="tst-name">HR Director</div>
-              <div class="tst-role">CityCare Health</div>
-            </div>
-          </div>
-          <div class="tst-stars" aria-label="4 out of 5">
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
-          </div>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-  <!-- Contact (unchanged) -->
-  <section id="contact" class="contact">
-    <div class="container" style="margin-top: 7%;">
-      <h2 data-aos="fade-up" data-aos-duration="1500">Contact Us</h2>
-      <div class="contact-content">
-        <div class="contact-info" data-aos="fade-right" data-aos-duration="1200">
-          <h3>Get in Touch</h3>
-          <p><i class="fas fa-map-marker-alt"></i> 1822 15th Street
-Suite C
-Gulfport, MS 39501-2104</p>
-          <p><i class="fas fa-phone"></i> (123) 456-7890</p>
-          <p><i class="fas fa-envelope"></i> info@businesssolutions.com</p>
-        </div>
-        <div class="contact-form" data-aos="fade-left" data-aos-duration="1200">
-          <form>
-            <input type="text" name="name" placeholder="Your Name" required />
-            <input type="email" name="email" placeholder="Your Email" required />
-            <textarea name="message" placeholder="Your Message" required></textarea>
-            <button type="submit">Send Message</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer (original) -->
-<footer class="advanced-footer">
-  <div class="container">
-    <div class="footer-grid">
-      
-      <!-- Logo Section -->
-      <div class="footer-col logo-col">
-        <a href="/">
-          <img src="kne-removebg-preview.png" alt="Company Logo" class="footer-logo">
-        </a>
-        <p class="logo-text">Building trusted solutions for our clients worldwide.</p>
-      </div>
-
-      <!-- Information (Navbar items) -->
-      <div class="footer-col">
-        <h6>Information</h6>
-        <ul>
-          
-          <li><a href="#">About Us</a></li>
-          <li><a href="#">Our Work</a></li>
-          <li><a href="#">Clients</a></li>
-          <li><a href="#">Procurement</a></li>
-          <li><a href="#">Testimonials</a></li>
-          
-        </ul>
-      </div>
-
-      <!-- Services -->
-      <div class="footer-col">
-        <h6>Services</h6>
-        <ul>
-          <li><a href="#">Consulting</a></li>
-          <li><a href="#">Procurement</a></li>
-          <li><a href="#">Project Management</a></li>
-          <li><a href="#">Training</a></li>
-        </ul>
-      </div>
-
-      <!-- Contact -->
-      <div class="footer-col">
-        <h6>Contact Us</h6>
-        <p>Need help? Reach out to us.</p>
-        <p>+01 123-456-7890</p>
-        <div class="social-icons">
-          <a href="#"><i class="fab fa-facebook-f"></i></a>
-          <a href="#"><i class="fab fa-twitter"></i></a>
-          <a href="#"><i class="fab fa-linkedin-in"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- Bottom -->
-  <div class="footer-bottom">
-    <p>© 2025 KnE Services. All Rights Reserved.</p>
-  </div>
-</footer>
-    <script>
-        // Number animation function
-        function animateNumber(element, target, duration) {
-            let start = 0;
-            const increment = target / (duration / 16);
-            const updateNumber = () => {
-                start += increment;
-                if (start >= target) {
-                    element.textContent = target;
-                    return;
-                }
-                element.textContent = Math.floor(start);
-                requestAnimationFrame(updateNumber);
-            };
-            updateNumber();
+      // Close mobile menu when clicking outside
+      document.addEventListener('click',e=>{
+        if(navbar.classList.contains('nav-active')&&!navbar.contains(e.target)){
+          navbar.classList.remove('nav-active');
+          document.body.style.overflow='';
         }
+      });
 
-        // Intersection Observer for scroll animation
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const numbers = entry.target.querySelectorAll('.stat-number');
-                    numbers.forEach(number => {
-                        number.classList.add('visible');
-                        const target = parseInt(number.getAttribute('data-target'));
-                        animateNumber(number, target, 2000); // 2-second animation
-                    });
-                    observer.unobserve(entry.target);
-                }
+      // Handle dropdown toggle on mobile
+      dropdowns.forEach(dropdown=>{
+        const link=dropdown.querySelector('.nav-link');
+        link.addEventListener('click',e=>{
+          if(window.innerWidth<=968){
+            e.preventDefault();
+            dropdown.classList.toggle('active');
+            dropdowns.forEach(other=>{
+              if(other!==dropdown)other.classList.remove('active');
             });
-        }, { threshold: 0.3 });
-
-        // Observe the stats section
-        const statsSection = document.querySelector('.stats-section');
-        observer.observe(statsSection);
-    </script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const slider = document.querySelector('.hero-slider');
-  const slides = document.querySelectorAll('.hero-slide');
-  const dots = document.querySelectorAll('.slider-dot');
-  const prevArrow = document.querySelector('.slider-arrow.prev');
-  const nextArrow = document.querySelector('.slider-arrow.next');
-  let currentSlide = 0;
-  let slideInterval;
-  let isSliding = false;
-
-  // Function to update slider position
-  function updateSlider() {
-    if (isSliding) return;
-    isSliding = true;
-    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-    slides.forEach((slide, i) => {
-      slide.classList.toggle('active', i === currentSlide);
-      dots[i].classList.toggle('active', i === currentSlide);
-    });
-    setTimeout(() => {
-      isSliding = false;
-    }, 800); // Match CSS transition duration
-  }
-
-  // Function to show a specific slide
-  function showSlide(index) {
-    currentSlide = index % slides.length;
-    if (currentSlide < 0) currentSlide += slides.length;
-    updateSlider();
-  }
-
-  // Function to start auto-slide
-  function startSlideShow() {
-    slideInterval = setInterval(() => {
-      showSlide(currentSlide + 1);
-    }, 6000); // Change slide every 6 seconds
-  }
-
-  // Function to stop auto-slide
-  function stopSlideShow() {
-    clearInterval(slideInterval);
-  }
-
-  // Event listeners for manual controls
-  dots.forEach((dot, index) => {
-    dot.addEventListener('click', () => {
-      if (isSliding) return;
-      stopSlideShow();
-      showSlide(index);
-      startSlideShow();
-    });
-  });
-
-  if (prevArrow && nextArrow) {
-    prevArrow.addEventListener('click', () => {
-      if (isSliding) return;
-      stopSlideShow();
-      showSlide(currentSlide - 1);
-      startSlideShow();
-    });
-
-    nextArrow.addEventListener('click', () => {
-      if (isSliding) return;
-      stopSlideShow();
-      showSlide(currentSlide + 1);
-      startSlideShow();
-    });
-  }
-
-  // Initialize slider
-  updateSlider();
-  startSlideShow();
-
-  // Fallback: Ensure slides are visible if JavaScript fails
-  window.addEventListener('load', () => {
-    slides.forEach(slide => {
-      slide.style.opacity = 1;
-    });
-    slider.style.transform = 'translateX(0)';
-  });
-
-  // Reinitialize AOS animations on slide change
-  if (window.AOS) {
-    slider.addEventListener('transitionend', () => {
-      const activeSlide = slides[currentSlide];
-      const elements = activeSlide.querySelectorAll('[data-aos]');
-      elements.forEach(el => {
-        el.classList.remove('aos-animate');
-        setTimeout(() => el.classList.add('aos-animate'), 50);
-      });
-    });
-  }
-});
-</script>
-<script>
-  // Services Dropdown Click Handler
-document.addEventListener('DOMContentLoaded', () => {
-  // Handle both Services and Training dropdowns
-  const sections = [
-    {
-      dropdownSelector: '.has-dropdown .dropdown a[href="#services-section"]',
-      sectionSelector: '#services-section',
-      mainLinkSelector: '.has-dropdown > .nav-link[href="#services-section"]'
-    },
-    {
-      dropdownSelector: '.has-dropdown .dropdown a[href="#training-section"]',
-      sectionSelector: '#training-section',
-      mainLinkSelector: '.has-dropdown > .nav-link[href="#training-section"]'
-    }
-  ];
-
-  sections.forEach(({ dropdownSelector, sectionSelector, mainLinkSelector }) => {
-    const dropdownLinks = document.querySelectorAll(dropdownSelector);
-    const section = document.querySelector(sectionSelector);
-    const serviceBoxes = section.querySelectorAll('.custom-box');
-    const mainLink = document.querySelector(mainLinkSelector);
-
-    // Function to filter and animate boxes
-    function filterBoxes(serviceName) {
-      serviceBoxes.forEach(box => {
-        const boxTitle = box.querySelector('h3').textContent.trim().toLowerCase();
-        if (boxTitle === serviceName.toLowerCase()) {
-          box.classList.add('selected');
-          box.classList.remove('blurred', 'hidden');
-          // Reinitialize AOS for selected box
-          if (window.AOS) {
-            box.classList.remove('aos-animate');
-            setTimeout(() => box.classList.add('aos-animate'), 50);
           }
-        } else {
-          box.classList.add('blurred');
-          box.classList.remove('selected');
-          // Hide after animation
-          setTimeout(() => {
-            box.classList.add('hidden');
-          }, 500); // Match transition duration
+        });
+      });
+
+      // Handle scroll and blur effect for dropdown links on desktop
+      dropdownLinks.forEach(link=>{
+        link.addEventListener('click',e=>{
+          if(window.innerWidth>968){
+            e.preventDefault();
+            const href=link.getAttribute('href');
+            const targetSection=document.querySelector(href);
+            if(targetSection){
+              targetSection.scrollIntoView({behavior:'smooth'});
+              navLinks.forEach(navLink=>navLink.classList.add('blurred'));
+              dropdownLinks.forEach(dLink=>dLink.classList.add('blurred'));
+              link.classList.remove('blurred');
+              navLinks.forEach(navLink=>navLink.classList.remove('active'));
+              const parentNavLink=link.closest('.has-dropdown')?.querySelector('.nav-link');
+              if(parentNavLink)parentNavLink.classList.add('active');
+            }
+          }
+        });
+      });
+
+      // Handle main nav links (non-dropdown) to remove blur and scroll
+      navLinks.forEach(link => {
+        link.addEventListener('click', e => {
+          if (window.innerWidth > 968 && !link.closest('.dropdown')) {
+            const href = link.getAttribute('href');
+            const targetSection = document.querySelector(href);
+            if (targetSection) {
+              e.preventDefault();
+              targetSection.scrollIntoView({ behavior: 'smooth' });
+              navLinks.forEach(navLink => navLink.classList.remove('blurred'));
+              dropdownLinks.forEach(dLink => dLink.classList.remove('blurred'));
+              navLinks.forEach(navLink => navLink.classList.remove('active'));
+              link.classList.add('active');
+            }
+          }
+        });
+      });
+
+      // Remove blur on any click outside navbar
+      document.addEventListener('click',e=>{
+        if(!navbar.contains(e.target)){
+          navLinks.forEach(link=>link.classList.remove('blurred'));
+          dropdownLinks.forEach(link=>link.classList.remove('blurred'));
         }
       });
-    }
 
-    // Function to reset all boxes
-    function resetBoxes() {
-      serviceBoxes.forEach(box => {
-        box.classList.remove('blurred', 'selected', 'hidden');
-        box.style.opacity = 1;
-        box.style.display = 'block';
-        // Reinitialize AOS for all boxes
-        if (window.AOS) {
-          box.classList.remove('aos-animate');
-          setTimeout(() => box.classList.add('aos-animate'), 50);
+      // Search functionality
+      if(searchBtn&&searchInput){
+        searchBtn.addEventListener('click',e=>{
+          e.preventDefault();
+          if(searchInput.value.trim())console.log('Search:',searchInput.value.trim());
+        });
+        searchInput.addEventListener('keypress',e=>{
+          if(e.key==='Enter'){
+            e.preventDefault();
+            if(searchInput.value.trim())console.log('Search:',searchInput.value.trim());
+          }
+        });
+      }
+
+      // Reset mobile menu and blur on resize
+      window.addEventListener('resize',()=>{
+        if(window.innerWidth>968){
+          navbar.classList.remove('nav-active');
+          document.body.style.overflow='';
+          dropdowns.forEach(d=>d.classList.remove('active'));
+          navLinks.forEach(link=>link.classList.remove('blurred'));
+          dropdownLinks.forEach(link=>link.classList.remove('blurred'));
         }
       });
-    }
 
-    // Event listener for dropdown links
-    dropdownLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const serviceName = link.textContent.trim();
-
-        // Reset before filtering
-        resetBoxes();
-
-        // Smooth scroll to section
-        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-        // Filter after scroll
-        setTimeout(() => {
-          filterBoxes(serviceName);
-        }, 200); // Adjust based on scroll duration
+      // Scroll behavior for navbar background
+      window.addEventListener('scroll',()=>{
+        if(window.scrollY>20){
+          navbar.classList.add('scrolled');
+        }else{
+          navbar.classList.remove('scrolled');
+        }
       });
+      if(window.scrollY>20){
+        navbar.classList.add('scrolled');
+      }
     });
-
-    // Reset on clicking main section link
-    if (mainLink) {
-      mainLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        resetBoxes();
-        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-    }
-  });
-});
-</script>
-
-  <!-- AOS Script -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-  <script> AOS.init(); </script>
+  </script>
 </body>
 </html>
