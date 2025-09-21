@@ -69,7 +69,12 @@
     letter-spacing:2px;
     text-shadow: var(--neon-glow);
   }
-
+  .container {
+      width: 100%;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+   }
   /* Layout of menu & actions */
   .nav-menu { display:flex; align-items:center; gap:1.75rem; }
   .nav-list { display:flex; gap:1.25rem; list-style:none; margin:0; padding:0; }
@@ -217,105 +222,109 @@
     .cta-section p{max-width:780px;margin:0 auto 18px;color:rgba(255,255,255,0.92)}
     .cta-section a{display:inline-block;padding:12px 34px;border-radius:999px;background:#fff;color:var(--primary-color);font-weight:700;box-shadow:0 12px 30px rgba(0,0,0,0.18)}
 
-    .advanced-footer {
-      background:rgb(44, 62, 80);
-      color: #fff;
-      padding: 60px 20px 30px;
-    }
+  .advanced-footer {
+  background:rgb(44, 62, 80); /* your existing primary */
+  color: #fff;
+  padding: 60px 20px 30px;
+}
 
-    /* Grid */
-    .footer-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 2rem;
-      margin-bottom: 2rem;
-    }
+/* Grid */
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
 
-    /* Logo */
-    .footer-logo {
-      max-width: 160px;
-      margin-top: -45px;
-    }
-    .logo-text {
-      font-size: 14px;
-      color: rgba(255,255,255,0.85);
-      line-height: 1.5;
-    }
+/* Logo */
+.footer-logo {
+  max-width: 160px;
+  margin-top: -45px;
+}
+.logo-text {
+  font-size: 14px;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.5;
+}
 
-    /* Headings */
-    .footer-col h6 {
-      font-size: 16px;
-      margin-bottom: 0.8rem;
-      position: relative;
-      display: inline-block;
-      padding-bottom: 4px;
-    }
-    .footer-col h6::after {
-      content: "";
-      display: block;
-      width: 30px;
-      height: 2px;
-      background: #fff;
-      margin-top: 4px;
-      transition: width 0.3s ease;
-    }
-    .footer-col h6:hover::after {
-      width: 50px;
-    }
+/* Headings */
+.footer-col h6 {
+  font-size: 16px;
+  margin-bottom: 0.8rem;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 4px;
+}
+.footer-col h6::after {
+  content: "";
+  display: block;
+  width: 30px;
+  height: 2px;
+  background: #fff;
+  margin-top: 4px;
+  transition: width 0.3s ease;
+}
+.footer-col h6:hover::after {
+  width: 50px;
+}
 
-    /* Links */
-    .footer-col ul {
-      list-style: none;
-      padding: 0;
-    }
-    .footer-col ul li {
-      margin-bottom: 0.6rem;
-    }
-    .footer-col ul li a {
-      color: rgba(255,255,255,0.85);
-      text-decoration: none;
-      transition: color 0.3s ease, padding-left 0.3s ease;
-    }
-    .footer-col ul li a:hover {
-      color: #fff;
-      padding-left: 6px;
-    }
+/* Links */
+.footer-col ul {
+  list-style: none;
+  padding: 0;
+}
+.footer-col ul li {
+  margin-bottom: 0.6rem;
+}
+.footer-col ul li a {
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  transition: color 0.3s ease, padding-left 0.3s ease;
+}
+.footer-col ul li a:hover {
+  color: #fff;
+  padding-left: 6px;
+}
 
-    /* Social Icons */
-    .social-icons {
-      margin-top: 1rem;
-    }
-    .social-icons a {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      margin-right: 10px;
-      font-size: 16px;
-      color: #fff;
-      background: rgba(255,255,255,0.15);
-      height: 40px;
-      width: 40px;
-      border-radius: 50%;
-      transition: transform 0.3s ease, background 0.3s ease;
-    }
-    .social-icons a:hover {
-      transform: scale(1.15);
-      background: #fff;
-      color: var(--primary-color, #1bbc9b);
-    }
+/* Social Icons */
+.social-icons {
+  margin-top: 1rem;
+}
+.social-icons a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  font-size: 16px;
+  color: #fff;
+  background: rgba(255,255,255,0.15);
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+.social-icons a:hover {
+  transform: scale(1.15);
+  background: #fff;
+  color: var(--primary-color, #1bbc9b);
+}
 
-    /* Bottom */
-    .footer-bottom {
-      border-top: 1px solid rgba(255,255,255,0.25);
-      padding-top: 15px;
-      text-align: center;
-    }
-    .footer-bottom p {
-      margin: 0;
-      font-size: 14px;
-      color: rgba(255,255,255,0.9);
-    }
+/* Bottom */
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.25);
+  padding-top: 15px;
+  text-align: center;
+}
+.footer-bottom p {
+  margin: 0;
+  font-size: 14px;
+  color: rgba(255,255,255,0.9);
+}
 
+.contact-link{
+  color: white;
+  text-decoration: none;
+}
     /* Responsive tweaks */
     @media(max-width:900px){
       .about-container,.mission-inner{grid-template-columns:1fr}
@@ -495,7 +504,7 @@
           <p>Need assistance? We're here to help.</p>
           <a href="tel:+011234567890" class="contact-link" aria-label="Call KnE Services at +01 123-456-7890">+01 123-456-7890</a>
           <a href="mailto:info@kneservices.com" class="contact-link" aria-label="Email KnE Services at info@kneservices.com">info@kneservices.com</a>
-          <a href="/index.html#contact" class="contact-btn" aria-label="Contact KnE Services">Contact Us</a>
+          
           <div class="social-icons">
             <a href="#" aria-label="Visit KnE Services on Facebook"><i class="fab fa-facebook-f"></i></a>
             <a href="#" aria-label="Visit KnE Services on Twitter"><i class="fab fa-twitter"></i></a>
